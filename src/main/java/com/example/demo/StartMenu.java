@@ -5,10 +5,17 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import com.example.demo.controller.Controller;
+import javafx.scene.text.Font;
 
 public class StartMenu {
     private final Stage stage;
@@ -25,12 +32,16 @@ public class StartMenu {
 
     public void show() {
         Text title = new Text("Sky Battle");
-        title.setStyle("-fx-font-size: 50px; -fx-font-weight: bold; -fx-fill: green;");
+        title.setStyle("-fx-font-size: 100px; -fx-font-weight: bold; -fx-fill: linear-gradient(from 0% 0% to 100% 100%, #6A0DAD, #FF1493); -fx-stroke-width: 1px;"); // Set text style
+
+        // Load custom font
+        Font retroFont = Font.loadFont(getClass().getResourceAsStream("/com/example/demo/fonts/PressStart2P-Regular.ttf"), 50);
+        title.setFont(retroFont);
 
         // Load images and set them to the buttons
-        Button startButton = createImageButton("Start  col_Button.png");
-        Button settingsButton = createImageButton("Settings  col_Button.png");
-        Button exitButton = createImageButton("Exit  col_Button.png");
+        Button startButton = createImageButton("Start Button.png");
+        Button settingsButton = createImageButton("Settings Button.png");
+        Button exitButton = createImageButton("Exit Button.png");
 
         // Add actions for each button
         startButton.setOnAction(e -> startGame());
@@ -44,8 +55,11 @@ public class StartMenu {
 
         VBox layout = new VBox(20, title, startButton, settingsButton, exitButton);
         layout.setAlignment(Pos.CENTER);
-        layout.setStyle("-fx-background-color: black;");
 
+        // Load and set background image
+        layout.setBackground(new Background(new BackgroundImage(new Image(getClass().getResourceAsStream("/com/example/demo/images/start-menu-background.png")),
+                BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT,
+                BackgroundSize.DEFAULT)));
         Scene scene = new Scene(layout, screenWidth, screenHeight);
         stage.setScene(scene);
     }
