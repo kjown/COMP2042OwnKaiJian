@@ -11,11 +11,12 @@ public class Main extends Application {
 
 	@Override
 	public void start(Stage stage) {
-		stage.setTitle("Sky Battle"); // Set the title of the window
+		stage.setTitle("1942");
 
+		// Initialize the game controller
 		controller = new Controller(stage);
 
-		// Create and display the StartMenu
+		// Create and display the StartMenu, passing the controller
 		StartMenu startMenu = new StartMenu(stage, SCREEN_WIDTH, SCREEN_HEIGHT, controller);
 		startMenu.show();
 

@@ -215,6 +215,10 @@ public abstract class LevelParent extends Observable {
 		levelView.showGameOverImage();
 	}
 
+	public void stopGame() {
+		timeline.stop();
+	}
+
 	protected UserPlane getUser() {
 		return user;
 	}

@@ -1,7 +1,6 @@
 package com.example.demo.controller;
 
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -15,40 +14,78 @@ public class Controller implements Observer {
 
 	private static final String LEVEL_ONE_CLASS_NAME = "com.example.demo.LevelOne";
 	private final Stage stage;
+	private LevelParent currentLevel;
+	private boolean isLoadingLevel = false;
 
 	public Controller(Stage stage) {
 		this.stage = stage;
+		System.out.println("Controller initialized");
 	}
 
-	public void launchGame() throws ClassNotFoundException, NoSuchMethodException, SecurityException,
-			InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException  {
-
+	public void launchGame() {
+		System.out.println("Launching game...");
+		try {
 			stage.show();
 			goToLevel(LEVEL_ONE_CLASS_NAME);
-	}
-
-	private void goToLevel(String className) throws ClassNotFoundException, NoSuchMethodException, SecurityException,
-			InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-			Class<?> myClass = Class.forName(className);
-			Constructor<?> constructor = myClass.getConstructor(double.class, double.class);
-			LevelParent myLevel = (LevelParent) constructor.newInstance(stage.getHeight(), stage.getWidth());
-			myLevel.addObserver(this);
-			Scene scene = myLevel.initializeScene();
-			stage.setScene(scene);
-			myLevel.startGame();
-
-	}
-
-	@Override
-	public void update(Observable arg0, Object arg1) {
-		try {
-			goToLevel((String) arg1);
-		} catch (ClassNotFoundException | NoSuchMethodException | SecurityException | InstantiationException
-				| IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-			Alert alert = new Alert(AlertType.ERROR);
-			alert.setContentText(e.getClass().toString());
-			alert.show();
+		} catch (Exception e) {
+			System.out.println("Exception caught in launchGame:");
+			e.printStackTrace();
+			showAlert("Error launching game", e);
 		}
 	}
 
+	private void goToLevel(String className) {
+		if (isLoadingLevel) {
+			System.out.println("Already loading a level, skipping: " + className);
+			return;
+		}
+		isLoadingLevel = true;
+
+		try {
+			System.out.println("Going to level: " + className);
+
+			// Stop and remove observer from the current level if it exists
+			if (currentLevel != null) {
+				currentLevel.stopGame();
+				currentLevel.deleteObserver(this);
+			}
+
+			// Load and instantiate the new level
+			Class<?> levelClass = Class.forName(className);
+			Constructor<?> constructor = levelClass.getConstructor(double.class, double.class);
+			LevelParent newLevel = (LevelParent) constructor.newInstance(stage.getHeight(), stage.getWidth());
+
+			// Set up the new level
+			newLevel.addObserver(this);
+			Scene scene = newLevel.initializeScene();
+			stage.setScene(scene);
+			newLevel.startGame();
+
+			// Update the current level reference
+			currentLevel = newLevel;
+		} catch (Exception e) {
+			System.out.println("Exception caught in goToLevel:");
+			e.printStackTrace();
+			showAlert("Error loading level: " + className, e);
+		} finally {
+			isLoadingLevel = false;
+		}
+	}
+
+	@Override
+	public void update(Observable observable, Object arg) {
+		if (arg instanceof String nextLevelClassName) {
+			goToLevel(nextLevelClassName);
+		} else {
+			System.out.println("Unknown level transition requested.");
+		}
+	}
+
+	private void showAlert(String message, Exception e) {
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.setTitle("Error");
+		alert.setHeaderText(message);
+		alert.setContentText(e.toString());
+		alert.showAndWait();
+	}
 }
