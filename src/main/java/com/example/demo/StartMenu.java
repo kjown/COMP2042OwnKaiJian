@@ -32,8 +32,7 @@ public class StartMenu {
 
     public void show() {
         Text title = new Text("Sky Battle");
-        title.setStyle("-fx-font-size: 100px; -fx-font-weight: bold; -fx-fill: linear-gradient(from 0% 0% to 100% 100%, #6A0DAD, #FF1493); -fx-stroke-width: 1px;"); // Set text style
-
+        title.setStyle("-fx-font-size: 100px; -fx-font-weight: bold; -fx-fill: linear-gradient(from 0% 0% to 0% 100%, #B0C4DE, #DADBDD, #FDDC5C); -fx-stroke-width: 1px; -fx-effect: dropshadow(three-pass-box, rgba(255,255,255,0.8), 10, 0.0, 0, 0);");
         // Load custom font
         Font retroFont = Font.loadFont(getClass().getResourceAsStream("/com/example/demo/fonts/PressStart2P-Regular.ttf"), 50);
         title.setFont(retroFont);
