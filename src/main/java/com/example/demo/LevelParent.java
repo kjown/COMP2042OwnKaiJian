@@ -214,6 +214,9 @@ public abstract class LevelParent extends Observable {
 		timeline.stop();
 		levelView.showGameOverImage();
 	}
+	public void stopGame() {
+		timeline.stop();
+	}
 
 	public void stopGame() {
 		timeline.stop();
