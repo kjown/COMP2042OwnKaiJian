@@ -218,9 +218,6 @@ public abstract class LevelParent extends Observable {
 		timeline.stop();
 	}
 
-	public void stopGame() {
-		timeline.stop();
-	}
 
 	protected UserPlane getUser() {
 		return user;
