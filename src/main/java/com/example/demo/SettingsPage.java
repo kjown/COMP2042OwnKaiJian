@@ -7,7 +7,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -38,9 +37,26 @@ public class SettingsPage {
         Button backButton = createTextButton("Back", customFontSettings);
         backButton.setOnAction(e -> goBackToStartMenu());
 
-        // Toggle button for sound with custom font
+        // Create controls button
+        Button controlsButton = createTextButton("Controls", customFontSettings);
+        controlsButton.setOnAction(e -> goToControlsPage());
+
+        // Toggle button for sound
+        ToggleButton soundToggle = createSoundToggle(customFontSettings);
+        addToggleButtonHoverEffects(soundToggle); // Add hover effects for the toggle button
+
+        VBox layout = new VBox(20, settingsTitle, soundToggle, controlsButton, backButton);
+        layout.setAlignment(Pos.CENTER);
+        layout.setPadding(new Insets(20));
+        layout.setBackground(new Background(new BackgroundFill(Color.BLACK, null, null)));
+
+        Scene settingsScene = new Scene(layout, screenWidth, screenHeight);
+        stage.setScene(settingsScene);
+    }
+
+    private ToggleButton createSoundToggle(Font customFont) {
         ToggleButton soundToggle = new ToggleButton("Sound: ON");
-        soundToggle.setFont(customFontSettings);
+        soundToggle.setFont(customFont);
         soundToggle.setStyle("-fx-background-color: transparent; -fx-text-fill: linear-gradient(from 0% 0% to 0% 100%, #FF00FF, #00FFFF, #FF00FF); -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 3, 0.0, 2, 2);");
         soundToggle.setSelected(true);
         soundToggle.setOnAction(e -> {
@@ -50,24 +66,14 @@ public class SettingsPage {
                 soundToggle.setText("Sound: OFF");
             }
         });
-
-        // Add hover effects
-        addHoverEffects(backButton);
-        addToggleButtonHoverEffects(soundToggle);
-
-        VBox layout = new VBox(20, settingsTitle, soundToggle, backButton);
-        layout.setAlignment(Pos.CENTER);
-        layout.setPadding(new Insets(20));
-        layout.setBackground(new Background(new BackgroundFill(javafx.scene.paint.Color.BLACK, null, null)));
-
-        Scene settingsScene = new Scene(layout, screenWidth, screenHeight);
-        stage.setScene(settingsScene);
+        return soundToggle;
     }
 
     private Button createTextButton(String text, Font font) {
         Button button = new Button(text);
         button.setFont(font);
         button.setStyle("-fx-background-color: transparent; -fx-text-fill: linear-gradient(from 0% 0% to 0% 100%, #FF00FF, #00FFFF, #FF00FF); -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 3, 0.0, 2, 2);");
+        addHoverEffects(button); // Add hover effects to regular buttons
         return button;
     }
 
@@ -90,27 +96,32 @@ public class SettingsPage {
         });
     }
 
-    private void addToggleButtonHoverEffects(ToggleButton button) {
-        button.setOnMouseEntered(e -> {
-            button.setStyle("-fx-background-color: transparent; -fx-text-fill: linear-gradient(from 0% 0% to 0% 100%, #00FFFF, #FF00FF, #00FFFF); -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 3, 0.0, 2, 2);");
-            button.setOpacity(0.8);
+    private void addToggleButtonHoverEffects(ToggleButton toggleButton) {
+        toggleButton.setOnMouseEntered(e -> {
+            toggleButton.setStyle("-fx-background-color: transparent; -fx-text-fill: linear-gradient(from 0% 0% to 0% 100%, #00FFFF, #FF00FF, #00FFFF); -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 3, 0.0, 2, 2);");
+            toggleButton.setOpacity(0.8);
         });
-        button.setOnMouseExited(e -> {
-            button.setStyle("-fx-background-color: transparent; -fx-text-fill: linear-gradient(from 0% 0% to 0% 100%, #FF00FF, #00FFFF, #FF00FF); -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 3, 0.0, 2, 2);");
-            button.setOpacity(1.0);
+        toggleButton.setOnMouseExited(e -> {
+            toggleButton.setStyle("-fx-background-color: transparent; -fx-text-fill: linear-gradient(from 0% 0% to 0% 100%, #FF00FF, #00FFFF, #FF00FF); -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 3, 0.0, 2, 2);");
+            toggleButton.setOpacity(1.0);
         });
-        button.setOnMousePressed(e -> {
-            button.setScaleX(0.95);
-            button.setScaleY(0.95);
+        toggleButton.setOnMousePressed(e -> {
+            toggleButton.setScaleX(0.95);
+            toggleButton.setScaleY(0.95);
         });
-        button.setOnMouseReleased(e -> {
-            button.setScaleX(1.0);
-            button.setScaleY(1.0);
+        toggleButton.setOnMouseReleased(e -> {
+            toggleButton.setScaleX(1.0);
+            toggleButton.setScaleY(1.0);
         });
     }
 
     private void goBackToStartMenu() {
         StartMenu startMenu = new StartMenu(stage, screenWidth, screenHeight, controller);
         startMenu.show();
+    }
+
+    private void goToControlsPage() {
+        ControlsPage controlsPage = new ControlsPage(stage, screenWidth, screenHeight, controller);
+        controlsPage.show();
     }
 }
