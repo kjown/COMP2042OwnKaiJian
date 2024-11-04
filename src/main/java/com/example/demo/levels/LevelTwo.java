@@ -10,13 +10,13 @@ public class LevelTwo extends LevelParent {
 
 	private static final String BACKGROUND_IMAGE_NAME = "/com/example/demo/images/background2.jpg";
 	private static final int PLAYER_INITIAL_HEALTH = 5;
-	private final Boss boss;
+	private Boss boss;
 	private LevelViewLevelTwo levelView;
 
 	public LevelTwo(double screenHeight, double screenWidth, Controller controller, Stage stage) {
 		super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH, controller, stage);
 		System.out.print("LevelTwo constructor called with height: " + screenHeight + " and width: " + screenWidth);
-		boss = new Boss();
+		boss = new Boss(this.levelView);
 		System.out.println("Boss initialised: " + boss);
 	}
 
@@ -43,6 +43,7 @@ public class LevelTwo extends LevelParent {
 	@Override
 	protected void spawnEnemyUnits() {
 		if (getCurrentNumberOfEnemies() == 0) {
+			boss = new Boss(this.levelView);
 			addEnemyUnit(boss);
 		}
 	}
@@ -50,9 +51,9 @@ public class LevelTwo extends LevelParent {
 	@Override
 	protected LevelView instantiateLevelView() {
 		System.out.println("Instantiating LevelViewLevelTwo");
-		levelView = new LevelViewLevelTwo(getRoot(), PLAYER_INITIAL_HEALTH);
+		this.levelView = new LevelViewLevelTwo(getRoot(), PLAYER_INITIAL_HEALTH);
 		System.out.println("LevelViewLevelTwo instantiated: " + levelView);
-		return levelView;
+		return this.levelView;
 	}
 
 }
