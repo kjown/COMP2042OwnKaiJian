@@ -30,10 +30,10 @@ public class LevelTwo extends LevelParent {
 		System.out.println("Checking game over conditions...");
 		if (userIsDestroyed()) {
 			System.out.println("User is destroyed. Losing game.");
-			loseGame();
+			gameStatus(GameStatus.LOSE);
 		} else if (boss.isDestroyed()) {
 			System.out.println("Boss is destroyed. Winning game.");
-			winGame();
+			gameStatus(GameStatus.WIN);
 		} else {
 			System.out.println("Game continues...");
 		}

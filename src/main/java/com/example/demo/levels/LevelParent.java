@@ -17,6 +17,7 @@ import javafx.scene.image.*;
 import javafx.stage.Stage;
 import javafx.scene.input.*;
 import javafx.util.Duration;
+import javafx.scene.text.Text;
 
 public abstract class LevelParent extends Observable {
 
@@ -39,6 +40,13 @@ public abstract class LevelParent extends Observable {
 
 	private int currentNumberOfEnemies;
 	private LevelView levelView;
+
+	private int score;
+	private Text scoreText;
+
+	public enum GameStatus {
+		WIN, LOSE
+	}
 
 	private final Controller controller;
 	private final Stage stage;
@@ -65,6 +73,13 @@ public abstract class LevelParent extends Observable {
 
 		initializeTimeline();
 		friendlyUnits.add(user);
+
+		score = 0;
+		scoreText = new Text("Score: " + score);
+		scoreText.setStyle("-fx-font-size: 20px; -fx-fill: white;");
+		scoreText.setTranslateX(10);
+		scoreText.setTranslateY(20);
+		root.getChildren().add(scoreText);
 	}
 
 	protected abstract void initializeFriendlyUnits();
@@ -210,8 +225,10 @@ public abstract class LevelParent extends Observable {
 	}
 
 	private void updateKillCount() {
-		for (int i = 0; i < currentNumberOfEnemies - enemyUnits.size(); i++) {
+		int kills = currentNumberOfEnemies - enemyUnits.size();
+		for (int i = 0; i < kills; i++) {
 			user.incrementKillCount();
+			updateScore(100); // Add points for each kill
 		}
 	}
 
@@ -219,19 +236,20 @@ public abstract class LevelParent extends Observable {
 		return Math.abs(enemy.getTranslateX()) > screenWidth;
 	}
 
-	protected void winGame() {
+	protected void gameStatus(GameStatus results) {
 		timeline.stop();
-		levelView.showWinImage();
+
+		switch (results) {
+			case WIN:
+				levelView.showWinImage();
+				break;
+			case LOSE:
+				// Show EndMenu
+				EndMenu endMenu = new EndMenu(stage, (int) screenWidth, (int) screenHeight, controller, score);
+				endMenu.show();
+		}
 	}
 
-	protected void loseGame() {
-		timeline.stop();
-//		levelView.showGameOverImage();
-
-		// Show EndMenu
-		EndMenu endMenu = new EndMenu(stage, (int) screenWidth, (int) screenHeight, controller);
-		endMenu.show();
-	}
 	public void stopGame() {
 		timeline.stop();
 	}
@@ -276,5 +294,10 @@ public abstract class LevelParent extends Observable {
 
 	public Stage getStage() {
 		return stage;
+	}
+
+	protected void updateScore(int points) {
+		score += points;
+		scoreText.setText("Score: " + score);
 	}
 }

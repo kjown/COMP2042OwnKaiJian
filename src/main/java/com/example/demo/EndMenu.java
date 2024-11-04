@@ -8,19 +8,20 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import com.example.demo.controller.Controller;
-import com.example.demo.StartMenu;
 
 public class EndMenu {
     private final Stage stage;
     private final int screenWidth;
     private final int screenHeight;
     private Controller controller;
+    private int score;
 
-    public EndMenu(Stage stage, int screenWidth, int screenHeight, Controller controller) {
+    public EndMenu(Stage stage, int screenWidth, int screenHeight, Controller controller, int score) {
         this.stage = stage;
         this.screenWidth = screenWidth;
         this.screenHeight = screenHeight;
         this.controller = controller;
+        this.score = score;
     }
 
     public void show() {
@@ -30,6 +31,10 @@ public class EndMenu {
         Font retroFont = Font.loadFont(getClass().getResourceAsStream("/com/example/demo/fonts/PressStart2P-Regular.ttf"), 50);
         title.setFont(retroFont);
 
+        Text scoreText = new Text("Score: " + score);
+        scoreText.setFont(retroFont);
+        scoreText.setStyle("-fx-font-size: 20px; -fx-fill: white;");
+
         Button menuButton = createStyledButton("Main Menu", retroFont);
         Button restartButton = createStyledButton("Restart", retroFont);
         Button exitButton = createStyledButton("Exit", retroFont);
@@ -38,7 +43,7 @@ public class EndMenu {
         restartButton.setOnAction(e -> restartGame());
         exitButton.setOnAction(e -> stage.close());
 
-        VBox layout = new VBox(20, title, menuButton, restartButton, exitButton);
+        VBox layout = new VBox(20, title, scoreText, menuButton, restartButton, exitButton);
         layout.setAlignment(Pos.CENTER);
         layout.setBackground(new Background(new BackgroundFill(javafx.scene.paint.Color.BLACK, null, null)));
 
