@@ -75,10 +75,12 @@ public class StartMenu {
 
     private void addHoverEffects(Button button) {
         button.setOnMouseEntered(e -> {
+            button.setText("> " + button.getText());
             button.setStyle("-fx-background-color: transparent; -fx-text-fill: linear-gradient(from 0% 0% to 0% 100%, #00FFFF, #FF00FF, #00FFFF); -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 3, 0.0, 2, 2);");
             button.setOpacity(0.8);
         });
         button.setOnMouseExited(e -> {
+            button.setText(button.getText().substring(2));
             button.setStyle("-fx-background-color: transparent; -fx-text-fill: linear-gradient(from 0% 0% to 0% 100%, #FF00FF, #00FFFF, #FF00FF); -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 3, 0.0, 2, 2);");
             button.setOpacity(1.0);
         });
