@@ -13,7 +13,7 @@ public class Main extends Application {
 	public void start(Stage stage) {
 		stage.setTitle("Sky Battle"); // Set the title of the window
 
-		controller = new Controller(stage);
+		controller = new Controller(stage, SCREEN_WIDTH, SCREEN_HEIGHT);
 
 		// Create and display the StartMenu
 		StartMenu startMenu = new StartMenu(stage, SCREEN_WIDTH, SCREEN_HEIGHT, controller);
