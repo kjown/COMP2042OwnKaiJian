@@ -4,6 +4,7 @@ import java.lang.reflect.Constructor;
 import java.util.Observable;
 import java.util.Observer;
 
+import com.example.demo.StartMenu;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -12,13 +13,18 @@ import com.example.demo.levels.LevelParent;
 
 public class Controller implements Observer {
 
-	private static final String LEVEL_ONE_CLASS_NAME = "com.example.demo.levels.LevelOne";
+	public static final String LEVEL_ONE_CLASS_NAME = "com.example.demo.levels.LevelOne";
 	private final Stage stage;
 	private LevelParent currentLevel;
 	private boolean isLoadingLevel = false;
+	private final int screenWidth;
+	private final int screenHeight;
 
-	public Controller(Stage stage) {
+	public Controller(Stage stage, int screenWidth, int screenHeight) {
 		this.stage = stage;
+		this.screenWidth = screenWidth;
+		this.screenHeight = screenHeight;
+
 		System.out.println("Controller initialized");
 	}
 
@@ -34,7 +40,7 @@ public class Controller implements Observer {
 		}
 	}
 
-	private void goToLevel(String className) {
+	public void goToLevel(String className) {
 		if (isLoadingLevel) {
 			System.out.println("Already loading a level, skipping: " + className);
 			return;
@@ -52,8 +58,8 @@ public class Controller implements Observer {
 
 			// Load and instantiate the new level
 			Class<?> levelClass = Class.forName(className);
-			Constructor<?> constructor = levelClass.getConstructor(double.class, double.class);
-			LevelParent newLevel = (LevelParent) constructor.newInstance(stage.getHeight(), stage.getWidth());
+			Constructor<?> constructor = levelClass.getConstructor(double.class, double.class, Controller.class, Stage.class);
+			LevelParent newLevel = (LevelParent) constructor.newInstance(stage.getHeight(), stage.getWidth(), this, stage);
 
 			// Set up the new level
 			newLevel.addObserver(this);
@@ -87,5 +93,10 @@ public class Controller implements Observer {
 		alert.setHeaderText(message);
 		alert.setContentText(e.toString());
 		alert.showAndWait();
+	}
+
+	public void goToMainMenu() {
+		StartMenu startMenu = new StartMenu(stage, screenWidth, screenHeight, this);
+		startMenu.show();
 	}
 }

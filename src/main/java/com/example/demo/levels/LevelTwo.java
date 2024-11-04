@@ -3,6 +3,8 @@ package com.example.demo.levels;
 import com.example.demo.view.LevelView;
 import com.example.demo.view.LevelViewLevelTwo;
 import com.example.demo.actors.Boss;
+import com.example.demo.controller.Controller;
+import javafx.stage.Stage;
 
 public class LevelTwo extends LevelParent {
 
@@ -11,8 +13,8 @@ public class LevelTwo extends LevelParent {
 	private final Boss boss;
 	private LevelViewLevelTwo levelView;
 
-	public LevelTwo(double screenHeight, double screenWidth) {
-		super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH);
+	public LevelTwo(double screenHeight, double screenWidth, Controller controller, Stage stage) {
+		super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH, controller, stage);
 		System.out.print("LevelTwo constructor called with height: " + screenHeight + " and width: " + screenWidth);
 		boss = new Boss();
 		System.out.println("Boss initialised: " + boss);

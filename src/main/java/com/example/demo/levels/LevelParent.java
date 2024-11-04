@@ -3,6 +3,8 @@ package com.example.demo.levels;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import com.example.demo.EndMenu;
+import com.example.demo.controller.Controller;
 import com.example.demo.view.LevelView;
 import com.example.demo.actors.ActiveActorDestructible;
 import com.example.demo.actors.FighterPlane;
@@ -12,6 +14,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.*;
+import javafx.stage.Stage;
 import javafx.scene.input.*;
 import javafx.util.Duration;
 
@@ -33,11 +36,14 @@ public abstract class LevelParent extends Observable {
 	private final List<ActiveActorDestructible> enemyUnits;
 	private final List<ActiveActorDestructible> userProjectiles;
 	private final List<ActiveActorDestructible> enemyProjectiles;
-	
+
 	private int currentNumberOfEnemies;
 	private LevelView levelView;
 
-	public LevelParent(String backgroundImageName, double screenHeight, double screenWidth, int playerInitialHealth) {
+	private final Controller controller;
+	private final Stage stage;
+
+	public LevelParent(String backgroundImageName, double screenHeight, double screenWidth, int playerInitialHealth, Controller controller, Stage stage) {
 		this.root = new Group();
 		this.scene = new Scene(root, screenWidth, screenHeight);
 		this.timeline = new Timeline();
@@ -53,6 +59,10 @@ public abstract class LevelParent extends Observable {
 		this.enemyMaximumYPosition = screenHeight - SCREEN_HEIGHT_ADJUSTMENT;
 		this.levelView = instantiateLevelView();
 		this.currentNumberOfEnemies = 0;
+
+		this.controller = controller;
+		this.stage = stage;
+
 		initializeTimeline();
 		friendlyUnits.add(user);
 	}
@@ -216,7 +226,11 @@ public abstract class LevelParent extends Observable {
 
 	protected void loseGame() {
 		timeline.stop();
-		levelView.showGameOverImage();
+//		levelView.showGameOverImage();
+
+		// Show EndMenu
+		EndMenu endMenu = new EndMenu(stage, (int) screenWidth, (int) screenHeight, controller);
+		endMenu.show();
 	}
 	public void stopGame() {
 		timeline.stop();
@@ -256,4 +270,11 @@ public abstract class LevelParent extends Observable {
 		currentNumberOfEnemies = enemyUnits.size();
 	}
 
+	public Controller getController() {
+		return controller;
+	}
+
+	public Stage getStage() {
+		return stage;
+	}
 }
