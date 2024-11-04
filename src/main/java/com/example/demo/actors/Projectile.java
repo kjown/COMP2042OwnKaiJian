@@ -1,6 +1,7 @@
 package com.example.demo.actors;
 
 import com.example.demo.actors.ActiveActorDestructible;
+import com.example.demo.controller.Main;
 
 public abstract class Projectile extends ActiveActorDestructible {
 	private int health;
@@ -20,6 +21,17 @@ public abstract class Projectile extends ActiveActorDestructible {
 
 	@Override
 	public abstract void updatePosition();
+
+	public void updateActor() {
+		updatePosition();
+		if (outOfBounds()) {
+			this.destroy();
+		}
+	}
+
+	public boolean outOfBounds() {
+		return getTranslateX() > Main.getScreenWidth();
+	}
 
 	private boolean healthAtZero() {
 		return health == 0;
