@@ -231,6 +231,11 @@ public abstract class LevelParent extends Observable {
 	protected void winGame() {
 		timeline.stop();
 		levelView.showWinImage();
+
+		EndMenu endMenu = new EndMenu(stage, (int) screenWidth, (int) screenHeight, controller);
+
+		Scene scene = getRoot().getScene();
+		scene.setOnKeyPressed(event -> endMenu.show());
 	}
 
 	protected void loseGame() {
