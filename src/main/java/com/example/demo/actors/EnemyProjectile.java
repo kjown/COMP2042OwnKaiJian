@@ -3,7 +3,7 @@ package com.example.demo.actors;
 public class EnemyProjectile extends Projectile {
 	
 	private static final String IMAGE_NAME = "enemyFire.png";
-	private static final int IMAGE_HEIGHT = 50;
+	private static final int IMAGE_HEIGHT = 30;
 	private static final int HORIZONTAL_VELOCITY = -10;
 	private static final int HEALTH = 1;
 
