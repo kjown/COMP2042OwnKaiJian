@@ -50,6 +50,7 @@ public class EndMenu {
         Button button = new Button(text);
         button.setFont(font);
         button.setStyle("-fx-background-color: transparent; -fx-text-fill: linear-gradient(from 0% 0% to 0% 100%, #FF00FF, #00FFFF, #FF00FF); -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 3, 0.0, 2, 2);");
+        button.setFocusTraversable(false);
         addHoverEffects(button);
         return button;
     }
