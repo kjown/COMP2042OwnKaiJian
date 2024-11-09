@@ -14,13 +14,13 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import com.example.demo.controller.Controller;
 
-public class SettingsPage {
+public class SettingsMenu {
     private final Stage stage;
     private final int screenWidth;
     private final int screenHeight;
     private final Controller controller;
 
-    public SettingsPage(Stage stage, int screenWidth, int screenHeight, Controller controller) {
+    public SettingsMenu(Stage stage, int screenWidth, int screenHeight, Controller controller) {
         this.stage = stage;
         this.screenWidth = screenWidth;
         this.screenHeight = screenHeight;
@@ -123,7 +123,7 @@ public class SettingsPage {
     }
 
     private void goToControlsPage() {
-        ControlsPage controlsPage = new ControlsPage(stage, screenWidth, screenHeight, controller);
-        controlsPage.show();
+        ControlsMenu controlsMenu = new ControlsMenu(stage, screenWidth, screenHeight, controller);
+        controlsMenu.show();
     }
 }

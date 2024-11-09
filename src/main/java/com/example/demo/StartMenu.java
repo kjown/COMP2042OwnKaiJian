@@ -70,8 +70,8 @@ public class StartMenu {
 
     private void showSettings() {
         System.out.println("Showing settings...");
-        SettingsPage settingsPage = new SettingsPage(stage, screenWidth, screenHeight, controller);
-        settingsPage.show();
+        SettingsMenu settingsMenu = new SettingsMenu(stage, screenWidth, screenHeight, controller);
+        settingsMenu.show();
     }
 
     private void addHoverEffects(Button button) {
