@@ -39,7 +39,9 @@ public abstract class LevelParent extends Observable {
 
 	private int currentNumberOfEnemies;
 	private LevelView levelView;
-
+	private boolean isSPaceEnabled= true;
+	private boolean isPause = false;
+	private boolean isESCEnabled= true;
 	private final Controller controller;
 	private final Stage stage;
 
@@ -123,6 +125,7 @@ public abstract class LevelParent extends Observable {
 				if (kc == KeyCode.UP) user.moveUp();
 				if (kc == KeyCode.DOWN) user.moveDown();
 				if (kc == KeyCode.SPACE) fireProjectile();
+				if (kc == KeyCode.ESCAPE && isESCEnabled) pauseLevel();
 			}
 		});
 		background.setOnKeyReleased(new EventHandler<KeyEvent>() {
@@ -220,11 +223,15 @@ public abstract class LevelParent extends Observable {
 	}
 
 	protected void winGame() {
+		isESCEnabled= false;
+		isSPaceEnabled = false;
 		timeline.stop();
 		levelView.showWinImage();
 	}
 
 	protected void loseGame() {
+		isESCEnabled= false;
+		isSPaceEnabled = false;
 		timeline.stop();
 //		levelView.showGameOverImage();
 
@@ -276,5 +283,18 @@ public abstract class LevelParent extends Observable {
 
 	public Stage getStage() {
 		return stage;
+	}
+
+	private void pauseLevel() {
+		if (!isPause) {
+			isPause = true;
+			isSPaceEnabled=false;
+			timeline.pause();
+			levelView.showPauseMenuImage();}
+		else {
+			isPause = false;
+			isSPaceEnabled=true;
+			timeline.play();
+			levelView.hidePauseMenuImage();}
 	}
 }
