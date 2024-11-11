@@ -1,6 +1,7 @@
 module com.example.demo {
     requires javafx.controls;
     requires javafx.fxml;
+    requires javafx.media;
 
     opens com.example.demo to javafx.fxml; // Open the main package
     exports com.example.demo.controller;    // Export the controller package

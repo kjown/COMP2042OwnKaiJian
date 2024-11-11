@@ -9,7 +9,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+
 import com.example.demo.levels.LevelParent;
+
 
 /**
  * Controller class to manage the game flow and transition between levels
@@ -22,6 +26,8 @@ public class Controller implements Observer {
 	private boolean isLoadingLevel = false;
 	private final int screenWidth;
 	private final int screenHeight;
+	private MediaPlayer backgroundMusicPlayer;
+	private MediaPlayer soundEffectPlayer;
 
 	/**
 	 * Constructor for the Controller class with the specified stage, screen width and screen height
@@ -86,6 +92,9 @@ public class Controller implements Observer {
 			stage.setScene(scene);
 			newLevel.startGame();
 
+			// Play background music
+			playBackgroundMusic("/com/example/demo/music/backgroundmusic.mp3");
+
 			// Update the current level reference
 			currentLevel = newLevel;
 		} catch (Exception e) {
@@ -94,6 +103,20 @@ public class Controller implements Observer {
 			showAlert("Error loading level: " + className, e);
 		} finally {
 			isLoadingLevel = false;
+		}
+	}
+
+	/**
+	 * Plays background music from the specified file.
+	 *
+	 * @param musicFile the path to the music file
+	 */
+	public void playBackgroundMusic(String musicFile) {
+		if (backgroundMusicPlayer == null) {
+			Media media = new Media(getClass().getResource(musicFile).toExternalForm());
+			backgroundMusicPlayer = new MediaPlayer(media);
+			backgroundMusicPlayer.setCycleCount(MediaPlayer.INDEFINITE); // Loop the music
+			backgroundMusicPlayer.play();
 		}
 	}
 
