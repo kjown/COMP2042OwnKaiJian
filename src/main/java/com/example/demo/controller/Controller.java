@@ -11,6 +11,9 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import com.example.demo.levels.LevelParent;
 
+/**
+ * Controller class to manage the game flow and transition between levels
+ */
 public class Controller implements Observer {
 
 	public static final String LEVEL_ONE_CLASS_NAME = "com.example.demo.levels.LevelOne";
@@ -20,6 +23,14 @@ public class Controller implements Observer {
 	private final int screenWidth;
 	private final int screenHeight;
 
+	/**
+	 * Constructor for the Controller class with the specified stage, screen width and screen height
+	 *
+	 * @param stage the primary stage for this application, onto which
+	 * the application scene can be set.
+	 * @param screenWidth the width of the screen
+	 * @param screenHeight the height of the screen
+	 */
 	public Controller(Stage stage, int screenWidth, int screenHeight) {
 		this.stage = stage;
 		this.screenWidth = screenWidth;
@@ -28,6 +39,9 @@ public class Controller implements Observer {
 		System.out.println("Controller initialized");
 	}
 
+	/**
+	 * Launch the game by displaying the primary stage and loading the first level
+	 */
 	public void launchGame() {
 		System.out.println("Launching game...");
 		try {
@@ -40,6 +54,11 @@ public class Controller implements Observer {
 		}
 	}
 
+	/**
+	 * Load and display the level with the specified class name
+	 *
+	 * @param className the class name of the level to load
+	 */
 	public void goToLevel(String className) {
 		if (isLoadingLevel) {
 			System.out.println("Already loading a level, skipping: " + className);
@@ -78,6 +97,13 @@ public class Controller implements Observer {
 		}
 	}
 
+	/**
+	 * Updates the observer with the specified observable object and argument
+	 *
+	 * @param observable     the observable object.
+	 * @param arg   an argument passed to the {@code notifyObservers}
+	 *                 method.
+	 */
 	@Override
 	public void update(Observable observable, Object arg) {
 		if (arg instanceof String nextLevelClassName) {
@@ -87,6 +113,12 @@ public class Controller implements Observer {
 		}
 	}
 
+	/**
+	 * Display an alert with the specified message and exception details
+	 *
+	 * @param message the message to display in the alert
+	 * @param e the exception to display in the alert
+	 */
 	private void showAlert(String message, Exception e) {
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle("Error");
@@ -95,6 +127,9 @@ public class Controller implements Observer {
 		alert.showAndWait();
 	}
 
+	/**
+	 * Transitions to the main menu.
+	 */
 	public void goToMainMenu() {
 		StartMenu startMenu = new StartMenu(stage, screenWidth, screenHeight, this);
 		startMenu.show();
