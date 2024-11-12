@@ -1,6 +1,6 @@
 package com.example.demo.actors;
 
-import com.example.demo.view.LevelViewLevelTwo;
+import com.example.demo.view.LevelViewLevelBoss;
 import com.example.demo.view.ShieldImage;
 import java.util.*;
 
@@ -27,10 +27,10 @@ public class Boss extends FighterPlane {
 	private int consecutiveMovesInSameDirection;
 	private int indexOfCurrentMove;
 	private int framesWithShieldActivated;
-	private LevelViewLevelTwo levelView;
+	private LevelViewLevelBoss levelView;
 	private ShieldImage shieldImage;
 
-	public Boss(LevelViewLevelTwo levelView) {
+	public Boss(LevelViewLevelBoss levelView) {
 		super(IMAGE_NAME, IMAGE_HEIGHT, INITIAL_X_POSITION, INITIAL_Y_POSITION, HEALTH);
 		movePattern = new ArrayList<>();
 		consecutiveMovesInSameDirection = 0;

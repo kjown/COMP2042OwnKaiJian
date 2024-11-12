@@ -1,6 +1,6 @@
 package com.example.demo.actors;
 
-public class EnemyPlane extends FighterPlane {
+public class Enemy1 extends FighterPlane {
 
 	private static final String IMAGE_NAME = "enemyplane1.png";
 	private static final int IMAGE_HEIGHT = 50;
@@ -10,7 +10,7 @@ public class EnemyPlane extends FighterPlane {
 	private static final int INITIAL_HEALTH = 1;
 	private static final double FIRE_RATE = .01;
 
-	public EnemyPlane(double initialXPos, double initialYPos) {
+	public Enemy1(double initialXPos, double initialYPos) {
 		super(IMAGE_NAME, IMAGE_HEIGHT, initialXPos, initialYPos, INITIAL_HEALTH);
 	}
 

@@ -3,7 +3,7 @@ package com.example.demo.levels;
 import com.example.demo.controller.Controller;
 import com.example.demo.view.LevelView;
 import com.example.demo.actors.ActiveActorDestructible;
-import com.example.demo.actors.EnemyPlane;
+import com.example.demo.actors.Enemy1;
 import javafx.stage.Stage;
 
 public class LevelOne extends LevelParent {
@@ -40,7 +40,7 @@ public class LevelOne extends LevelParent {
 		for (int i = 0; i < TOTAL_ENEMIES - currentNumberOfEnemies; i++) {
 			if (Math.random() < ENEMY_SPAWN_PROBABILITY) {
 				double newEnemyInitialYPosition = Math.random() * getEnemyMaximumYPosition();
-				ActiveActorDestructible newEnemy = new EnemyPlane(getScreenWidth(), newEnemyInitialYPosition);
+				ActiveActorDestructible newEnemy = new Enemy1(getScreenWidth(), newEnemyInitialYPosition);
 				addEnemyUnit(newEnemy);
 			}
 		}
