@@ -115,7 +115,8 @@ public class Controller implements Observer {
 		if (backgroundMusicPlayer == null) {
 			Media media = new Media(getClass().getResource(musicFile).toExternalForm());
 			backgroundMusicPlayer = new MediaPlayer(media);
-			backgroundMusicPlayer.setCycleCount(MediaPlayer.INDEFINITE); // Loop the music
+			backgroundMusicPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+			backgroundMusicPlayer.setVolume(0.3);
 			backgroundMusicPlayer.play();
 		}
 	}
