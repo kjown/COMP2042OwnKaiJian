@@ -1,10 +1,9 @@
 package com.example.demo;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import com.example.demo.controller.Main;
 
 public class PauseMenu extends ImageView {
-    private static final String IMAGE_NAME = "/com/example/demo/images/pauseMenu.png";
+    private static final String IMAGE_NAME = "/com/example/demo/images/others/pauseMenu.png";
     private static final int WIDTH = 1300;
     private static final int HEIGHT = 300;
     public PauseMenu(double xPosition, double yPosition) {

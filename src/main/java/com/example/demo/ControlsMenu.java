@@ -41,11 +41,11 @@ public class ControlsMenu {
         controlsLayout.getChildren().add(controlsTitle);
 
         // Add control images and instructions
-        addControlInstruction(controlsLayout, "/com/example/demo/images/SPACE.png", "SPACE - Shoot");
-        addControlInstruction(controlsLayout, "/com/example/demo/images/ARROWUP.png", "UP ARROW - Go Up");
-        addControlInstruction(controlsLayout, "/com/example/demo/images/ARROWDOWN.png", "DOWN ARROW - Go Down");
-        addControlInstruction(controlsLayout, "/com/example/demo/images/ARROWLEFT.png", "LEFT ARROW - Go Left");
-        addControlInstruction(controlsLayout, "/com/example/demo/images/ARROWRIGHT.png", "RIGHT ARROW - Go Right");
+        addControlInstruction(controlsLayout, "/com/example/demo/images/buttons/SPACE.png", "SPACE - Shoot");
+        addControlInstruction(controlsLayout, "/com/example/demo/images/buttons/ARROWUP.png", "UP ARROW - Go Up");
+        addControlInstruction(controlsLayout, "/com/example/demo/images/buttons/ARROWDOWN.png", "DOWN ARROW - Go Down");
+        addControlInstruction(controlsLayout, "/com/example/demo/images/buttons/ARROWLEFT.png", "LEFT ARROW - Go Left");
+        addControlInstruction(controlsLayout, "/com/example/demo/images/buttons/ARROWRIGHT.png", "RIGHT ARROW - Go Right");
         addControlInstruction(controlsLayout, "/com/example/demo/images/ESC.png", "ESC - PAUSE");
 
 
