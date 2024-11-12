@@ -235,7 +235,11 @@ public abstract class LevelParent extends Observable {
 		EndMenu endMenu = new EndMenu(stage, (int) screenWidth, (int) screenHeight, controller);
 
 		Scene scene = getRoot().getScene();
-		scene.setOnKeyPressed(event -> endMenu.show());
+		scene.setOnKeyPressed(event -> {
+			if (event.getCode() == KeyCode.ESCAPE) {
+				endMenu.show();
+			}
+		});
 	}
 
 	protected void loseGame() {
