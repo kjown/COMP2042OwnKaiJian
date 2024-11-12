@@ -44,6 +44,10 @@ public class ControlsMenu {
         addControlInstruction(controlsLayout, "/com/example/demo/images/SPACE.png", "SPACE - Shoot");
         addControlInstruction(controlsLayout, "/com/example/demo/images/ARROWUP.png", "UP ARROW - Go Up");
         addControlInstruction(controlsLayout, "/com/example/demo/images/ARROWDOWN.png", "DOWN ARROW - Go Down");
+        addControlInstruction(controlsLayout, "/com/example/demo/images/ARROWLEFT.png", "LEFT ARROW - Go Left");
+        addControlInstruction(controlsLayout, "/com/example/demo/images/ARROWRIGHT.png", "RIGHT ARROW - Go Right");
+        addControlInstruction(controlsLayout, "/com/example/demo/images/ESC.png", "ESC - PAUSE");
+
 
         // Create back button
         Button backButton = createTextButton("Back");
