@@ -1,23 +1,17 @@
 package com.example.demo.controller;
 
+import com.example.demo.controller.AudioManager;
+import com.example.demo.menu.StartMenu;
+import com.example.demo.levels.LevelParent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 import java.lang.reflect.Constructor;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import java.util.Observable;
 import java.util.Observer;
 
-import com.example.demo.menu.StartMenu;
-import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.stage.Stage;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-
-import com.example.demo.levels.LevelParent;
-
-/**
- * Controller class to manage the game flow and transition between levels
- */
-public class Controller implements Observer {
+public class Controller implements Observer{
 
 	public static final String LEVEL_ONE_CLASS_NAME = "com.example.demo.levels.LevelOne";
 	private final Stage stage;
@@ -25,10 +19,8 @@ public class Controller implements Observer {
 	private boolean isLoadingLevel = false;
 	private final int screenWidth;
 	private final int screenHeight;
-	private MediaPlayer backgroundMusicPlayer;
-	private MediaPlayer soundEffectPlayer;
 
-	private boolean isBackgroundMusicOn = true;
+	private final AudioManager audioManager;
 
 	/**
 	 * Constructor for the Controller class with the specified stage, screen width and screen height
@@ -43,6 +35,7 @@ public class Controller implements Observer {
 		this.screenWidth = screenWidth;
 		this.screenHeight = screenHeight;
 
+		this.audioManager = new AudioManager();  // Initialize the AudioManager
 		System.out.println("Controller initialized");
 	}
 
@@ -53,7 +46,7 @@ public class Controller implements Observer {
 		System.out.println("Launching game...");
 		try {
 			// Initialize background music when starting the game
-			initializeBackgroundMusic();
+			audioManager.initializeBackgroundMusic("/com/example/demo/music/backgroundmusic.mp3");
 			stage.show();
 			goToLevel(LEVEL_ONE_CLASS_NAME);
 		} catch (Exception e) {
@@ -106,54 +99,21 @@ public class Controller implements Observer {
 		}
 	}
 
-	/**
-	 * Initialize background music
-	 */
-	private void initializeBackgroundMusic() {
-		if (backgroundMusicPlayer == null) {
-			// Specify the path to the background music file
-			String musicPath = "/com/example/demo/music/backgroundmusic.mp3"; // Update with correct path
-			Media media = new Media(getClass().getResource(musicPath).toExternalForm());
-			backgroundMusicPlayer = new MediaPlayer(media);
-
-			// Set up background music to play in a loop
-			backgroundMusicPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-			backgroundMusicPlayer.setVolume(0.1);  // You can adjust the volume
-
-			// Play the background music
-			if (isBackgroundMusicOn) {
-				backgroundMusicPlayer.play();
-			}
-		}
-	}
-
 	// Getter and Setter for the sound state
 	public boolean isBackgroundMusicOn() {
-		return isBackgroundMusicOn;
+		return audioManager.isBackgroundMusicOn();
 	}
 
 	public void setBackgroundMusicOn(boolean isOn) {
-		isBackgroundMusicOn = isOn;
-		if (isOn) {
-			resumeBackgroundMusic();
-		} else {
-			pauseBackgroundMusic();
-		}
+		audioManager.setBackgroundMusicOn(isOn);
 	}
 
 	public void pauseBackgroundMusic() {
-		if (backgroundMusicPlayer != null && backgroundMusicPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
-			backgroundMusicPlayer.pause();
-		}
+		audioManager.pauseBackgroundMusic();
 	}
 
 	public void resumeBackgroundMusic() {
-		if (backgroundMusicPlayer == null) {
-			initializeBackgroundMusic();  // Initialize music if not already done
-		}
-		if (backgroundMusicPlayer.getStatus() == MediaPlayer.Status.PAUSED || backgroundMusicPlayer.getStatus() == MediaPlayer.Status.STOPPED) {
-			backgroundMusicPlayer.play();
-		}
+		audioManager.resumeBackgroundMusic();
 	}
 
 	/**
@@ -162,7 +122,6 @@ public class Controller implements Observer {
 	 * @param observable the observable object.
 	 * @param arg        an argument passed to the {@code notifyObservers} method.
 	 */
-	@Override
 	public void update(Observable observable, Object arg) {
 		if (arg instanceof String nextLevelClassName) {
 			goToLevel(nextLevelClassName);
