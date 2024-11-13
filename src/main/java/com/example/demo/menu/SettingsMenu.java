@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.menu;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -55,17 +55,29 @@ public class SettingsMenu {
     }
 
     private ToggleButton createSoundToggle(Font customFont) {
-        ToggleButton soundToggle = new ToggleButton("Sound: ON");
+        ToggleButton soundToggle = new ToggleButton();
         soundToggle.setFont(customFont);
         soundToggle.setStyle("-fx-background-color: transparent; -fx-text-fill: linear-gradient(from 0% 0% to 0% 100%, #FF00FF, #00FFFF, #FF00FF); -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 3, 0.0, 2, 2);");
-        soundToggle.setSelected(true);
+
+        // Initialize toggle based on the Controller's sound state
+        if (controller.isBackgroundMusicOn()) {
+            soundToggle.setText("Sound: ON");
+            soundToggle.setSelected(true);
+        } else {
+            soundToggle.setText("Sound: OFF");
+            soundToggle.setSelected(false);
+        }
+
         soundToggle.setOnAction(e -> {
             if (soundToggle.isSelected()) {
                 soundToggle.setText("Sound: ON");
+                controller.setBackgroundMusicOn(true);  // Update sound state
             } else {
                 soundToggle.setText("Sound: OFF");
+                controller.setBackgroundMusicOn(false);  // Update sound state
             }
         });
+
         return soundToggle;
     }
 

@@ -1,9 +1,7 @@
 package com.example.demo.view;
 
-import com.example.demo.PauseMenu;
+import com.example.demo.menu.PauseMenu;
 import javafx.scene.Group;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 
 public class LevelView {
 	

@@ -1,10 +1,9 @@
 package com.example.demo.levels;
 
-import java.security.Key;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import com.example.demo.EndMenu;
+import com.example.demo.menu.EndMenu;
 import com.example.demo.controller.Controller;
 import com.example.demo.view.LevelView;
 import com.example.demo.actors.ActiveActorDestructible;
@@ -308,11 +307,18 @@ public abstract class LevelParent extends Observable {
 			isPause = true;
 			isSPaceEnabled=false;
 			timeline.pause();
-			levelView.showPauseMenuImage();}
+			levelView.showPauseMenuImage();
+			controller.pauseBackgroundMusic();
+		}
+
 		else {
 			isPause = false;
 			isSPaceEnabled=true;
 			timeline.play();
-			levelView.hidePauseMenuImage();}
+			levelView.hidePauseMenuImage();
+			if (controller.isBackgroundMusicOn()) {
+				controller.resumeBackgroundMusic();
+			}
+		}
 	}
 }

@@ -2,7 +2,7 @@ package com.example.demo.controller;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import com.example.demo.StartMenu;
+import com.example.demo.menu.StartMenu;
 
 /**
  * Main class to launch the application "Sky Battle"

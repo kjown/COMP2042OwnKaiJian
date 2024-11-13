@@ -4,7 +4,7 @@ import java.lang.reflect.Constructor;
 import java.util.Observable;
 import java.util.Observer;
 
-import com.example.demo.StartMenu;
+import com.example.demo.menu.StartMenu;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -13,7 +13,6 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
 import com.example.demo.levels.LevelParent;
-
 
 /**
  * Controller class to manage the game flow and transition between levels
@@ -29,11 +28,13 @@ public class Controller implements Observer {
 	private MediaPlayer backgroundMusicPlayer;
 	private MediaPlayer soundEffectPlayer;
 
+	private boolean isBackgroundMusicOn = true;
+
 	/**
 	 * Constructor for the Controller class with the specified stage, screen width and screen height
 	 *
-	 * @param stage the primary stage for this application, onto which
-	 * the application scene can be set.
+	 * @param stage       the primary stage for this application, onto which
+	 *                   the application scene can be set.
 	 * @param screenWidth the width of the screen
 	 * @param screenHeight the height of the screen
 	 */
@@ -51,6 +52,8 @@ public class Controller implements Observer {
 	public void launchGame() {
 		System.out.println("Launching game...");
 		try {
+			// Initialize background music when starting the game
+			initializeBackgroundMusic();
 			stage.show();
 			goToLevel(LEVEL_ONE_CLASS_NAME);
 		} catch (Exception e) {
@@ -92,9 +95,6 @@ public class Controller implements Observer {
 			stage.setScene(scene);
 			newLevel.startGame();
 
-			// Play background music
-			playBackgroundMusic("/com/example/demo/music/backgroundmusic.mp3");
-
 			// Update the current level reference
 			currentLevel = newLevel;
 		} catch (Exception e) {
@@ -107,16 +107,51 @@ public class Controller implements Observer {
 	}
 
 	/**
-	 * Plays background music from the specified file.
-	 *
-	 * @param musicFile the path to the music file
+	 * Initialize background music
 	 */
-	public void playBackgroundMusic(String musicFile) {
+	private void initializeBackgroundMusic() {
 		if (backgroundMusicPlayer == null) {
-			Media media = new Media(getClass().getResource(musicFile).toExternalForm());
+			// Specify the path to the background music file
+			String musicPath = "/com/example/demo/music/backgroundmusic.mp3"; // Update with correct path
+			Media media = new Media(getClass().getResource(musicPath).toExternalForm());
 			backgroundMusicPlayer = new MediaPlayer(media);
+
+			// Set up background music to play in a loop
 			backgroundMusicPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-			backgroundMusicPlayer.setVolume(0.3);
+			backgroundMusicPlayer.setVolume(0.1);  // You can adjust the volume
+
+			// Play the background music
+			if (isBackgroundMusicOn) {
+				backgroundMusicPlayer.play();
+			}
+		}
+	}
+
+	// Getter and Setter for the sound state
+	public boolean isBackgroundMusicOn() {
+		return isBackgroundMusicOn;
+	}
+
+	public void setBackgroundMusicOn(boolean isOn) {
+		isBackgroundMusicOn = isOn;
+		if (isOn) {
+			resumeBackgroundMusic();
+		} else {
+			pauseBackgroundMusic();
+		}
+	}
+
+	public void pauseBackgroundMusic() {
+		if (backgroundMusicPlayer != null && backgroundMusicPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
+			backgroundMusicPlayer.pause();
+		}
+	}
+
+	public void resumeBackgroundMusic() {
+		if (backgroundMusicPlayer == null) {
+			initializeBackgroundMusic();  // Initialize music if not already done
+		}
+		if (backgroundMusicPlayer.getStatus() == MediaPlayer.Status.PAUSED || backgroundMusicPlayer.getStatus() == MediaPlayer.Status.STOPPED) {
 			backgroundMusicPlayer.play();
 		}
 	}
@@ -124,9 +159,8 @@ public class Controller implements Observer {
 	/**
 	 * Updates the observer with the specified observable object and argument
 	 *
-	 * @param observable     the observable object.
-	 * @param arg   an argument passed to the {@code notifyObservers}
-	 *                 method.
+	 * @param observable the observable object.
+	 * @param arg        an argument passed to the {@code notifyObservers} method.
 	 */
 	@Override
 	public void update(Observable observable, Object arg) {
@@ -141,7 +175,7 @@ public class Controller implements Observer {
 	 * Display an alert with the specified message and exception details
 	 *
 	 * @param message the message to display in the alert
-	 * @param e the exception to display in the alert
+	 * @param e       the exception to display in the alert
 	 */
 	private void showAlert(String message, Exception e) {
 		Alert alert = new Alert(AlertType.ERROR);

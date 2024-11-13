@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.menu;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -46,7 +46,7 @@ public class ControlsMenu {
         addControlInstruction(controlsLayout, "/com/example/demo/images/ARROWDOWN.png", "DOWN ARROW - Go Down");
         addControlInstruction(controlsLayout, "/com/example/demo/images/ARROWLEFT.png", "LEFT ARROW - Go Left");
         addControlInstruction(controlsLayout, "/com/example/demo/images/ARROWRIGHT.png", "RIGHT ARROW - Go Right");
-        addControlInstruction(controlsLayout, "/com/example/demo/images/ESC.png", "ESC - PAUSE");
+//        addControlInstruction(controlsLayout, "/com/example/demo/images/ESC.png", "ESC - PAUSE");
 
 
         // Create back button
