@@ -4,6 +4,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import com.example.demo.menu.EndMenu;
+import com.example.demo.actors.Helicopter;
 import com.example.demo.controller.Controller;
 import com.example.demo.view.LevelView;
 import com.example.demo.actors.ActiveActorDestructible;
@@ -148,8 +149,15 @@ public abstract class LevelParent extends Observable {
 	}
 
 	private void generateEnemyFire() {
-		enemyUnits.forEach(enemy -> spawnEnemyProjectile(((FighterPlane) enemy).fireProjectile()));
-	}
+		enemyUnits.forEach(enemy -> {
+			if (enemy instanceof FighterPlane) {
+				ActiveActorDestructible projectile = ((FighterPlane) enemy).fireProjectile();
+				spawnEnemyProjectile(projectile);
+			} else if (enemy instanceof Helicopter) {
+				ActiveActorDestructible projectile = ((Helicopter) enemy).fireProjectile();
+				spawnEnemyProjectile(projectile);
+			}
+		});	}
 
 	private void spawnEnemyProjectile(ActiveActorDestructible projectile) {
 		if (projectile != null) {
