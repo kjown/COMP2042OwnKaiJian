@@ -1,4 +1,3 @@
-// LevelViewLevelTwo.java
 package com.example.demo.view;
 
 import javafx.scene.Group;
