@@ -39,7 +39,7 @@ public class LevelOne extends LevelParent {
 		int currentNumberOfEnemies = getCurrentNumberOfEnemies();
 		for (int i = 0; i < TOTAL_ENEMIES - currentNumberOfEnemies; i++) {
 			if (Math.random() < ENEMY_SPAWN_PROBABILITY) {
-				double newEnemyInitialYPosition = Math.random() * getEnemyMaximumYPosition();
+				double newEnemyInitialYPosition = Math.random() * getEnemyMaxYPosition();
 				ActiveActorDestructible newEnemy = new EnemyPlane(getScreenWidth(), newEnemyInitialYPosition);
 				addEnemyUnit(newEnemy);
 			}
