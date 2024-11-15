@@ -17,7 +17,7 @@ public class LevelView {
 	private static final int SCREEN_HEIGHT = 750;
 	private final Group root;
 	private final WinImage winImage;
-	private final GameOverImage gameOverImage;
+//	private final GameOverImage gameOverImage;
 	private final HeartDisplay heartDisplay;
 	private final PauseMenu pauseMenu;
 
@@ -25,7 +25,7 @@ public class LevelView {
 		this.root = root;
 		this.heartDisplay = new HeartDisplay(HEART_DISPLAY_X_POSITION, HEART_DISPLAY_Y_POSITION, heartsToDisplay);
 		this.winImage = new WinImage(WIN_IMAGE_X_POSITION, WIN_IMAGE_Y_POSITION);
-		this.gameOverImage = new GameOverImage(LOSS_SCREEN_X_POSITION, LOSS_SCREEN_Y_POSISITION);
+//		this.gameOverImage = new GameOverImage(LOSS_SCREEN_X_POSITION, LOSS_SCREEN_Y_POSISITION);
 		this.pauseMenu = new PauseMenu(IMAGE_X_POSITION, IMAGE_Y_POSITION);
 	}
 	
