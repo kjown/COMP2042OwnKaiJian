@@ -24,7 +24,7 @@ public class Enemy1 extends FighterPlane {
 		if (Math.random() < FIRE_RATE) {
 			double projectileXPosition = getProjectileXPosition(PROJECTILE_X_POSITION_OFFSET);
 			double projectileYPostion = getProjectileYPosition(PROJECTILE_Y_POSITION_OFFSET);
-			return new EnemyProjectile(projectileXPosition, projectileYPostion);
+			return new EnemyRocketProjectile(projectileXPosition, projectileYPostion);
 		}
 		return null;
 	}
