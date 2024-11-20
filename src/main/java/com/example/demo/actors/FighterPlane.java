@@ -1,6 +1,7 @@
 package com.example.demo.actors;
 
 import com.example.demo.actors.ActiveActorDestructible;
+import com.example.demo.controller.AudioManager;
 
 public abstract class FighterPlane extends ActiveActorDestructible {
 
@@ -16,6 +17,9 @@ public abstract class FighterPlane extends ActiveActorDestructible {
 	@Override
 	public void takeDamage() {
 		health--;
+		// Play hit marker sound
+		AudioManager.getInstance().playSoundEffect("/com/example/demo/music/hitmarker.mp3");
+
 		if (healthAtZero()) {
 			this.destroy();
 		}

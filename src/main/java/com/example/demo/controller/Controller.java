@@ -35,7 +35,7 @@ public class Controller implements Observer{
 		this.screenWidth = screenWidth;
 		this.screenHeight = screenHeight;
 
-		this.audioManager = new AudioManager();  // Initialize the AudioManager
+		this.audioManager = AudioManager.getInstance();
 		System.out.println("Controller initialized");
 	}
 

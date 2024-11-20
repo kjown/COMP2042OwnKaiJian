@@ -5,30 +5,50 @@ import javafx.scene.media.MediaPlayer;
 
 public class AudioManager {
 
+    private static AudioManager instance;
+
     private MediaPlayer backgroundMusicPlayer;
     private MediaPlayer soundEffectPlayer;
 
     private boolean isBackgroundMusicOn = true;
 
-    /**
-     * Initialize background music.
-     *
-     * @param musicPath the path to the music file
-     */
+    // Private constructor to prevent direct instantiation
+    private AudioManager() {}
+
+    // Public method to provide a single instance
+    public static AudioManager getInstance() {
+        if (instance == null) {
+            synchronized (AudioManager.class) {
+                if (instance == null) {
+                    instance = new AudioManager();
+                }
+            }
+        }
+        return instance;
+    }
+
     public void initializeBackgroundMusic(String musicPath) {
         if (backgroundMusicPlayer == null) {
             Media media = new Media(getClass().getResource(musicPath).toExternalForm());
             backgroundMusicPlayer = new MediaPlayer(media);
-
-            // Set up background music to play in a loop
             backgroundMusicPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-            backgroundMusicPlayer.setVolume(0.1);  // Adjust volume here
-
-            // Play the background music if enabled
+            backgroundMusicPlayer.setVolume(0.1);
             if (isBackgroundMusicOn) {
                 backgroundMusicPlayer.play();
             }
         }
+    }
+
+    public void playSoundEffect(String soundPath) {
+        if (soundEffectPlayer != null) {
+            soundEffectPlayer.stop();
+        }
+        Media media = new Media(getClass().getResource(soundPath).toExternalForm());
+        soundEffectPlayer = new MediaPlayer(media);
+
+        soundEffectPlayer.setVolume(0.2);
+
+        soundEffectPlayer.play();
     }
 
     /**
@@ -76,17 +96,4 @@ public class AudioManager {
         return isBackgroundMusicOn;
     }
 
-    /**
-     * Play a sound effect.
-     *
-     * @param soundPath the path to the sound effect file
-     */
-    public void playSoundEffect(String soundPath) {
-        if (soundEffectPlayer != null) {
-            soundEffectPlayer.stop();
-        }
-        Media media = new Media(getClass().getResource(soundPath).toExternalForm());
-        soundEffectPlayer = new MediaPlayer(media);
-        soundEffectPlayer.play();
-    }
 }
