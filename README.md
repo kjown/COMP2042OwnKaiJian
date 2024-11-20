@@ -32,6 +32,7 @@ Ensure you have added JavaFX library in your IDE
 - Utilised helper methods to handle creation of UI elements like `createTitleText` and `createStyledButton`.
 - Centralised font loading logic with `loadFont` method.
 - Lambda expressions for simplified button action assignments.
+- 
 #### Settings Menu
 - `SettingsMenu` implemented with `Sound ON/OFF` toggler to turn on or off background music, `Controls` button to show the controls of the game and `Back` button to return to `StartMenu`.
 - Used lambdas for cleaner action assignments.
@@ -58,6 +59,19 @@ Ensure you have added JavaFX library in your IDE
 
 
 ### **Game Flow**
+#### Start Menu
+#### Level 1
+
+#### Level 2
+
+#### Level 3
+
+#### Level 4
+
+#### Level 5 (Boss Level)
+
+#### End Menu
+
 
 ### **Game Scene Management**
 - **Dynamic Background**: Each level has different background image to suit the theme of the level.
@@ -66,7 +80,9 @@ Ensure you have added JavaFX library in your IDE
   - `EndMenu` is displayed when the player loses all their lives.
 
 ### **Sound and Music Control**
-- `AudioManager` class implemented to control the background music and sound effects in the game. `AudioManager` class has methods to control the music and sound effects in the game. TODO!
+#### AudioManager.java
+- `AudioManager` class implemented to control the background music and sound effects in the game. `AudioManager` class has methods to control the music and sound effects in the game.
+-  `Singleton` pattern is used to ensure only one instance of the `AudioManager` class is created.
 - Background music plays throughout the game and can be toggled on or off in the `SettingsMenu`.
 - Background music stops when PauseMenu is displayed and resumes when the game is unpaused.
 
