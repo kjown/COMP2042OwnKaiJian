@@ -1,5 +1,6 @@
 package com.example.demo.actors;
 
+import com.example.demo.view.HealthBar;
 import com.example.demo.view.LevelViewLevelBoss;
 import com.example.demo.view.ShieldImage;
 
@@ -84,6 +85,8 @@ public class Boss extends FighterPlane {
 
 	/** The shield image representing the Boss's shield. */
 	private final ShieldImage shieldImage;
+	/** Health bar for the Boss. */
+	private final HealthBar healthBar;
 
 	/**
 	 * Constructs a new Boss object with a specific level view.
@@ -99,6 +102,9 @@ public class Boss extends FighterPlane {
 		initializeFields();
 		initializeMovePattern();
 		addShieldToScene();
+
+		this.healthBar = new HealthBar(INITIAL_X_POSITION, INITIAL_Y_POSITION - 20, HEALTH);
+		this.healthBar.addToScene(levelView.getRoot());
 	}
 
 	/**
@@ -149,6 +155,7 @@ public class Boss extends FighterPlane {
 			}
 		} else {
 			super.takeDamage();
+			healthBar.updateHealth(getHealth(), HEALTH);
 		}
 	}
 
@@ -288,6 +295,8 @@ public class Boss extends FighterPlane {
 	 */
 	private void updateShieldPosition() {
 		shieldImage.setPosition(getLayoutX() + getTranslateX() + SHIELD_OFFSET_X, getLayoutY() + getTranslateY() + SHIELD_OFFSET_Y);
+		healthBar.updatePosition(getLayoutX() + getTranslateX(), getLayoutY() + getTranslateY() - 20);
+
 	}
 
 	/**
