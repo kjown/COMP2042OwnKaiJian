@@ -27,15 +27,26 @@ Ensure you have added JavaFX library in your IDE
 - Added horizontal movement for the player using `LEFT` and `RIGHT` arrow keys in `UserPlane` class.
 
 ### **Menus and User Interface**
+#### Start Menu
 - `StartMenu` implemented with `Start`, `Settings` and `Exit` buttons with `startGame()` and `showSettings()` methods for `Start` and `Settings` button, while `Exit` button exits the game. All buttons have hovering effects to improve user experience.
+- Utilised helper methods to handle creation of UI elements like `createTitleText` and `createStyledButton`.
+- Centralised font loading logic with `loadFont` method.
+- Lambda expressions for simplified button action assignments.
+#### Settings Menu
 - `SettingsMenu` implemented with `Sound ON/OFF` toggler to turn on or off background music, `Controls` button to show the controls of the game and `Back` button to return to `StartMenu`.
-- `ControlsMenu` implemented with `Back` button to return to `SettingsMenu`. `ControsMenu` shows all controls user are able to use when playing the game. 
-- `PauseMenu` implemented pause functionality using `ESC` key to pause when playing the game.
-- `EndMenu` implemented with `Main Menu`, `Restart` and `Exit` buttons with `showMainMenu()` and `restartGame()` methods as well as exiting the game when `Exit` is pressed. All buttons have hovering effects to improve user experience.
+- Used lambdas for cleaner action assignments.
 
+#### Controls Menu
+- `ControlsMenu` implemented with `Back` button to return to `SettingsMenu`. `ControsMenu` shows all controls user are able to use when playing the game. 
+- Encapsulated logic for creating the layout and adding elements like images and instructions.
+#### Pause Menu
+- `PauseMenu` implemented pause functionality using `ESC` key to pause when playing the game.
+#### End Menu
+- `EndMenu` implemented with `Main Menu`, `Restart` and `Exit` buttons with `showMainMenu()` and `restartGame()` methods as well as exiting the game when `Exit` is pressed. All buttons have hovering effects to improve user experience.
+- Encapsulated the game restart and main menu navigation logic in separate methods for clarity.
 
 ### **Game Mechanics**
-- `Projectiles` from enemies is destroyable by user with their own respective health values.
+- `Projectiles` from enemies is now destroyable by user with their own respective health values.
 - `Projectiles` are destroyed when Out of Bounds.
 - `Boss` now has shield with its own health value and spawn probability to protect the boss.
 - `Boss` now displays its own `HealthBar` to show the health of the boss.
@@ -89,9 +100,20 @@ Ensure you have added JavaFX library in your IDE
 
 
 ## Modified Java Classes
+### Controller.java
+- Getter and setter methods for sound effect related methods such as `isBackgroundMusicOn`, `setBackgroundMusicOn`, `pauseBackgroundMusic`, `playBackgroundMusic` and `resumeBackgroundMusic` to provide controlled access to the `AudioManager` class.
+- Encapsulated level transition logic in `goToLevel`. 
+- Smaller, more focused methods for better readability and maintainability. For example, the `launchGame` method is focused on starting the game, leaving the background music initialization to its own method.
+- `Observer pattern` utilized to manage level transitions, reducing coupling between controller and level classes.
+- `Reflection` was used for dynamic instantiation of levels, making it easier to scale the game with minimal changes.
+- Centralized error handling with dedicated `showAlert` method, which is used in both `launchGame` and `goToLevel` methods. This reduces duplication and improves maintainability of the code.
+- Whenever error occurs, the exception is logged with e.printStackTrace() and a user-friendly alert is shown with the exception details to make debugging easier.
+
 ### LevelParent.java
 - added handleProjectileCollision() method to handle projectile collision with actors.
 -  
+
+### Enemy1.java
 
 ### Boss.java
 - Added `addShieldToScene()` method to add shield to the scene.
