@@ -6,7 +6,7 @@ import com.example.demo.controller.Controller;
 import com.example.demo.view.LevelView;
 import javafx.stage.Stage;
 
-public class Level2 extends LevelParent {
+public class LevelTwo extends LevelParent {
     private static final String BACKGROUND_IMAGE_NAME = "/com/example/demo/images/background2.png";
     private static final String NEXT_LEVEL = "com.example.demo.levels.LevelThree";
     private static final int TOTAL_ENEMIES = 5;
@@ -14,7 +14,7 @@ public class Level2 extends LevelParent {
     private static final double ENEMY_SPAWN_PROBABILITY = .2;
     private static final int PLAYER_INITIAL_HEALTH = 5;
 
-    public Level2(double screenHeight, double screenWidth, Controller controller, Stage stage) {
+    public LevelTwo(double screenHeight, double screenWidth, Controller controller, Stage stage) {
         super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, 5, controller, stage);
         System.out.println("LevelTwo constructor called with height: " + screenHeight + " and width: " + screenWidth);
     }
