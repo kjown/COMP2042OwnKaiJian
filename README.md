@@ -38,6 +38,7 @@ Ensure you have added JavaFX library in your IDE
 - `Projectiles` from enemies is destroyable by user with their own respective health values.
 - `Projectiles` are destroyed when Out of Bounds.
 - `Boss` now has shield with its own health value and spawn probability to protect the boss.
+- `Boss` now displays its own `HealthBar` to show the health of the boss.
 - `Enemy2` has its own movement pattern and projectile characteristics.
 - `Enemy3` has its own movement pattern and projectile characteristics.
 - Enemy Spawning logic is changed to spawn enemies in a more random and efficient manner.
