@@ -1,5 +1,10 @@
 package com.example.demo.actors;
 
+import javafx.animation.TranslateTransition;
+import javafx.application.Platform;
+import javafx.scene.layout.Pane;
+import javafx.util.Duration;
+
 public class UserPlane extends FighterPlane {
 
 	private static final String IMAGE_NAME = "userplane.png";
@@ -21,7 +26,68 @@ public class UserPlane extends FighterPlane {
 		verticalVelocityMultiplier = 0;
 		horizontalVelocityMultiplier = 0;
 	}
-	
+
+	@Override
+	public void takeDamage() {
+		super.takeDamage();  // Call to parent method for damage logic
+
+		// Apply the screen shake effect after damage
+		Platform.runLater(() -> {
+			javafx.scene.Node rootNode = getSceneRootNode();  // Assuming this method correctly gets the root node
+			if (rootNode != null) {
+				shakeScreen(rootNode);  // Trigger screen shake
+			}
+		});
+	}
+
+	private void shakeScreen(javafx.scene.Node rootNode) {
+		// Ensure that the rootNode is an instance of a node that can be translated
+		if (rootNode != null) {
+			final double SHAKE_DISTANCE = 10.0;  // Maximum shake distance
+			final int SHAKE_TIMES = 5;           // Number of shake iterations
+			final int SHAKE_DURATION_MS = 100;   // Duration per shake
+			final double INITIAL_X = rootNode.getTranslateX();
+			final double INITIAL_Y = rootNode.getTranslateY();
+
+			// Create the shake effect
+			TranslateTransition[] shakes = new TranslateTransition[SHAKE_TIMES];
+			for (int i = 0; i < SHAKE_TIMES; i++) {
+				double offsetX = (Math.random() * 2 - 1) * SHAKE_DISTANCE;  // Random horizontal offset
+				double offsetY = (Math.random() * 2 - 1) * SHAKE_DISTANCE;  // Random vertical offset
+
+				shakes[i] = new TranslateTransition(Duration.millis(SHAKE_DURATION_MS), rootNode);
+				shakes[i].setByX(offsetX);  // Apply offset on X
+				shakes[i].setByY(offsetY);  // Apply offset on Y
+				shakes[i].setCycleCount(1);
+				shakes[i].setAutoReverse(true);  // Ensure it goes back to original position after shake
+			}
+
+			// Clip the root node to prevent shaking content from overflowing
+			rootNode.setClip(new javafx.scene.shape.Rectangle(rootNode.getBoundsInLocal().getWidth(), rootNode.getBoundsInLocal().getHeight()));
+
+			// Chain the shake transitions sequentially
+			for (int i = 0; i < SHAKE_TIMES; i++) {
+				final int index = i;
+				shakes[i].setOnFinished(event -> {
+					// After each shake, reset position back to the original coordinates
+					TranslateTransition resetPosition = new TranslateTransition(Duration.millis(50), rootNode);
+					resetPosition.setToX(INITIAL_X);  // Set to the original X position
+					resetPosition.setToY(INITIAL_Y);  // Set to the original Y position
+					resetPosition.play();
+
+					// If there is a next shake, start it
+					if (index + 1 < SHAKE_TIMES) {
+						shakes[index + 1].play();
+					}
+				});
+			}
+
+			// Start the first shake
+			shakes[0].play();
+		}
+	}
+
+
 	@Override
 	public void updatePosition() {
 		if (isMoving()) {
@@ -35,12 +101,12 @@ public class UserPlane extends FighterPlane {
 			}
 		}
 	}
-	
+
 	@Override
 	public void updateActor() {
 		updatePosition();
 	}
-	
+
 	@Override
 	public ActiveActorDestructible fireProjectile() {
 		double PROJECTILE_X_POSITION = getLayoutX() + getTranslateX() + 110;
@@ -78,6 +144,11 @@ public class UserPlane extends FighterPlane {
 
 	public void incrementKillCount() {
 		numberOfKills++;
+	}
+
+	private javafx.scene.Node getSceneRootNode() {
+		// Get the root node from the scene, which could be a Group or a Pane.
+		return getScene().getRoot();  // Return as Node, which can be either Group, Pane, or other types
 	}
 
 }
