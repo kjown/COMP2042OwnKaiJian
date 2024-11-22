@@ -18,6 +18,8 @@ import javafx.scene.image.*;
 import javafx.stage.Stage;
 import javafx.scene.input.*;
 import javafx.util.Duration;
+import com.example.demo.controller.AudioManager;
+
 
 public abstract class LevelParent extends Observable {
 
@@ -45,6 +47,9 @@ public abstract class LevelParent extends Observable {
 	private boolean isESCEnabled= true;
 	private final Controller controller;
 	private final Stage stage;
+	private static final String WIN_SOUND_PATH = "/com/example/demo/music/winsound.wav";
+	private final AudioManager audioManager;
+
 
 	public LevelParent(String backgroundImageName, double screenHeight, double screenWidth, int playerInitialHealth, Controller controller, Stage stage) {
 		this.root = new Group();
@@ -68,6 +73,7 @@ public abstract class LevelParent extends Observable {
 
 		initializeTimeline();
 		friendlyUnits.add(user);
+		audioManager = AudioManager.getInstance();
 	}
 
 	protected abstract void initializeFriendlyUnits();
@@ -243,6 +249,7 @@ public abstract class LevelParent extends Observable {
 		isSPaceEnabled = false;
 		timeline.stop();
 		levelView.showWinImage();
+		audioManager.playSoundEffect(WIN_SOUND_PATH);
 
 		EndMenu endMenu = new EndMenu(stage, (int) screenWidth, (int) screenHeight, controller);
 
