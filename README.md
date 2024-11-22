@@ -87,7 +87,7 @@ Ensure you have added JavaFX library in your IDE
 - Background music stops when PauseMenu is displayed and resumes when the game is unpaused.
 
 
-## **Technical Details**
+### **Technical Details**
 - Fixed the crash that occurs in `LevelOne`.
 - Fixed ShieldImage not showing up in `Boss` class.
 - Fixed the hitbox of actors for more accurate and fun gameplay experience.
@@ -95,6 +95,10 @@ Ensure you have added JavaFX library in your IDE
 ## Implemented but Not Working Properly
 
 ## Features not Implemented
+-  `UserPlane` turning red when it takes damage.
+- `Power Ups` not implemented.
+- `High Score` not implemented.
+- `Special Movements` not implemented. 
 
 ## New Java Classes
 | New Class        | Description                                                                                                                                            | Path                                                                                                                        |
