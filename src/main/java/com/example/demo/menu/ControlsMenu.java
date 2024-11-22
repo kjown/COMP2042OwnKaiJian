@@ -14,6 +14,10 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import com.example.demo.controller.Controller;
+import javafx.scene.input.KeyCode;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ControlsMenu {
     private final Stage stage;
@@ -21,11 +25,15 @@ public class ControlsMenu {
     private final int screenHeight;
     private final Controller controller;
 
+    private List<Button> controlButtons;
+    private int selectedIndex = 0; // Track the currently selected button index
+
     public ControlsMenu(Stage stage, int screenWidth, int screenHeight, Controller controller) {
         this.stage = stage;
         this.screenWidth = screenWidth;
         this.screenHeight = screenHeight;
         this.controller = controller;
+        this.controlButtons = new ArrayList<>();
     }
 
     // Display the controls menu
@@ -33,6 +41,9 @@ public class ControlsMenu {
         VBox controlsLayout = createControlsLayout();
         Scene controlsScene = new Scene(controlsLayout, screenWidth, screenHeight);
         stage.setScene(controlsScene);
+
+        // Enable keyboard navigation
+        controlsScene.setOnKeyPressed(e -> handleKeyPress(e.getCode()));
     }
 
     // Create the main layout for the controls menu
@@ -52,6 +63,7 @@ public class ControlsMenu {
 
         // Add back button
         Button backButton = createTextButton("Back", 50, this::goBack);
+        controlButtons.add(backButton);
         controlsLayout.getChildren().add(backButton);
 
         return controlsLayout;
@@ -102,6 +114,7 @@ public class ControlsMenu {
         button.setFont(loadCustomFont(fontSize));
         styleButton(button);
         addButtonHoverEffects(button);
+        controlButtons.add(button);
         button.setOnAction(e -> action.run());
         return button;
     }
@@ -137,5 +150,55 @@ public class ControlsMenu {
     private void goBack() {
         SettingsMenu settingsMenu = new SettingsMenu(stage, screenWidth, screenHeight, controller);
         settingsMenu.show();
+    }
+
+    // Handle keyboard input (arrow keys and enter key)
+    private void handleKeyPress(KeyCode keyCode) {
+        switch (keyCode) {
+            case UP:
+                navigateUp();
+                break;
+            case DOWN:
+                navigateDown();
+                break;
+            case ENTER:
+                selectButton();
+                break;
+            default:
+                break;
+        }
+    }
+
+    // Navigate up through the buttons
+    private void navigateUp() {
+        selectedIndex = (selectedIndex > 0) ? selectedIndex - 1 : controlButtons.size() - 1;
+        updateButtonStyles();
+    }
+
+    // Navigate down through the buttons
+    private void navigateDown() {
+        selectedIndex = (selectedIndex < controlButtons.size() - 1) ? selectedIndex + 1 : 0;
+        updateButtonStyles();
+    }
+
+    // Select the currently highlighted button
+    private void selectButton() {
+        controlButtons.get(selectedIndex).fire();
+    }
+
+    // Update button styles based on selection
+    private void updateButtonStyles() {
+        for (int i = 0; i < controlButtons.size(); i++) {
+            Button button = controlButtons.get(i);
+            if (i == selectedIndex) {
+                button.setStyle("-fx-background-color: transparent; " +
+                        "-fx-text-fill: linear-gradient(from 0% 0% to 0% 100%, #FFD700, #FF8C00, #FF4500); " +
+                        "-fx-effect: dropshadow(three-pass-box, rgba(255,140,0,0.8), 5, 0.0, 2, 2);");
+            } else {
+                button.setStyle("-fx-background-color: transparent; " +
+                        "-fx-text-fill: linear-gradient(from 0% 0% to 0% 100%, #FF00FF, #00FFFF, #FF00FF); " +
+                        "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 3, 0.0, 2, 2);");
+            }
+        }
     }
 }
