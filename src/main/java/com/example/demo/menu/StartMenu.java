@@ -8,6 +8,10 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import com.example.demo.controller.Controller;
+import javafx.scene.input.KeyCode;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class StartMenu {
     private final Stage stage;
@@ -18,18 +22,32 @@ public class StartMenu {
     // High score, should be dynamically retrieved or calculated
     private int highScore = 0;
 
+    // List to store buttons for navigation
+    private List<Button> menuButtons;
+    private int selectedIndex = 0; // Track the currently selected button index
+
     public StartMenu(Stage stage, int screenWidth, int screenHeight, Controller controller) {
         this.stage = stage;
         this.screenWidth = screenWidth;
         this.screenHeight = screenHeight;
         this.controller = controller;
+        this.menuButtons = new ArrayList<>();
     }
 
     // Display the Start Menu
     public void show() {
         VBox layout = createLayout();
         Scene scene = new Scene(layout, screenWidth, screenHeight);
+
+        // Disable mouse navigation for buttons
+        scene.setOnMouseMoved(e -> scene.setCursor(javafx.scene.Cursor.NONE));
+
+        // Enable keyboard navigation
+        scene.setOnKeyPressed(e -> handleKeyPress(e.getCode()));
+
         stage.setScene(scene);
+        stage.show();
+        updateButtonStyles();
     }
 
     // Create and arrange UI components in the layout
@@ -42,6 +60,11 @@ public class StartMenu {
         Button startButton = createStyledButton("Start", retroFont, this::startGame);
         Button settingsButton = createStyledButton("Settings", retroFont, this::showSettings);
         Button exitButton = createStyledButton("Exit", retroFont, () -> stage.close());
+
+        // Add buttons to the list for navigation
+        menuButtons.add(startButton);
+        menuButtons.add(settingsButton);
+        menuButtons.add(exitButton);
 
         // Arrange the components in a vertical box
         VBox layout = new VBox(20, highScoreText, title, startButton, settingsButton, exitButton);
@@ -86,40 +109,58 @@ public class StartMenu {
                 "-fx-text-fill: linear-gradient(from 0% 0% to 0% 100%, #FF00FF, #00FFFF, #FF00FF); " +
                 "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 3, 0.0, 2, 2);");
         button.setFocusTraversable(false);
-        addHoverEffects(button);
         button.setOnAction(e -> action.run());
         return button;
     }
 
-    // Add hover effects to a button
-    private void addHoverEffects(Button button) {
-        button.setOnMouseEntered(e -> applyHoverStyle(button, true));
-        button.setOnMouseExited(e -> applyHoverStyle(button, false));
-        button.setOnMousePressed(e -> scaleButton(button, 0.95));
-        button.setOnMouseReleased(e -> scaleButton(button, 1.0));
-    }
-
-    // Apply hover style to a button
-    private void applyHoverStyle(Button button, boolean isHovered) {
-        if (isHovered) {
-            button.setText("> " + button.getText());
-            button.setStyle("-fx-background-color: transparent; " +
-                    "-fx-text-fill: linear-gradient(from 0% 0% to 0% 100%, #00FFFF, #FF00FF, #00FFFF); " +
-                    "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 3, 0.0, 2, 2);");
-            button.setOpacity(0.8);
-        } else {
-            button.setText(button.getText().substring(2));
-            button.setStyle("-fx-background-color: transparent; " +
-                    "-fx-text-fill: linear-gradient(from 0% 0% to 0% 100%, #FF00FF, #00FFFF, #FF00FF); " +
-                    "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 3, 0.0, 2, 2);");
-            button.setOpacity(1.0);
+    // Handle key press events for navigation
+    private void handleKeyPress(KeyCode keyCode) {
+        switch (keyCode) {
+            case UP:
+                navigateUp();
+                break;
+            case DOWN:
+                navigateDown();
+                break;
+            case ENTER:
+                selectButton();
+                break;
+            default:
+                break;
         }
     }
 
-    // Scale a button when pressed/released
-    private void scaleButton(Button button, double scale) {
-        button.setScaleX(scale);
-        button.setScaleY(scale);
+    // Navigate to the previous button
+    private void navigateUp() {
+        selectedIndex = (selectedIndex > 0) ? selectedIndex - 1 : menuButtons.size() - 1;
+        updateButtonStyles();
+    }
+
+    // Navigate to the next button
+    private void navigateDown() {
+        selectedIndex = (selectedIndex < menuButtons.size() - 1) ? selectedIndex + 1 : 0;
+        updateButtonStyles();
+    }
+
+    // Trigger the action of the currently selected button
+    private void selectButton() {
+        menuButtons.get(selectedIndex).fire();
+    }
+
+    // Update the visual style of buttons to indicate which one is selected
+    private void updateButtonStyles() {
+        for (int i = 0; i < menuButtons.size(); i++) {
+            Button button = menuButtons.get(i);
+            if (i == selectedIndex) {
+                button.setStyle("-fx-background-color: transparent; " +
+                        "-fx-text-fill: linear-gradient(from 0% 0% to 0% 100%, #FFD700, #FF8C00, #FF4500); " +
+                        "-fx-effect: dropshadow(three-pass-box, rgba(255,140,0,0.8), 5, 0.0, 2, 2);");
+            } else {
+                button.setStyle("-fx-background-color: transparent; " +
+                        "-fx-text-fill: linear-gradient(from 0% 0% to 0% 100%, #FF00FF, #00FFFF, #FF00FF); " +
+                        "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 3, 0.0, 2, 2);");
+            }
+        }
     }
 
     // Action to start the game
