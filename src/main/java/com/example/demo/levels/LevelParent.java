@@ -250,13 +250,14 @@ public abstract class LevelParent extends Observable {
 		timeline.stop();
 		levelView.showWinImage();
 		audioManager.playSoundEffect(WIN_SOUND_PATH);
+		audioManager.pauseBackgroundMusic();
 
 		EndMenu endMenu = new EndMenu(stage, (int) screenWidth, (int) screenHeight, controller);
 
 		Scene scene = getRoot().getScene();
 		scene.setOnKeyPressed(event -> {
 			if (event.getCode() == KeyCode.ESCAPE) {
-				endMenu.show();
+				System.exit(0);
 			}
 		});
 	}
