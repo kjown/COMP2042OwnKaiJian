@@ -12,6 +12,7 @@ public class AudioManager {
 
     private boolean isBackgroundMusicOn = true;
 
+    // Private constructor to prevent direct instantiation
     private AudioManager() {}
 
     // Public method to provide a single instance

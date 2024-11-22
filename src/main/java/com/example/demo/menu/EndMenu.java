@@ -8,29 +8,21 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import com.example.demo.controller.Controller;
-import com.example.demo.controller.AudioManager;
 
 public class EndMenu {
     private final Stage stage;
     private final int screenWidth;
     private final int screenHeight;
     private Controller controller;
-    private final AudioManager audioManager;
 
     public EndMenu(Stage stage, int screenWidth, int screenHeight, Controller controller) {
         this.stage = stage;
         this.screenWidth = screenWidth;
         this.screenHeight = screenHeight;
         this.controller = controller;
-
-        this.audioManager = AudioManager.getInstance();
     }
 
     public void show() {
-        audioManager.pauseBackgroundMusic();
-
-        audioManager.playSoundEffect("/com/example/demo/music/losesound.wav"); // Replace with the actual path to your sound file
-
         Text title = new Text("Game Over");
         title.setStyle("-fx-font-size: 100px; -fx-font-weight: bold; -fx-fill: linear-gradient(from 0% 0% to 0% 100%, #B0C4DE, #DADBDD, #FDDC5C); -fx-stroke-width: 1px; -fx-effect: dropshadow(three-pass-box, rgba(255,255,255,0.8), 10, 0.0, 0, 0);");
 
@@ -73,7 +65,6 @@ public class EndMenu {
 
     private void restartGame() {
         controller.goToLevel(Controller.LEVEL_ONE_CLASS_NAME);
-        audioManager.resumeBackgroundMusic();
     }
 
     private void addHoverEffects(Button button) {
