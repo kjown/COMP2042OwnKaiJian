@@ -20,6 +20,7 @@ public abstract class Helicopter extends ActiveActorDestructible {
         AudioManager.getInstance().playSoundEffect("/com/example/demo/music/hitmarker.mp3");
 
         if (healthAtZero()) {
+            AudioManager.getInstance().playSoundEffect("/com/example/demo/music/destroyedsound.wav");
             this.destroy();
         }
     }

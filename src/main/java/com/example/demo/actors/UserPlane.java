@@ -14,7 +14,7 @@ public class UserPlane extends FighterPlane {
 	private static final int HORIZONTAL_VELOCITY = 8;
 	private static final int PROJECTILE_X_POSITION = 110;
 	private static final int PROJECTILE_Y_POSITION_OFFSET = 20;
-	private static final String SHOOTING_SFX_PATH = "/com/example/demo/music/shootsound.wav";  // Path to the shooting sound
+	private static final String SHOOTING_SFX_PATH = "/com/example/demo/music/shootsound.wav";
 
 	private int verticalVelocityMultiplier;
 	private int horizontalVelocityMultiplier;
@@ -25,7 +25,7 @@ public class UserPlane extends FighterPlane {
 		super(IMAGE_NAME, IMAGE_HEIGHT, INITIAL_X_POSITION, INITIAL_Y_POSITION, initialHealth);
 		verticalVelocityMultiplier = 0;
 		horizontalVelocityMultiplier = 0;
-		audioManager = AudioManager.getInstance();  // Initialize AudioManager instance
+		audioManager = AudioManager.getInstance();
 	}
 
 	@Override
@@ -49,10 +49,8 @@ public class UserPlane extends FighterPlane {
 
 	@Override
 	public ActiveActorDestructible fireProjectile() {
-		// Play the shooting sound effect
 		audioManager.playSoundEffect(SHOOTING_SFX_PATH);
 
-		// Create and return a new projectile
 		double PROJECTILE_X_POSITION = getLayoutX() + getTranslateX() + 110;
 		return new UserProjectile(PROJECTILE_X_POSITION, getProjectileYPosition(PROJECTILE_Y_POSITION_OFFSET));
 	}
