@@ -6,6 +6,12 @@ import com.example.demo.actors.ActiveActorDestructible;
 import com.example.demo.actors.Enemy1;
 import javafx.stage.Stage;
 
+/**
+ * LevelOne represents the first level of the game.
+ * This class handles the initialization of the level,
+ * including setting up the background, spawning enemies,
+ * checking game status, and transitioning to the next level.
+ */
 public class LevelOne extends LevelParent {
 
 	// Constants
@@ -16,12 +22,23 @@ public class LevelOne extends LevelParent {
 	private static final double ENEMY_SPAWN_PROBABILITY = 0.20;
 	private static final int PLAYER_INITIAL_HEALTH = 5;
 
-	// Constructor
+	/**
+	 * Constructor for LevelOne.
+	 *
+	 * @param screenHeight The height of the game screen.
+	 * @param screenWidth The width of the game screen.
+	 * @param controller The game controller responsible for managing game states.
+	 * @param stage The primary stage of the JavaFX application.
+	 */
 	public LevelOne(double screenHeight, double screenWidth, Controller controller, Stage stage) {
 		super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH, controller, stage);
 		logInitialization(screenHeight, screenWidth);
 	}
 
+	/**
+	 * Checks if the game is over by evaluating if the player has been destroyed
+	 * or if the kill target to advance has been reached.
+	 */
 	@Override
 	protected void checkIfGameOver() {
 		if (userIsDestroyed()) {
@@ -31,11 +48,17 @@ public class LevelOne extends LevelParent {
 		}
 	}
 
+	/**
+	 * Initializes friendly units (like the player) at the start of the level.
+	 */
 	@Override
 	protected void initializeFriendlyUnits() {
 		addUserToScene();
 	}
 
+	/**
+	 * Spawns enemy units during the level based on a predefined probability.
+	 */
 	@Override
 	protected void spawnEnemyUnits() {
 		int enemiesToSpawn = calculateEnemiesToSpawn();
@@ -46,45 +69,75 @@ public class LevelOne extends LevelParent {
 		}
 	}
 
+	/**
+	 * Creates and returns a LevelView object for this level.
+	 *
+	 * @return A LevelView instance for LevelOne.
+	 */
 	@Override
 	protected LevelView instantiateLevelView() {
 		return new LevelView(getRoot(), PLAYER_INITIAL_HEALTH);
 	}
 
-	// Helper method to log initialization
+	/**
+	 * Logs the initialization details of the level, including screen dimensions.
+	 *
+	 * @param screenHeight The height of the game screen.
+	 * @param screenWidth The width of the game screen.
+	 */
 	private void logInitialization(double screenHeight, double screenWidth) {
 		System.out.println("LevelOne constructor called with height: " + screenHeight + " and width: " + screenWidth);
 	}
 
-	// Adds the user (player) to the scene
+	/**
+	 * Adds the player to the scene at the start of the level.
+	 */
 	private void addUserToScene() {
 		getRoot().getChildren().add(getUser());
 	}
 
-	// Determines if the user has reached the kill target to advance the level
+	/**
+	 * Determines if the player has reached the required kill target to advance to the next level.
+	 *
+	 * @return true if the player has enough kills to advance, false otherwise.
+	 */
 	private boolean userHasReachedKillTarget() {
 		return getUser().getNumberOfKills() >= KILLS_TO_ADVANCE;
 	}
 
-	// Calculates how many enemies need to be spawned
+	/**
+	 * Calculates the number of enemies that need to be spawned based on the total count.
+	 *
+	 * @return The number of enemies to be spawned.
+	 */
 	private int calculateEnemiesToSpawn() {
 		int currentNumberOfEnemies = getCurrentNumberOfEnemies();
 		return TOTAL_ENEMIES - currentNumberOfEnemies;
 	}
 
-	// Randomly decides if an enemy should spawn based on the probability
+	/**
+	 * Randomly determines if an enemy should be spawned based on a predefined probability.
+	 *
+	 * @return true if an enemy should spawn, false otherwise.
+	 */
 	private boolean shouldSpawnEnemy() {
 		return Math.random() < ENEMY_SPAWN_PROBABILITY;
 	}
 
-	// Spawns a new enemy at a random Y position
+	/**
+	 * Spawns a new enemy at a random Y position within the allowable game area.
+	 */
 	private void spawnEnemy() {
 		double newEnemyInitialYPosition = generateRandomEnemyYPosition();
 		ActiveActorDestructible newEnemy = new Enemy1(getScreenWidth(), newEnemyInitialYPosition);
 		addEnemyUnit(newEnemy);
 	}
 
-	// Generates a random Y position for a new enemy
+	/**
+	 * Generates a random Y position for a new enemy spawn.
+	 *
+	 * @return A random Y position within the allowable bounds for enemy spawning.
+	 */
 	private double generateRandomEnemyYPosition() {
 		return Math.random() * getEnemyMaximumYPosition();
 	}

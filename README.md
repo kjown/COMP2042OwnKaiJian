@@ -32,19 +32,25 @@ Ensure you have added JavaFX library in your IDE
 - Utilised helper methods to handle creation of UI elements like `createTitleText` and `createStyledButton`.
 - Centralised font loading logic with `loadFont` method.
 - Lambda expressions for simplified button action assignments.
-- 
+- Has hover sound effects for buttons.
+
 #### Settings Menu
 - `SettingsMenu` implemented with `Sound ON/OFF` toggler to turn on or off background music, `Controls` button to show the controls of the game and `Back` button to return to `StartMenu`.
 - Used lambdas for cleaner action assignments.
+- Has hover sound effects for buttons.
 
 #### Controls Menu
 - `ControlsMenu` implemented with `Back` button to return to `SettingsMenu`. `ControsMenu` shows all controls user are able to use when playing the game. 
 - Encapsulated logic for creating the layout and adding elements like images and instructions.
+- Has hover sound effects for buttons.
+
 #### Pause Menu
 - `PauseMenu` implemented pause functionality using `ESC` key to pause when playing the game.
+
 #### End Menu
 - `EndMenu` implemented with `Main Menu`, `Restart` and `Exit` buttons with `showMainMenu()` and `restartGame()` methods as well as exiting the game when `Exit` is pressed. All buttons have hovering effects to improve user experience.
 - Encapsulated the game restart and main menu navigation logic in separate methods for clarity.
+- Has hover sound effects for buttons.
 
 ### **Game Mechanics**
 - `Projectiles` from enemies is now destroyable by user with their own respective health values.
@@ -59,10 +65,20 @@ Ensure you have added JavaFX library in your IDE
 
 
 ### **Game Flow**
+#### Start Game Cutscene
+- A cutscene is displayed to introduce the game to the player.
+- User can continue to `LevelOne` by pressing `SPACE` key.
+
 #### Start Menu
 #### Level 1
+- `LevelOne` implemented with `UserPlane` and `Enemy1` actors. User can play the first level of the game with Enemy1 of Plane type.
+- `Enemy1` are spawned in random positions and move in a straight line.
+- When user destroys 10 enemies, the user will proceed to `LevelTwo`.
 
 #### Level 2
+- `LevelTwo` implemented with `UserPlane` and `Enemy2` actors. User can play the second level of the game with Enemy2 of Helicopter type.
+- `Enemy2` are spawned in random positions.
+- `Enemy2` shoots bullet projectiles at the user at a high fire rate.
 
 #### Level 3
 
@@ -85,7 +101,7 @@ Ensure you have added JavaFX library in your IDE
 -  `Singleton` pattern is used to ensure only one instance of the `AudioManager` class is created.
 - Background music plays throughout the game and can be toggled on or off in the `SettingsMenu`.
 - Background music stops when PauseMenu is displayed and resumes when the game is unpaused.
-
+- `AudioManager` class has methods to play sound effects.
 
 ### **Technical Details**
 - Fixed the crash that occurs in `LevelOne`.
@@ -150,7 +166,7 @@ Ensure you have added JavaFX library in your IDE
 - Added `shouldSpawnEnemy()` helper method to randomly decide if any enemy should spawn based on the probability.
 - Added `generateRandomEnemyYPosition()` helper method to generate a random Y position for a new enemy.
 - Added `calculateEnemiesToSpawn()` method to calculate how many enemies need to be spawned.
-- 
+
 
 ### LevelBoss.java (previously LevelTwo.java)
 - Renamed `LevelTwo.java` to `LevelBoss.java`.
