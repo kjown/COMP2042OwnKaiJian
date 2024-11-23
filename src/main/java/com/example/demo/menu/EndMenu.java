@@ -74,6 +74,7 @@ public class EndMenu {
             button.setText("> " + button.getText());
             button.setStyle("-fx-background-color: transparent; -fx-text-fill: linear-gradient(from 0% 0% to 0% 100%, #00FFFF, #FF00FF, #00FFFF); -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 3, 0.0, 2, 2);");
             button.setOpacity(0.8);
+            AudioManager.getInstance().playSoundEffect("/com/example/demo/music/menu-button-hover.wav");
         });
         button.setOnMouseExited(e -> {
             button.setText(button.getText().substring(2));

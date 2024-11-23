@@ -8,6 +8,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import com.example.demo.controller.Controller;
+import com.example.demo.controller.AudioManager;
 
 public class StartMenu {
     private final Stage stage;
@@ -91,9 +92,13 @@ public class StartMenu {
         return button;
     }
 
-    // Add hover effects to a button
+    // Add hover effects to a button, including hover sound
     private void addHoverEffects(Button button) {
-        button.setOnMouseEntered(e -> applyHoverStyle(button, true));
+        button.setOnMouseEntered(e -> {
+            applyHoverStyle(button, true);
+            // Play hover sound
+            AudioManager.getInstance().playSoundEffect("/com/example/demo/music/menu-button-hover.wav");
+        });
         button.setOnMouseExited(e -> applyHoverStyle(button, false));
         button.setOnMousePressed(e -> scaleButton(button, 0.95));
         button.setOnMouseReleased(e -> scaleButton(button, 1.0));

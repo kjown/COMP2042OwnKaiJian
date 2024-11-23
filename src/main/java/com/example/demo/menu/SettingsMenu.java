@@ -12,6 +12,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.scene.media.AudioClip; // Import AudioClip for sound effects
 import com.example.demo.controller.Controller;
 
 public class SettingsMenu {
@@ -19,12 +20,16 @@ public class SettingsMenu {
     private final int screenWidth;
     private final int screenHeight;
     private final Controller controller;
+    private final AudioClip hoverSound; // AudioClip for the hover sound effect
 
     public SettingsMenu(Stage stage, int screenWidth, int screenHeight, Controller controller) {
         this.stage = stage;
         this.screenWidth = screenWidth;
         this.screenHeight = screenHeight;
         this.controller = controller;
+
+        // Load the hover sound effect from resources
+        this.hoverSound = new AudioClip(getClass().getResource("/com/example/demo/music/menu-button-hover.wav").toExternalForm());
     }
 
     public void show() {
@@ -91,6 +96,7 @@ public class SettingsMenu {
 
     private void addHoverEffects(Button button) {
         button.setOnMouseEntered(e -> {
+            playHoverSound(); // Play sound when hovered
             button.setText("> " + button.getText());
             button.setStyle("-fx-background-color: transparent; -fx-text-fill: linear-gradient(from 0% 0% to 0% 100%, #00FFFF, #FF00FF, #00FFFF); -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 3, 0.0, 2, 2);");
             button.setOpacity(0.8);
@@ -112,6 +118,7 @@ public class SettingsMenu {
 
     private void addToggleButtonHoverEffects(ToggleButton toggleButton) {
         toggleButton.setOnMouseEntered(e -> {
+            playHoverSound(); // Play sound when hovered
             toggleButton.setStyle("-fx-background-color: transparent; -fx-text-fill: linear-gradient(from 0% 0% to 0% 100%, #00FFFF, #FF00FF, #00FFFF); -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 3, 0.0, 2, 2);");
             toggleButton.setOpacity(0.8);
         });
@@ -127,6 +134,13 @@ public class SettingsMenu {
             toggleButton.setScaleX(1.0);
             toggleButton.setScaleY(1.0);
         });
+    }
+
+    // Method to play hover sound effect
+    private void playHoverSound() {
+        if (hoverSound != null) {
+            hoverSound.play();
+        }
     }
 
     private void goBackToStartMenu() {

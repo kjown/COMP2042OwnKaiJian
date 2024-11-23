@@ -1,5 +1,6 @@
 package com.example.demo.menu;
 
+import com.example.demo.controller.AudioManager;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -118,6 +119,7 @@ public class ControlsMenu {
         button.setOnMouseEntered(e -> {
             button.setStyle("-fx-background-color: transparent; -fx-text-fill: linear-gradient(from 0% 0% to 0% 100%, #00FFFF, #FF00FF);");
             button.setOpacity(0.8);
+            AudioManager.getInstance().playSoundEffect("/com/example/demo/music/menu-button-hover.wav");
         });
         button.setOnMouseExited(e -> {
             button.setStyle("-fx-background-color: transparent; -fx-text-fill: #FF00FF;");
