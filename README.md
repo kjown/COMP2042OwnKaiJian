@@ -53,12 +53,29 @@ Ensure you have added JavaFX library in your IDE
 - Has hover sound effects for buttons.
 
 ### **Game Mechanics**
+#### Projectiles
 - `Projectiles` from enemies is now destroyable by user with their own respective health values.
 - `Projectiles` are destroyed when Out of Bounds.
+
+#### Boss
 - `Boss` now has shield with its own health value and spawn probability to protect the boss.
 - `Boss` now displays its own `HealthBar` to show the health of the boss.
+
+#### Enemy 1
+- `Enemy1` has its own movement pattern and projectile characteristics.
+- Has 1 health.
+- Fires `rocket` projectiles.
+- Spawns at random positions.
+
+#### Enemy 2
 - `Enemy2` has its own movement pattern and projectile characteristics.
+- Moves at slower speed than `Enemy1`.
+- Has more health. Able to take more damage.
+- Fires `bullet` projectiles at a higher fire rate.
+
+#### Enemy 3
 - `Enemy3` has its own movement pattern and projectile characteristics.
+
 - Enemy Spawning logic is changed to spawn enemies in a more random and efficient manner.
 - Different enemy types have different movement patterns, projectile characteristics, health value and spawn logic.
 - User wins and will trigger the `WinImage` when the boss is defeated in `LevelBoss`.
@@ -70,21 +87,23 @@ Ensure you have added JavaFX library in your IDE
 - User can continue to `LevelOne` by pressing `SPACE` key.
 
 #### Start Menu
-#### Level 1
+#### Level One
 - `LevelOne` implemented with `UserPlane` and `Enemy1` actors. User can play the first level of the game with Enemy1 of Plane type.
 - `Enemy1` are spawned in random positions and move in a straight line.
 - When user destroys 10 enemies, the user will proceed to `LevelTwo`.
 
-#### Level 2
+#### Level Two
 - `LevelTwo` implemented with `UserPlane` and `Enemy2` actors. User can play the second level of the game with Enemy2 of Helicopter type.
 - `Enemy2` are spawned in random positions.
-- `Enemy2` shoots bullet projectiles at the user at a high fire rate.
+- Has a desert theme.
 
-#### Level 3
+#### Level Three
 
-#### Level 4
+#### Level Four
 
-#### Level 5 (Boss Level)
+#### Level 5 (Level Boss)
+
+#### Win Image
 
 #### End Menu
 
