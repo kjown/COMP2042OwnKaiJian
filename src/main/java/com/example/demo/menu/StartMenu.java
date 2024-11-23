@@ -130,7 +130,7 @@ public class StartMenu {
     // Action to start the game
     private void startGame() {
         try {
-            controller.launchGame();
+            showCutscene();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -142,4 +142,68 @@ public class StartMenu {
         SettingsMenu settingsMenu = new SettingsMenu(stage, screenWidth, screenHeight, controller);
         settingsMenu.show();
     }
+
+    // Show cutscene with typing effect
+    private void showCutscene() {
+        // Story text for the cutscene
+        String storyText = "In the skies above, a battle rages between rival forces. You are the chosen hero...\n" +
+                "Your mission is to defeat the enemy and claim victory for your people.\n\n" +
+                "Get ready to dive into the action...";
+
+        // Create a text node to display the story
+        Text cutsceneText = new Text();
+        cutsceneText.setFont(loadRetroFont(30));
+        cutsceneText.setFill(javafx.scene.paint.Color.web("#39FF14")); // Neon Green
+        cutsceneText.setFill(javafx.scene.paint.Color.WHITE);
+        cutsceneText.setWrappingWidth(screenWidth * 0.8);  // Wrap the text for readability
+        cutsceneText.setStyle("-fx-effect: dropshadow(gaussian, rgba(57, 255, 20, 1), 10, 0.0, 0, 0);");  // Neon Green Glow
+
+        // Create a layout for the cutscene text
+        VBox cutsceneLayout = new VBox(20, cutsceneText);
+        cutsceneLayout.setAlignment(Pos.CENTER);
+        cutsceneLayout.setBackground(new Background(new BackgroundFill(javafx.scene.paint.Color.BLACK, null, null)));
+
+        // Scene for the cutscene
+        Scene cutsceneScene = new Scene(cutsceneLayout, screenWidth, screenHeight);
+        stage.setScene(cutsceneScene);
+
+        AudioManager.getInstance().playSoundEffect("/com/example/demo/music/typing_sound.mp3");
+
+
+        // Start typing effect
+        typeWriterEffect(cutsceneText, storyText, () -> {
+            // Prompt the user to press SPACE to proceed
+            Text promptText = new Text("Press SPACE to start the battle...");
+            promptText.setFont(loadRetroFont(25));
+            promptText.setFill(javafx.scene.paint.Color.YELLOW);
+            cutsceneLayout.getChildren().add(promptText);
+
+            // Listen for SPACE key press to start the game
+            cutsceneScene.setOnKeyPressed(event -> {
+                if (event.getCode() == javafx.scene.input.KeyCode.SPACE) {
+                    controller.launchGame();  // Proceed to start the game
+                }
+            });
+        });
+    }
+
+    private void typeWriterEffect(Text textNode, String fullText, Runnable onFinish) {
+        StringBuilder currentText = new StringBuilder();
+        new Thread(() -> {
+            for (char c : fullText.toCharArray()) {
+                try {
+                    currentText.append(c);
+                    // Update the text on the JavaFX Application thread
+                    javafx.application.Platform.runLater(() -> textNode.setText(currentText.toString()));
+
+                    Thread.sleep(30);  // Adjust typing speed
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            // After typing is complete, run the callback to show the next prompt
+            javafx.application.Platform.runLater(onFinish);
+        }).start();
+    }
+
 }
