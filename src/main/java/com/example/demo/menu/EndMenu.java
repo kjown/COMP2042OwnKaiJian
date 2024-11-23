@@ -8,6 +8,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import com.example.demo.controller.Controller;
+import com.example.demo.controller.AudioManager;
 
 public class EndMenu {
     private final Stage stage;
@@ -65,6 +66,7 @@ public class EndMenu {
 
     private void restartGame() {
         controller.goToLevel(Controller.LEVEL_ONE_CLASS_NAME);
+        AudioManager.getInstance().resumeBackgroundMusic();
     }
 
     private void addHoverEffects(Button button) {

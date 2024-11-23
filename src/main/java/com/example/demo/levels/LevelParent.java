@@ -48,6 +48,7 @@ public abstract class LevelParent extends Observable {
 	private final Controller controller;
 	private final Stage stage;
 	private static final String WIN_SOUND_PATH = "/com/example/demo/music/winsound.wav";
+	private static final String LOSE_SOUND_PATH = "/com/example/demo/music/losesound.wav";
 	private final AudioManager audioManager;
 
 
@@ -267,6 +268,8 @@ public abstract class LevelParent extends Observable {
 		isSPaceEnabled = false;
 		timeline.stop();
 //		levelView.showGameOverImage();
+		audioManager.pauseBackgroundMusic();
+		audioManager.playSoundEffect(LOSE_SOUND_PATH);
 
 		// Show EndMenu
 		EndMenu endMenu = new EndMenu(stage, (int) screenWidth, (int) screenHeight, controller);
