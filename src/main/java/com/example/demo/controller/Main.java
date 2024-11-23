@@ -13,7 +13,7 @@ public class Main extends Application {
 	private Controller controller;
 
 	/**
-	 * Initializes and display the priamry stage with StartMenu
+	 * Initializes and display the primary stage with StartMenu
 	 * @param stage the primary stage for this application, onto which
 	 * the application scene can be set.
 	 * Applications may create other stages, if needed, but they will not be
