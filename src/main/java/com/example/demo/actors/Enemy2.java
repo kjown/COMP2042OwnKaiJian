@@ -1,5 +1,7 @@
 package com.example.demo.actors;
 
+import com.example.demo.actors.projectiles.EnemyBulletProjectile;
+
 public class Enemy2 extends Helicopter {
     private static final String IMAGE_NAME = "enemy2.png";
     private static final int IMAGE_HEIGHT = 50;

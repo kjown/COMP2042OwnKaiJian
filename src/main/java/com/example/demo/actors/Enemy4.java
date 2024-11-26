@@ -1,5 +1,7 @@
 package com.example.demo.actors;
 
+import com.example.demo.actors.projectiles.LaserProjectile;
+
 public class Enemy4 extends FighterPlane {
 
     private static final String IMAGE_NAME = "enemyplane4.png";

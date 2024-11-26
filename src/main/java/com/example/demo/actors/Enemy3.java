@@ -1,5 +1,6 @@
 package com.example.demo.actors;
 
+import com.example.demo.actors.projectiles.EnemyBulletProjectile;
 import com.example.demo.view.LevelViewLevelThree;
 
 import java.util.ArrayList;

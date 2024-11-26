@@ -1,5 +1,6 @@
 package com.example.demo.actors;
 
+import com.example.demo.actors.projectiles.UserProjectile;
 import com.example.demo.controller.AudioManager;
 import com.example.demo.view.LevelView;
 import javafx.animation.TranslateTransition;

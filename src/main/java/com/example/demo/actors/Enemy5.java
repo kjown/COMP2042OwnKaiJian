@@ -1,5 +1,7 @@
 package com.example.demo.actors;
 
+import com.example.demo.actors.projectiles.LaserProjectile;
+
 /**
  * Represents an enemy fighter plane (Enemy5) in the game.
  * This class extends the FighterPlane class and defines specific behavior for the Enemy5, including movement and projectile firing.
