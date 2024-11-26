@@ -1,6 +1,6 @@
 package com.example.demo.levels;
 
-import com.example.demo.actors.Enemy3;
+import com.example.demo.actors.enemies.Enemy3;
 import com.example.demo.view.LevelViewLevelThree;
 import com.example.demo.controller.Controller;
 import com.example.demo.view.LevelView;

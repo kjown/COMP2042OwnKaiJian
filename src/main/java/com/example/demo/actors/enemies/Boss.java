@@ -1,5 +1,8 @@
-package com.example.demo.actors;
+package com.example.demo.actors.enemies;
 
+import com.example.demo.actors.ActiveActorDestructible;
+import com.example.demo.actors.FighterPlane;
+import com.example.demo.actors.projectiles.BossProjectile;
 import com.example.demo.view.HealthBar;
 import com.example.demo.view.LevelViewLevelBoss;
 import com.example.demo.view.ShieldImage;

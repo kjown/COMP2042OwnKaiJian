@@ -1,7 +1,7 @@
 package com.example.demo.levels;
 
 import com.example.demo.actors.ActiveActorDestructible;
-import com.example.demo.actors.Enemy2;
+import com.example.demo.actors.enemies.Enemy2;
 import com.example.demo.controller.Controller;
 import com.example.demo.view.LevelView;
 import javafx.stage.Stage;

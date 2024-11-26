@@ -2,7 +2,7 @@ package com.example.demo.levels;
 
 import com.example.demo.view.LevelView;
 import com.example.demo.view.LevelViewLevelBoss;
-import com.example.demo.actors.Boss;
+import com.example.demo.actors.enemies.Boss;
 import com.example.demo.controller.Controller;
 import javafx.stage.Stage;
 

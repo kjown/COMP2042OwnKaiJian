@@ -1,5 +1,6 @@
-package com.example.demo.actors;
+package com.example.demo.actors.enemies;
 
+import com.example.demo.actors.ActiveActorDestructible;
 import com.example.demo.actors.projectiles.EnemyBulletProjectile;
 
 public class Enemy2 extends Helicopter {

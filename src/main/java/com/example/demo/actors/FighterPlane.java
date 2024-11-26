@@ -1,6 +1,5 @@
 package com.example.demo.actors;
 
-import com.example.demo.actors.ActiveActorDestructible;
 import com.example.demo.controller.AudioManager;
 
 public abstract class FighterPlane extends ActiveActorDestructible {

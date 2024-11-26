@@ -1,7 +1,5 @@
 package com.example.demo.actors.projectiles;
 
-import com.example.demo.actors.Projectile;
-
 public class UserProjectile extends Projectile {
 
 	private static final String IMAGE_NAME = "userfire.png";

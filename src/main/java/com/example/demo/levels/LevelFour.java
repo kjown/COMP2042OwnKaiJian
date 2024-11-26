@@ -3,8 +3,8 @@ package com.example.demo.levels;
 import com.example.demo.controller.Controller;
 import com.example.demo.view.LevelView;
 import com.example.demo.actors.ActiveActorDestructible;
-import com.example.demo.actors.Enemy5;
-import com.example.demo.actors.Enemy4;
+import com.example.demo.actors.enemies.Enemy5;
+import com.example.demo.actors.enemies.Enemy4;
 import javafx.stage.Stage;
 
 /**
