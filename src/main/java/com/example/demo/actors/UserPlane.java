@@ -1,10 +1,17 @@
 package com.example.demo.actors;
 
 import com.example.demo.controller.AudioManager;
+import com.example.demo.view.LevelView;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
+import javafx.scene.shape.Circle;
+import javafx.scene.paint.Color;
+import javafx.scene.effect.Glow;
+
 
 public class UserPlane extends FighterPlane {
 
@@ -20,16 +27,29 @@ public class UserPlane extends FighterPlane {
 	private static final int PROJECTILE_Y_POSITION_OFFSET = 20;
 	private static final String SHOOTING_SFX_PATH = "/com/example/demo/music/shootsound.wav";
 
+	private static final int KILLS_TO_ACTIVATE_SHIELD = 2;
+	private static final int SHIELD_DURATION_MS = 5000;
+
 	private int verticalVelocityMultiplier;
 	private int horizontalVelocityMultiplier;
 	private int numberOfKills;
 	private final AudioManager audioManager;
+	private boolean shieldActive;
+	private long shieldActivatedTime;
+
+	private Circle shieldCircle;
+
+	private LevelView levelView;
+
 
 	public UserPlane(int initialHealth) {
 		super(IMAGE_NAME, IMAGE_HEIGHT, INITIAL_X_POSITION, INITIAL_Y_POSITION, initialHealth);
 		verticalVelocityMultiplier = 0;
 		horizontalVelocityMultiplier = 0;
 		audioManager = AudioManager.getInstance();
+		shieldActive = false;
+
+		initializeShieldVisual();
 	}
 
 	@Override
@@ -44,17 +64,54 @@ public class UserPlane extends FighterPlane {
 				this.setTranslateY(initialTranslateY);
 			}
 		}
+
+		updateShieldPosition();
+	}
+
+	private void initializeShieldVisual() {
+		shieldCircle = new Circle();
+		shieldCircle.setRadius(80);
+		shieldCircle.setFill(Color.rgb(0, 191, 255, 0.3)); // Blue semi-transparent color
+		shieldCircle.setStroke(Color.CYAN);
+		shieldCircle.setStrokeWidth(3);
+		shieldCircle.setVisible(false);
+		shieldCircle.setEffect(new Glow(0.8));
+
+		Platform.runLater(() -> {
+			javafx.scene.Node parentNode = this.getParent();
+			if (parentNode != null) {
+				if (parentNode instanceof Pane) {
+					((Pane) parentNode).getChildren().add(shieldCircle);
+				} else if (parentNode instanceof javafx.scene.Group) {
+					((javafx.scene.Group) parentNode).getChildren().add(shieldCircle);
+				}
+			}
+		});
+	}
+
+
+	private void updateShieldPosition() {
+		Platform.runLater(() -> {
+			if (shieldCircle != null && shieldCircle.isVisible()) {
+				double planeCenterX = getLayoutX() + getTranslateX() + IMAGE_HEIGHT / 2 + 50;
+				double planeCenterY = getLayoutY() + getTranslateY() + IMAGE_HEIGHT / 2;
+
+				shieldCircle.setCenterX(planeCenterX);
+				shieldCircle.setCenterY(planeCenterY);
+			}
+		});
 	}
 
 	@Override
 	public void takeDamage() {
-		super.takeDamage();  // Call to parent method for damage logic
+		if (!shieldActive) {
+			super.takeDamage();
+		}
 
-		// Apply the screen shake effect after damage
 		Platform.runLater(() -> {
-			javafx.scene.Node rootNode = getSceneRootNode();  // Assuming this method correctly gets the root node
+			javafx.scene.Node rootNode = getSceneRootNode();
 			if (rootNode != null) {
-				shakeScreen(rootNode);  // Trigger screen shake
+				shakeScreen(rootNode);
 			}
 		});
 	}
@@ -62,6 +119,7 @@ public class UserPlane extends FighterPlane {
 	@Override
 	public void updateActor() {
 		updatePosition();
+		checkShieldStatus();
 	}
 
 	@Override
@@ -104,29 +162,64 @@ public class UserPlane extends FighterPlane {
 		return numberOfKills;
 	}
 
+
+	/**
+	 * Increments the kill count and checks if the shield should be activated.
+	 */
 	public void incrementKillCount() {
 		numberOfKills++;
+		if (numberOfKills % KILLS_TO_ACTIVATE_SHIELD == 0) {
+			activateShield();
+		}
 	}
+
+	/**
+	 * Activates the shield for a limited duration.
+	 */
+	private void activateShield() {
+		shieldActive = true;
+		shieldActivatedTime = System.currentTimeMillis();
+		System.out.println("Shield activated!");
+		Platform.runLater(() -> shieldCircle.setVisible(true));
+	}
+
+	/**
+	 * Checks if the shield duration has expired and deactivates it if necessary.
+	 */
+	private void checkShieldStatus() {
+		if (shieldActive && (System.currentTimeMillis() - shieldActivatedTime) >= SHIELD_DURATION_MS) {
+			deactivateShield();
+		}
+	}
+
+	/**
+	 * Deactivates the shield.
+	 */
+	private void deactivateShield() {
+		shieldActive = false;
+		System.out.println("Shield deactivated!");
+		Platform.runLater(() -> shieldCircle.setVisible(false));
+	}
+
 	private void shakeScreen(javafx.scene.Node rootNode) {
-		// Ensure that the rootNode is an instance of a node that can be translated
 		if (rootNode != null) {
-			final double SHAKE_DISTANCE = 10.0;  // Maximum shake distance
-			final int SHAKE_TIMES = 5;           // Number of shake iterations
-			final int SHAKE_DURATION_MS = 100;   // Duration per shake
+			final double SHAKE_DISTANCE = 10.0;
+			final int SHAKE_TIMES = 5;
+			final int SHAKE_DURATION_MS = 100;
 			final double INITIAL_X = rootNode.getTranslateX();
 			final double INITIAL_Y = rootNode.getTranslateY();
 
 			// Create the shake effect
 			TranslateTransition[] shakes = new TranslateTransition[SHAKE_TIMES];
 			for (int i = 0; i < SHAKE_TIMES; i++) {
-				double offsetX = (Math.random() * 2 - 1) * SHAKE_DISTANCE;  // Random horizontal offset
-				double offsetY = (Math.random() * 2 - 1) * SHAKE_DISTANCE;  // Random vertical offset
+				double offsetX = (Math.random() * 2 - 1) * SHAKE_DISTANCE;
+				double offsetY = (Math.random() * 2 - 1) * SHAKE_DISTANCE;
 
 				shakes[i] = new TranslateTransition(Duration.millis(SHAKE_DURATION_MS), rootNode);
-				shakes[i].setByX(offsetX);  // Apply offset on X
-				shakes[i].setByY(offsetY);  // Apply offset on Y
+				shakes[i].setByX(offsetX);
+				shakes[i].setByY(offsetY);
 				shakes[i].setCycleCount(1);
-				shakes[i].setAutoReverse(true);  // Ensure it goes back to original position after shake
+				shakes[i].setAutoReverse(true);
 			}
 
 			// Clip the root node to prevent shaking content from overflowing
@@ -138,8 +231,8 @@ public class UserPlane extends FighterPlane {
 				shakes[i].setOnFinished(event -> {
 					// After each shake, reset position back to the original coordinates
 					TranslateTransition resetPosition = new TranslateTransition(Duration.millis(50), rootNode);
-					resetPosition.setToX(INITIAL_X);  // Set to the original X position
-					resetPosition.setToY(INITIAL_Y);  // Set to the original Y position
+					resetPosition.setToX(INITIAL_X);
+					resetPosition.setToY(INITIAL_Y);
 					resetPosition.play();
 
 					// If there is a next shake, start it
@@ -149,13 +242,16 @@ public class UserPlane extends FighterPlane {
 				});
 			}
 
-			// Start the first shake
 			shakes[0].play();
 		}
 	}
 	private javafx.scene.Node getSceneRootNode() {
-		// Get the root node from the scene, which could be a Group or a Pane.
-		return getScene().getRoot();  // Return as Node, which can be either Group, Pane, or other types
+		Scene scene = getScene();
+		if (scene != null) {
+			Parent root = scene.getRoot();
+			return root;
+		}
+		return null;
 	}
 
 }
