@@ -13,7 +13,10 @@ import javafx.scene.shape.Circle;
 import javafx.scene.paint.Color;
 import javafx.scene.effect.Glow;
 
-
+/**
+ * The UserPlane class represents the user's plane in the game, extending from FighterPlane.
+ * It handles user movement, health, projectile firing, and shield activation based on kills.
+ */
 public class UserPlane extends FighterPlane {
 
 	private static final String IMAGE_NAME = "userplane.png";
@@ -39,10 +42,14 @@ public class UserPlane extends FighterPlane {
 	private long shieldActivatedTime;
 
 	private Circle shieldCircle;
-
 	private LevelView levelView;
 
-
+	/**
+	 * Constructs a UserPlane object with the specified initial health.
+	 * Initializes movement multipliers, shield, and audio manager.
+	 *
+	 * @param initialHealth The initial health of the plane.
+	 */
 	public UserPlane(int initialHealth) {
 		super(IMAGE_NAME, IMAGE_HEIGHT, INITIAL_X_POSITION, INITIAL_Y_POSITION, initialHealth);
 		verticalVelocityMultiplier = 0;
@@ -53,6 +60,10 @@ public class UserPlane extends FighterPlane {
 		initializeShieldVisual();
 	}
 
+	/**
+	 * Updates the position of the user plane based on movement multipliers.
+	 * Ensures the plane does not move out of the vertical bounds.
+	 */
 	@Override
 	public void updatePosition() {
 		if (isMoving()) {
@@ -69,6 +80,10 @@ public class UserPlane extends FighterPlane {
 		updateShieldPosition();
 	}
 
+	/**
+	 * Initializes the visual representation of the shield as a circle.
+	 * The shield is initially invisible.
+	 */
 	private void initializeShieldVisual() {
 		shieldCircle = new Circle();
 		shieldCircle.setRadius(80);
@@ -90,7 +105,10 @@ public class UserPlane extends FighterPlane {
 		});
 	}
 
-
+	/**
+	 * Updates the position of the shield based on the user plane's position.
+	 * The shield is centered on the plane and follows its movements.
+	 */
 	private void updateShieldPosition() {
 		Platform.runLater(() -> {
 			if (shieldCircle != null && shieldCircle.isVisible()) {
@@ -103,6 +121,9 @@ public class UserPlane extends FighterPlane {
 		});
 	}
 
+	/**
+	 * Handles the logic for taking damage, including shield protection and screen shake effect.
+	 */
 	@Override
 	public void takeDamage() {
 		if (!shieldActive) {
@@ -117,12 +138,20 @@ public class UserPlane extends FighterPlane {
 		});
 	}
 
+	/**
+	 * Updates the user plane's position and checks the shield status.
+	 */
 	@Override
 	public void updateActor() {
 		updatePosition();
 		checkShieldStatus();
 	}
 
+	/**
+	 * Fires a projectile from the user plane.
+	 *
+	 * @return A new instance of UserProjectile.
+	 */
 	@Override
 	public ActiveActorDestructible fireProjectile() {
 		audioManager.playSoundEffect(SHOOTING_SFX_PATH);
@@ -131,38 +160,65 @@ public class UserPlane extends FighterPlane {
 		return new UserProjectile(PROJECTILE_X_POSITION, getProjectileYPosition(PROJECTILE_Y_POSITION_OFFSET));
 	}
 
+	/**
+	 * Checks if the plane is currently moving based on its velocity multipliers.
+	 *
+	 * @return true if the plane is moving, false otherwise.
+	 */
 	private boolean isMoving() {
 		return verticalVelocityMultiplier != 0 || horizontalVelocityMultiplier != 0;
 	}
 
+	/**
+	 * Moves the plane upwards.
+	 */
 	public void moveUp() {
 		verticalVelocityMultiplier = -1;
 	}
 
+	/**
+	 * Moves the plane downwards.
+	 */
 	public void moveDown() {
 		verticalVelocityMultiplier = 1;
 	}
 
+	/**
+	 * Moves the plane forward (to the right).
+	 */
 	public void moveForward() {
 		horizontalVelocityMultiplier = 1;
 	}
 
+	/**
+	 * Moves the plane backward (to the left).
+	 */
 	public void moveBackward() {
 		horizontalVelocityMultiplier = -1;
 	}
 
+	/**
+	 * Stops the vertical movement of the plane.
+	 */
 	public void stopVerticalMovement() {
 		verticalVelocityMultiplier = 0;
 	}
 
+	/**
+	 * Stops the horizontal movement of the plane.
+	 */
 	public void stopHorizontalMovement() {
 		horizontalVelocityMultiplier = 0;
 	}
 
+	/**
+	 * Gets the number of kills achieved by the user plane.
+	 *
+	 * @return The current kill count.
+	 */
 	public int getNumberOfKills() {
 		return numberOfKills;
 	}
-
 
 	/**
 	 * Increments the kill count and checks if the shield should be activated.
@@ -194,7 +250,7 @@ public class UserPlane extends FighterPlane {
 	}
 
 	/**
-	 * Deactivates the shield.
+	 * Deactivates the shield and makes it invisible.
 	 */
 	private void deactivateShield() {
 		shieldActive = false;
@@ -202,6 +258,11 @@ public class UserPlane extends FighterPlane {
 		Platform.runLater(() -> shieldCircle.setVisible(false));
 	}
 
+	/**
+	 * Creates a screen shake effect when the plane takes damage.
+	 *
+	 * @param rootNode The root node of the scene to apply the shake effect on.
+	 */
 	private void shakeScreen(javafx.scene.Node rootNode) {
 		if (rootNode != null) {
 			final double SHAKE_DISTANCE = 10.0;
@@ -246,6 +307,12 @@ public class UserPlane extends FighterPlane {
 			shakes[0].play();
 		}
 	}
+
+	/**
+	 * Retrieves the root node of the scene to apply the shake effect.
+	 *
+	 * @return The root node of the scene, or null if the scene is not available.
+	 */
 	private javafx.scene.Node getSceneRootNode() {
 		Scene scene = getScene();
 		if (scene != null) {
@@ -254,5 +321,4 @@ public class UserPlane extends FighterPlane {
 		}
 		return null;
 	}
-
 }

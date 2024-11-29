@@ -1,9 +1,17 @@
 package com.example.demo.actors.enemies;
 
 import com.example.demo.actors.ActiveActorDestructible;
+import com.example.demo.actors.FighterPlane;
 import com.example.demo.actors.projectiles.EnemyBulletProjectile;
 
+/**
+ * The Enemy2 class {@link Helicopter} represents a type of enemy helicopter in the game.
+ * It extends the Helicopter class and includes logic for horizontal movement,
+ * firing projectiles with a specific fire rate, and updating the position.
+ */
 public class Enemy2 extends Helicopter {
+
+    // Constant values for Enemy2's attributes
     private static final String IMAGE_NAME = "enemy2.png";
     private static final int IMAGE_HEIGHT = 50;
     private static final int HORIZONTAL_VELOCITY = -2;
@@ -12,44 +20,32 @@ public class Enemy2 extends Helicopter {
     private static final int INITIAL_HEALTH = 7;
     private static final double FIRE_RATE = .03;
 
-
+    /**
+     * Constructs an Enemy2 object with the specified initial position.
+     *
+     * @param initialXPos The initial X position of the enemy helicopter.
+     * @param initialYPos The initial Y position of the enemy helicopter.
+     */
     public Enemy2(double initialXPos, double initialYPos) {
         super(IMAGE_NAME, IMAGE_HEIGHT, initialXPos, initialYPos, INITIAL_HEALTH);
     }
 
+    /**
+     * Updates the position of the enemy helicopter.
+     * In this case, the helicopter only moves horizontally at a fixed velocity.
+     */
     @Override
     public void updatePosition() {
         moveHorizontally(HORIZONTAL_VELOCITY);
-//        moveVertically();
+        // Uncomment and modify for vertical movement if needed
+        // moveVertically();
     }
 
     /**
-     * Oscillates the helicopter vertically between the UPPER_BOUND and LOWER_BOUND.
-     */
-//    private void moveVertically() {
-//        if (moveUpCounter < MOVE_UP_DURATION) {
-//            // Move up while within the duration
-//            setY(getY() - VERTICAL_VELOCITY); // Move up by `verticalVelocity` units
-//            moveUpCounter++;
-//        } else {
-//            // Move down at a slower speed
-//            setY(getY() + DOWNWARD_VELOCITY);
-//
-//            // Reset the counter and reverse direction once it reaches the lower bound
-//            if (getY() >= LOWER_BOUND) {
-//                moveUpCounter = 0; // Reset the counter to start moving up again
-//            }
-//        }
-//
-//        // Ensure the helicopter stays within the upper bound by reversing direction if exceeded
-//        if (getY() <= UPPER_BOUND) {
-//            moveUpCounter = MOVE_UP_DURATION; // Start moving down if it hits the upper bound
-//        }
-//    }
-
-    /**
-     * Fires a projectile with a certain probability based on the fire rate.
-     * @return a new projectile if fired, otherwise null.
+     * Fires a projectile at a certain probability based on the defined fire rate.
+     * If a projectile is fired, it returns a new EnemyBulletProjectile; otherwise, returns null.
+     *
+     * @return A new EnemyBulletProjectile if fired, otherwise null.
      */
     public ActiveActorDestructible fireProjectile() {
         if (Math.random() < FIRE_RATE) {
@@ -62,6 +58,9 @@ public class Enemy2 extends Helicopter {
         return null;
     }
 
+    /**
+     * Updates the enemy helicopter's behavior, including movement and projectile firing.
+     */
     @Override
     public void updateActor() {
         updatePosition();
