@@ -46,6 +46,8 @@ public class LevelTwo extends LevelParent {
 
     /**
      * Checks if the game is over or if the player has reached the kill target to proceed to the next level.
+     * If the player is destroyed, the game ends, otherwise, if the player reaches the kill target,
+     * they advance to the next level.
      */
     @Override
     protected void checkIfGameOver() {
@@ -58,6 +60,7 @@ public class LevelTwo extends LevelParent {
 
     /**
      * Initializes friendly units for the level, such as the player character.
+     * The player is added to the scene at the start of the level.
      */
     @Override
     protected void initializeFriendlyUnits() {

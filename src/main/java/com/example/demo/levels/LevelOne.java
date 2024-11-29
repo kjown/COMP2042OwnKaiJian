@@ -7,10 +7,10 @@ import com.example.demo.actors.enemies.Enemy1;
 import javafx.stage.Stage;
 
 /**
- * LevelOne represents the first level of the game.
- * This class handles the initialization of the level,
- * including setting up the background, spawning enemies,
+ * Represents the first level of the game.
+ * This class handles the initialization of the level, spawning enemies,
  * checking game status, and transitioning to the next level.
+ * The player must defeat enough enemies to advance to the next level.
  */
 public class LevelOne extends LevelParent {
 
@@ -38,6 +38,7 @@ public class LevelOne extends LevelParent {
 	/**
 	 * Checks if the game is over by evaluating if the player has been destroyed
 	 * or if the kill target to advance has been reached.
+	 * The game ends if the player is destroyed, or the player advances to the next level if the kill target is reached.
 	 */
 	@Override
 	protected void checkIfGameOver() {
@@ -50,6 +51,7 @@ public class LevelOne extends LevelParent {
 
 	/**
 	 * Initializes friendly units (like the player) at the start of the level.
+	 * This method adds the user (player) to the scene.
 	 */
 	@Override
 	protected void initializeFriendlyUnits() {
@@ -58,6 +60,7 @@ public class LevelOne extends LevelParent {
 
 	/**
 	 * Spawns enemy units during the level based on a predefined probability.
+	 * This method determines how many enemies should spawn and handles the spawning.
 	 */
 	@Override
 	protected void spawnEnemyUnits() {
@@ -71,6 +74,7 @@ public class LevelOne extends LevelParent {
 
 	/**
 	 * Creates and returns a LevelView object for this level.
+	 * This view is used to display the graphical interface of LevelOne.
 	 *
 	 * @return A LevelView instance for LevelOne.
 	 */
@@ -81,6 +85,7 @@ public class LevelOne extends LevelParent {
 
 	/**
 	 * Logs the initialization details of the level, including screen dimensions.
+	 * This is primarily for debugging and logging purposes.
 	 *
 	 * @param screenHeight The height of the game screen.
 	 * @param screenWidth The width of the game screen.
@@ -90,7 +95,7 @@ public class LevelOne extends LevelParent {
 	}
 
 	/**
-	 * Adds the player to the scene at the start of the level.
+	 * Adds the user (player) to the scene at the start of the level.
 	 */
 	private void addUserToScene() {
 		getRoot().getChildren().add(getUser());
@@ -107,6 +112,7 @@ public class LevelOne extends LevelParent {
 
 	/**
 	 * Calculates the number of enemies that need to be spawned based on the total count.
+	 * Ensures that the total number of enemies does not exceed the predefined limit.
 	 *
 	 * @return The number of enemies to be spawned.
 	 */
@@ -117,6 +123,7 @@ public class LevelOne extends LevelParent {
 
 	/**
 	 * Randomly determines if an enemy should be spawned based on a predefined probability.
+	 * The probability of spawning an enemy is determined by ENEMY_SPAWN_PROBABILITY.
 	 *
 	 * @return true if an enemy should spawn, false otherwise.
 	 */
@@ -125,7 +132,7 @@ public class LevelOne extends LevelParent {
 	}
 
 	/**
-	 * Spawns a new enemy at a random Y position within the allowable game area.
+	 * Spawns a new enemy of type {@link Enemy1} at a random Y position within the allowable game area.
 	 */
 	private void spawnEnemy() {
 		double newEnemyInitialYPosition = generateRandomEnemyYPosition();
@@ -135,6 +142,7 @@ public class LevelOne extends LevelParent {
 
 	/**
 	 * Generates a random Y position for a new enemy spawn.
+	 * This ensures that enemies are spawned at different vertical positions on the screen.
 	 *
 	 * @return A random Y position within the allowable bounds for enemy spawning.
 	 */

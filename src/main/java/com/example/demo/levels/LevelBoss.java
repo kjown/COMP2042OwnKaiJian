@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 /**
  * Represents the final Boss level of the game.
  * This level pits the player against a single boss enemy. Defeating the boss completes the game.
+ * Extends the {@link LevelParent} class and overrides key methods to handle boss-specific behavior.
  */
 public class LevelBoss extends LevelParent {
 
@@ -33,7 +34,8 @@ public class LevelBoss extends LevelParent {
 	}
 
 	/**
-	 * Initializes the boss entity and logs the initialization.
+	 * Initializes the boss entity and logs the initialization to the console.
+	 * Creates a new instance of the Boss enemy.
 	 */
 	private void initializeBoss() {
 		this.boss = new Boss(this.levelView);
@@ -42,6 +44,7 @@ public class LevelBoss extends LevelParent {
 
 	/**
 	 * Initializes friendly units for the level, such as the player character.
+	 * Adds the user (player) to the scene.
 	 */
 	@Override
 	protected void initializeFriendlyUnits() {
@@ -49,7 +52,7 @@ public class LevelBoss extends LevelParent {
 	}
 
 	/**
-	 * Adds the user (player) to the scene.
+	 * Adds the user (player) to the game scene.
 	 */
 	private void addUserToScene() {
 		getRoot().getChildren().add(getUser());
@@ -57,6 +60,7 @@ public class LevelBoss extends LevelParent {
 
 	/**
 	 * Checks if the game is over. The game ends when the player is destroyed or the boss is defeated.
+	 * If the user is destroyed, the game will lose. If the boss is destroyed, the game will win.
 	 */
 	@Override
 	protected void checkIfGameOver() {
@@ -74,6 +78,7 @@ public class LevelBoss extends LevelParent {
 
 	/**
 	 * Spawns the boss enemy if it hasn't already been added to the scene.
+	 * Only spawns the boss when there are no existing enemy units in the scene.
 	 */
 	@Override
 	protected void spawnEnemyUnits() {
@@ -93,8 +98,9 @@ public class LevelBoss extends LevelParent {
 
 	/**
 	 * Creates and initializes the view for this level.
+	 * Instantiates a {@link LevelViewLevelBoss} object to manage the user interface and view-specific behavior.
 	 *
-	 * @return A `LevelViewLevelBoss` object configured for this level.
+	 * @return A {@link LevelViewLevelBoss} object configured for this level.
 	 */
 	@Override
 	protected LevelView instantiateLevelView() {

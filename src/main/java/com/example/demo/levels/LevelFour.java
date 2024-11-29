@@ -9,8 +9,9 @@ import javafx.stage.Stage;
 
 /**
  * Represents the fourth level of the game.
- * This level introduces two new enemy types: `Enemy4` and `Enemy5`.
- * The player must defeat `Enemy4` to proceed to the next level.
+ * This level introduces two new enemy types: {@link Enemy4} and {@link Enemy5}.
+ * The player must defeat {@link Enemy4} to proceed to the next level.
+ * The game continues until the player is destroyed or {@link Enemy4} is defeated.
  */
 public class LevelFour extends LevelParent {
 
@@ -37,7 +38,8 @@ public class LevelFour extends LevelParent {
 
     /**
      * Checks if the game is over. The game is considered over if the player is destroyed
-     * or if `Enemy4` has been defeated.
+     * or if {@link Enemy4} has been defeated.
+     * If the player is destroyed, the game is lost. If {@link Enemy4} is defeated, the game proceeds to the next level.
      */
     @Override
     protected void checkIfGameOver() {
@@ -49,9 +51,9 @@ public class LevelFour extends LevelParent {
     }
 
     /**
-     * Checks if `Enemy4` has been destroyed.
+     * Checks if {@link Enemy4} has been destroyed.
      *
-     * @return true if `Enemy4` is destroyed or null, false otherwise.
+     * @return true if {@link Enemy4} is destroyed or null, false otherwise.
      */
     private boolean isEnemy4Destroyed() {
         return enemy4 == null || enemy4.isDestroyed();
@@ -59,6 +61,7 @@ public class LevelFour extends LevelParent {
 
     /**
      * Initializes friendly units for the level, such as the player character.
+     * This method adds the user (player) to the scene.
      */
     @Override
     protected void initializeFriendlyUnits() {
@@ -73,8 +76,8 @@ public class LevelFour extends LevelParent {
     }
 
     /**
-     * Spawns enemy units in the level. This includes a single `Enemy4` and multiple `Enemy5` instances.
-     * The player must defeat `Enemy4` to progress.
+     * Spawns enemy units in the level. This includes a single {@link Enemy4} and multiple {@link Enemy5} instances.
+     * The player must defeat {@link Enemy4} to progress.
      */
     @Override
     protected void spawnEnemyUnits() {
@@ -83,7 +86,8 @@ public class LevelFour extends LevelParent {
     }
 
     /**
-     * Spawns `Enemy4` if it is not already present in the level.
+     * Spawns {@link Enemy4} if it is not already present in the level.
+     * This method ensures that only one instance of {@link Enemy4} exists in the scene at a time.
      */
     private void spawnEnemy4IfNotPresent() {
         if (getCurrentNumberOfEnemies() == 0) {
@@ -94,7 +98,8 @@ public class LevelFour extends LevelParent {
     }
 
     /**
-     * Spawns additional enemies (`Enemy5`) up to the limit of 5 instances.
+     * Spawns additional enemies ({@link Enemy5}) up to the limit of 5 instances.
+     * These enemies are spawned randomly, ensuring a variety of gameplay.
      */
     private void spawnAdditionalEnemies() {
         if (getCurrentNumberOfEnemies() < TOTAL_ENEMIES - 1) {
@@ -106,6 +111,7 @@ public class LevelFour extends LevelParent {
 
     /**
      * Generates a random Y position for enemy spawning.
+     * This value ensures that the enemies are spread across the screen in different vertical positions.
      *
      * @return A double value representing the Y position.
      */
@@ -115,8 +121,9 @@ public class LevelFour extends LevelParent {
 
     /**
      * Creates and initializes the view for this level.
+     * Instantiates a {@link LevelView} object that is specifically configured for this level.
      *
-     * @return A `LevelView` object configured for this level.
+     * @return A {@link LevelView} object configured for this level.
      */
     @Override
     protected LevelView instantiateLevelView() {
