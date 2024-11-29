@@ -10,12 +10,24 @@ import javafx.stage.Stage;
 import com.example.demo.controller.Controller;
 import com.example.demo.controller.AudioManager;
 
+/**
+ * The EndMenu class represents the end screen of the game, providing the user with options to
+ * go back to the main menu, restart the game, or exit the game.
+ */
 public class EndMenu {
     private final Stage stage;
     private final int screenWidth;
     private final int screenHeight;
     private Controller controller;
 
+    /**
+     * Constructor to initialize the EndMenu.
+     *
+     * @param stage The primary stage of the application.
+     * @param screenWidth The width of the screen.
+     * @param screenHeight The height of the screen.
+     * @param controller The controller that manages the game flow.
+     */
     public EndMenu(Stage stage, int screenWidth, int screenHeight, Controller controller) {
         this.stage = stage;
         this.screenWidth = screenWidth;
@@ -23,6 +35,9 @@ public class EndMenu {
         this.controller = controller;
     }
 
+    /**
+     * Displays the EndMenu, showing the game over message and the available options.
+     */
     public void show() {
         Text title = new Text("Game Over");
         title.setStyle("-fx-font-size: 100px; -fx-font-weight: bold; -fx-fill: linear-gradient(from 0% 0% to 0% 100%, #B0C4DE, #DADBDD, #FDDC5C); -fx-stroke-width: 1px; -fx-effect: dropshadow(three-pass-box, rgba(255,255,255,0.8), 10, 0.0, 0, 0);");
@@ -30,6 +45,7 @@ public class EndMenu {
         Font retroFont = Font.loadFont(getClass().getResourceAsStream("/com/example/demo/fonts/PressStart2P-Regular.ttf"), 50);
         title.setFont(retroFont);
 
+        // Create the buttons with actions
         Button menuButton = createStyledButton("Main Menu", retroFont);
         Button restartButton = createStyledButton("Restart", retroFont);
         Button exitButton = createStyledButton("Exit", retroFont);
@@ -38,6 +54,7 @@ public class EndMenu {
         restartButton.setOnAction(e -> restartGame());
         exitButton.setOnAction(e -> stage.close());
 
+        // Layout for the EndMenu
         VBox layout = new VBox(20, title, menuButton, restartButton, exitButton);
         layout.setAlignment(Pos.CENTER);
         layout.setBackground(new Background(new BackgroundFill(javafx.scene.paint.Color.BLACK, null, null)));
@@ -46,6 +63,13 @@ public class EndMenu {
         stage.setScene(scene);
     }
 
+    /**
+     * Creates a styled button with a given text and font.
+     *
+     * @param text The text displayed on the button.
+     * @param font The font used for the button's text.
+     * @return The styled button.
+     */
     public Button createStyledButton(String text, Font font) {
         Button button = new Button(text);
         button.setFont(font);
@@ -55,6 +79,9 @@ public class EndMenu {
         return button;
     }
 
+    /**
+     * Navigates to the main menu by creating a new Controller and showing the StartMenu.
+     */
     public void goToMainMenu() {
         controller = new Controller(stage, screenWidth, screenHeight);
 
@@ -64,11 +91,19 @@ public class EndMenu {
         stage.show();
     }
 
+    /**
+     * Restarts the game by going to the first level and resuming background music.
+     */
     private void restartGame() {
         controller.goToLevel(Controller.LEVEL_ONE_CLASS_NAME);
         AudioManager.getInstance().resumeBackgroundMusic();
     }
 
+    /**
+     * Adds hover effects to the given button, including text changes and style adjustments.
+     *
+     * @param button The button to which the hover effects will be added.
+     */
     private void addHoverEffects(Button button) {
         button.setOnMouseEntered(e -> {
             button.setText("> " + button.getText());

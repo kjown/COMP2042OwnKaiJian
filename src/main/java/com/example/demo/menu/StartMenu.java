@@ -10,6 +10,11 @@ import javafx.stage.Stage;
 import com.example.demo.controller.Controller;
 import com.example.demo.controller.AudioManager;
 
+/**
+ * The StartMenu class represents the start screen of the game.
+ * It provides options for starting the game, accessing settings, and exiting the game.
+ * It also displays the high score and a cutscene with a typing effect before starting the game.
+ */
 public class StartMenu {
     private final Stage stage;
     private final int screenWidth;
@@ -19,6 +24,14 @@ public class StartMenu {
     // High score, should be dynamically retrieved or calculated
     private int highScore = 0;
 
+    /**
+     * Constructor to initialize the StartMenu.
+     *
+     * @param stage The stage (window) where the start menu will be displayed.
+     * @param screenWidth The width of the screen.
+     * @param screenHeight The height of the screen.
+     * @param controller The controller for managing game logic and settings.
+     */
     public StartMenu(Stage stage, int screenWidth, int screenHeight, Controller controller) {
         this.stage = stage;
         this.screenWidth = screenWidth;
@@ -26,14 +39,20 @@ public class StartMenu {
         this.controller = controller;
     }
 
-    // Display the Start Menu
+    /**
+     * Displays the start menu scene with the high score, title, and buttons.
+     */
     public void show() {
         VBox layout = createLayout();
         Scene scene = new Scene(layout, screenWidth, screenHeight);
         stage.setScene(scene);
     }
 
-    // Create and arrange UI components in the layout
+    /**
+     * Creates the layout for the start menu, including the title, high score, and buttons.
+     *
+     * @return The VBox layout containing the start menu components.
+     */
     private VBox createLayout() {
         Text title = createTitleText("Sky Battle");
         Text highScoreText = createHighScoreText();
@@ -51,7 +70,12 @@ public class StartMenu {
         return layout;
     }
 
-    // Create the title text with style
+    /**
+     * Creates the title text with a specified style.
+     *
+     * @param text The text to be displayed as the title.
+     * @return A Text object for the title.
+     */
     private Text createTitleText(String text) {
         Text title = new Text(text);
         title.setStyle("-fx-font-size: 100px; -fx-font-weight: bold; " +
@@ -61,7 +85,11 @@ public class StartMenu {
         return title;
     }
 
-    // Create the high score text
+    /**
+     * Creates the high score text, displaying the current high score.
+     *
+     * @return A Text object for the high score.
+     */
     private Text createHighScoreText() {
         Text highScoreText = new Text("High Score: " + highScore);
         highScoreText.setFont(loadRetroFont(20));
@@ -69,17 +97,33 @@ public class StartMenu {
         return highScoreText;
     }
 
-    // Load the custom retro font
+    /**
+     * Loads the custom retro font with the default size of 50.
+     *
+     * @return The Font object for the retro font.
+     */
     private Font loadRetroFont() {
         return loadRetroFont(50); // Default size if not specified
     }
 
-    // Load the custom retro font with a specific size
+    /**
+     * Loads the custom retro font with a specified size.
+     *
+     * @param size The font size to be used.
+     * @return The Font object for the retro font with the specified size.
+     */
     private Font loadRetroFont(int size) {
         return Font.loadFont(getClass().getResourceAsStream("/com/example/demo/fonts/PressStart2P-Regular.ttf"), size);
     }
 
-    // Create a styled button with hover effects and a click action
+    /**
+     * Creates a styled button with hover effects and an action to be executed when clicked.
+     *
+     * @param text The text displayed on the button.
+     * @param font The font to be used for the button text.
+     * @param action The action to be performed when the button is clicked.
+     * @return The styled Button object.
+     */
     private Button createStyledButton(String text, Font font, Runnable action) {
         Button button = new Button(text);
         button.setFont(font);
@@ -92,7 +136,11 @@ public class StartMenu {
         return button;
     }
 
-    // Add hover effects to a button, including hover sound
+    /**
+     * Adds hover effects to a button, including a hover sound effect.
+     *
+     * @param button The button to which the hover effects will be applied.
+     */
     private void addHoverEffects(Button button) {
         button.setOnMouseEntered(e -> {
             applyHoverStyle(button, true);
@@ -104,7 +152,12 @@ public class StartMenu {
         button.setOnMouseReleased(e -> scaleButton(button, 1.0));
     }
 
-    // Apply hover style to a button
+    /**
+     * Applies the hover style to a button (changes text and style).
+     *
+     * @param button The button to apply the hover style to.
+     * @param isHovered Whether the button is hovered or not.
+     */
     private void applyHoverStyle(Button button, boolean isHovered) {
         if (isHovered) {
             button.setText("> " + button.getText());
@@ -121,13 +174,20 @@ public class StartMenu {
         }
     }
 
-    // Scale a button when pressed/released
+    /**
+     * Scales the button when pressed/released to give a visual effect.
+     *
+     * @param button The button to scale.
+     * @param scale The scale factor to apply.
+     */
     private void scaleButton(Button button, double scale) {
         button.setScaleX(scale);
         button.setScaleY(scale);
     }
 
-    // Action to start the game
+    /**
+     * Action to start the game by displaying the cutscene.
+     */
     private void startGame() {
         try {
             showCutscene();
@@ -136,14 +196,18 @@ public class StartMenu {
         }
     }
 
-    // Action to show the settings menu
+    /**
+     * Shows the settings menu when the settings button is clicked.
+     */
     private void showSettings() {
         System.out.println("Showing settings...");
         SettingsMenu settingsMenu = new SettingsMenu(stage, screenWidth, screenHeight, controller);
         settingsMenu.show();
     }
 
-    // Show cutscene with typing effect
+    /**
+     * Displays a cutscene with a typing effect and a prompt to start the game after the cutscene finishes.
+     */
     private void showCutscene() {
         // Story text for the cutscene
         String storyText = "In the skies above, a battle rages between rival forces. You are the chosen hero...\n" +
@@ -169,7 +233,6 @@ public class StartMenu {
 
         AudioManager.getInstance().playSoundEffect("/com/example/demo/music/typing_sound.mp3");
 
-
         // Start typing effect
         typeWriterEffect(cutsceneText, storyText, () -> {
             // Prompt the user to press SPACE to proceed
@@ -187,6 +250,13 @@ public class StartMenu {
         });
     }
 
+    /**
+     * Creates a typewriter effect for the cutscene text.
+     *
+     * @param textNode The Text node to display the effect.
+     * @param fullText The full text to be typed out.
+     * @param onFinish The action to perform after the typing effect is complete.
+     */
     private void typeWriterEffect(Text textNode, String fullText, Runnable onFinish) {
         StringBuilder currentText = new StringBuilder();
         new Thread(() -> {
@@ -205,5 +275,4 @@ public class StartMenu {
             javafx.application.Platform.runLater(onFinish);
         }).start();
     }
-
 }

@@ -15,13 +15,31 @@ import javafx.stage.Stage;
 import javafx.scene.media.AudioClip; // Import AudioClip for sound effects
 import com.example.demo.controller.Controller;
 
+/**
+ * The SettingsMenu class represents the settings menu in the game.
+ * It provides options to adjust the sound settings and navigate to the controls page or back to the main menu.
+ */
 public class SettingsMenu {
+
+    // Stage for the current scene, width, and height of the screen
     private final Stage stage;
     private final int screenWidth;
     private final int screenHeight;
-    private final Controller controller;
-    private final AudioClip hoverSound; // AudioClip for the hover sound effect
 
+    // Controller for managing game logic
+    private final Controller controller;
+
+    // AudioClip for the hover sound effect
+    private final AudioClip hoverSound;
+
+    /**
+     * Constructor that initializes the SettingsMenu.
+     *
+     * @param stage The stage (window) in which the settings menu will be displayed.
+     * @param screenWidth The width of the screen.
+     * @param screenHeight The height of the screen.
+     * @param controller The controller that manages the game logic and settings.
+     */
     public SettingsMenu(Stage stage, int screenWidth, int screenHeight, Controller controller) {
         this.stage = stage;
         this.screenWidth = screenWidth;
@@ -32,17 +50,21 @@ public class SettingsMenu {
         this.hoverSound = new AudioClip(getClass().getResource("/com/example/demo/music/menu-button-hover.wav").toExternalForm());
     }
 
+    /**
+     * Displays the settings menu with the available options such as sound toggle and navigation buttons.
+     */
     public void show() {
+        // Title for the settings menu
         Text settingsTitle = new Text("Settings");
         Font customFontSettings = Font.loadFont(getClass().getResourceAsStream("/com/example/demo/fonts/PressStart2P-Regular.ttf"), 30);
         settingsTitle.setFont(customFontSettings);
         settingsTitle.setStyle("-fx-font-weight: bold; -fx-fill: #FFFFFF;");
 
-        // Create back button with custom font
+        // Back button to return to the start menu
         Button backButton = createTextButton("Back", customFontSettings);
         backButton.setOnAction(e -> goBackToStartMenu());
 
-        // Create controls button
+        // Button to navigate to the controls page
         Button controlsButton = createTextButton("Controls", customFontSettings);
         controlsButton.setOnAction(e -> goToControlsPage());
 
@@ -50,15 +72,23 @@ public class SettingsMenu {
         ToggleButton soundToggle = createSoundToggle(customFontSettings);
         addToggleButtonHoverEffects(soundToggle); // Add hover effects for the toggle button
 
+        // VBox layout to arrange the elements vertically
         VBox layout = new VBox(20, settingsTitle, soundToggle, controlsButton, backButton);
         layout.setAlignment(Pos.CENTER);
         layout.setPadding(new Insets(20));
         layout.setBackground(new Background(new BackgroundFill(Color.BLACK, null, null)));
 
+        // Create and set the scene
         Scene settingsScene = new Scene(layout, screenWidth, screenHeight);
         stage.setScene(settingsScene);
     }
 
+    /**
+     * Creates a toggle button for controlling the sound (on/off).
+     *
+     * @param customFont The font to be used for the button text.
+     * @return A ToggleButton for controlling the sound.
+     */
     private ToggleButton createSoundToggle(Font customFont) {
         ToggleButton soundToggle = new ToggleButton();
         soundToggle.setFont(customFont);
@@ -86,6 +116,13 @@ public class SettingsMenu {
         return soundToggle;
     }
 
+    /**
+     * Creates a button with the given text and font.
+     *
+     * @param text The text displayed on the button.
+     * @param font The font used for the button text.
+     * @return A Button with the specified text and font.
+     */
     private Button createTextButton(String text, Font font) {
         Button button = new Button(text);
         button.setFont(font);
@@ -94,6 +131,12 @@ public class SettingsMenu {
         return button;
     }
 
+    /**
+     * Adds hover effects to a button such as changing text, style, and opacity.
+     * Also plays a hover sound effect when the mouse enters the button.
+     *
+     * @param button The button to which the hover effects will be added.
+     */
     private void addHoverEffects(Button button) {
         button.setOnMouseEntered(e -> {
             playHoverSound(); // Play sound when hovered
@@ -116,6 +159,12 @@ public class SettingsMenu {
         });
     }
 
+    /**
+     * Adds hover effects to a toggle button such as changing style and opacity.
+     * Also plays a hover sound effect when the mouse enters the toggle button.
+     *
+     * @param toggleButton The toggle button to which the hover effects will be added.
+     */
     private void addToggleButtonHoverEffects(ToggleButton toggleButton) {
         toggleButton.setOnMouseEntered(e -> {
             playHoverSound(); // Play sound when hovered
@@ -136,18 +185,26 @@ public class SettingsMenu {
         });
     }
 
-    // Method to play hover sound effect
+    /**
+     * Plays the hover sound effect when a button or toggle button is hovered over.
+     */
     private void playHoverSound() {
         if (hoverSound != null) {
             hoverSound.play();
         }
     }
 
+    /**
+     * Navigates back to the start menu.
+     */
     private void goBackToStartMenu() {
         StartMenu startMenu = new StartMenu(stage, screenWidth, screenHeight, controller);
         startMenu.show();
     }
 
+    /**
+     * Navigates to the controls page.
+     */
     private void goToControlsPage() {
         ControlsMenu controlsMenu = new ControlsMenu(stage, screenWidth, screenHeight, controller);
         controlsMenu.show();
