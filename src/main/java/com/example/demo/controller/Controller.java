@@ -11,7 +11,12 @@ import javafx.scene.control.Alert.AlertType;
 import java.util.Observable;
 import java.util.Observer;
 
-public class Controller implements Observer{
+/**
+ * The Controller class manages the game flow, including transitioning between levels,
+ * managing background music, and handling user input.
+ * It also follows the Observer pattern to listen for level transitions.
+ */
+public class Controller implements Observer {
 
 	public static final String LEVEL_ONE_CLASS_NAME = "com.example.demo.levels.LevelOne";
 	private final Stage stage;
@@ -23,7 +28,7 @@ public class Controller implements Observer{
 	private final AudioManager audioManager;
 
 	/**
-	 * Constructor for the Controller class with the specified stage, screen width and screen height
+	 * Constructs a Controller instance with the specified stage, screen width, and height.
 	 *
 	 * @param stage       the primary stage for this application, onto which
 	 *                   the application scene can be set.
@@ -40,7 +45,8 @@ public class Controller implements Observer{
 	}
 
 	/**
-	 * Launch the game by displaying the primary stage and loading the first level
+	 * Launches the game by displaying the primary stage and loading the first level.
+	 * Initializes the background music for the game and transitions to the first level.
 	 */
 	public void launchGame() {
 		System.out.println("Launching game...");
@@ -57,7 +63,8 @@ public class Controller implements Observer{
 	}
 
 	/**
-	 * Load and display the level with the specified class name
+	 * Loads and displays the level with the specified class name.
+	 * The current level is stopped, and a new level is instantiated and displayed.
 	 *
 	 * @param className the class name of the level to load
 	 */
@@ -100,27 +107,44 @@ public class Controller implements Observer{
 	}
 
 	// Getter and Setter for the sound state
+
+	/**
+	 * Returns whether the background music is currently on or off.
+	 *
+	 * @return true if the background music is on, false otherwise
+	 */
 	public boolean isBackgroundMusicOn() {
 		return audioManager.isBackgroundMusicOn();
 	}
 
+	/**
+	 * Sets the background music on or off.
+	 *
+	 * @param isOn true to turn on the background music, false to turn it off
+	 */
 	public void setBackgroundMusicOn(boolean isOn) {
 		audioManager.setBackgroundMusicOn(isOn);
 	}
 
+	/**
+	 * Pauses the background music if it is currently playing.
+	 */
 	public void pauseBackgroundMusic() {
 		audioManager.pauseBackgroundMusic();
 	}
 
+	/**
+	 * Resumes the background music if it is paused or stopped.
+	 */
 	public void resumeBackgroundMusic() {
 		audioManager.resumeBackgroundMusic();
 	}
 
 	/**
-	 * Updates the observer with the specified observable object and argument
+	 * Updates the observer with the specified observable object and argument.
 	 *
-	 * @param observable the observable object.
-	 * @param arg        an argument passed to the {@code notifyObservers} method.
+	 * @param observable the observable object
+	 * @param arg        the argument passed to the {@code notifyObservers} method
 	 */
 	public void update(Observable observable, Object arg) {
 		if (arg instanceof String nextLevelClassName) {
@@ -131,7 +155,7 @@ public class Controller implements Observer{
 	}
 
 	/**
-	 * Display an alert with the specified message and exception details
+	 * Displays an alert with the specified message and exception details.
 	 *
 	 * @param message the message to display in the alert
 	 * @param e       the exception to display in the alert
@@ -145,7 +169,7 @@ public class Controller implements Observer{
 	}
 
 	/**
-	 * Transitions to the main menu.
+	 * Transitions to the main menu by displaying the StartMenu.
 	 */
 	public void goToMainMenu() {
 		StartMenu startMenu = new StartMenu(stage, screenWidth, screenHeight, this);

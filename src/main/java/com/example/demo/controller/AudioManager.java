@@ -3,6 +3,11 @@ package com.example.demo.controller;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
+/**
+ * The AudioManager class is responsible for managing the background music and sound effects in the game.
+ * It ensures that the audio is controlled globally within the application and follows the Singleton design pattern
+ * to provide a single instance for audio management.
+ */
 public class AudioManager {
 
     private static AudioManager instance;
@@ -12,10 +17,16 @@ public class AudioManager {
 
     private boolean isBackgroundMusicOn = true;
 
-    // Private constructor to prevent direct instantiation
+    /**
+     * Private constructor to prevent direct instantiation of the AudioManager class.
+     */
     private AudioManager() {}
 
-    // Public method to provide a single instance
+    /**
+     * Returns the singleton instance of AudioManager.
+     *
+     * @return the singleton instance of AudioManager
+     */
     public static AudioManager getInstance() {
         if (instance == null) {
             synchronized (AudioManager.class) {
@@ -27,6 +38,11 @@ public class AudioManager {
         return instance;
     }
 
+    /**
+     * Initializes the background music with the specified music file path.
+     *
+     * @param musicPath the file path of the background music
+     */
     public void initializeBackgroundMusic(String musicPath) {
         if (backgroundMusicPlayer == null) {
             Media media = new Media(getClass().getResource(musicPath).toExternalForm());
@@ -39,6 +55,12 @@ public class AudioManager {
         }
     }
 
+    /**
+     * Plays a sound effect from the specified file path.
+     * If a sound effect is already playing, it is stopped before the new sound effect is played.
+     *
+     * @param soundPath the file path of the sound effect
+     */
     public void playSoundEffect(String soundPath) {
         if (soundEffectPlayer != null) {
             soundEffectPlayer.stop();
@@ -52,7 +74,8 @@ public class AudioManager {
     }
 
     /**
-     * Play the background music.
+     * Resumes playing the background music if it is paused or stopped.
+     * If the background music is not initialized, it will be initialized with the default music path.
      */
     public void resumeBackgroundMusic() {
         if (backgroundMusicPlayer == null) {
@@ -65,7 +88,7 @@ public class AudioManager {
     }
 
     /**
-     * Pause the background music.
+     * Pauses the background music if it is currently playing.
      */
     public void pauseBackgroundMusic() {
         if (backgroundMusicPlayer != null && backgroundMusicPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
@@ -74,9 +97,11 @@ public class AudioManager {
     }
 
     /**
-     * Setter for the background music on/off state.
+     * Sets the background music on or off.
+     * If the background music is turned on, it will resume playing.
+     * If turned off, it will pause the music.
      *
-     * @param isOn true to turn on the music, false to turn off
+     * @param isOn true to turn on the background music, false to turn it off
      */
     public void setBackgroundMusicOn(boolean isOn) {
         isBackgroundMusicOn = isOn;
@@ -88,7 +113,7 @@ public class AudioManager {
     }
 
     /**
-     * Getter for the background music on/off state.
+     * Returns whether the background music is currently on or off.
      *
      * @return true if the background music is on, false otherwise
      */
