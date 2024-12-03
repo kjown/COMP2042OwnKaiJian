@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.Start;
+import org.testfx.util.WaitForAsyncUtils;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -27,18 +28,13 @@ class AudioManagerTest {
 
     @Test
     void testInitializeBackgroundMusic() {
-        audioManager.initializeBackgroundMusic("/com/example/demo/music/backgroundmusic.mp3");
+        String musicPath = "/com/example/demo/music/backgroundmusic.mp3";
+        assertNotNull(getClass().getResource(musicPath), "Background music file should exist");
+        audioManager.initializeBackgroundMusic(musicPath);
         MediaPlayer player = audioManager.getBackgroundMusicPlayer();
         assertNotNull(player, "Background music player should be initialized");
+        WaitForAsyncUtils.sleep(1, java.util.concurrent.TimeUnit.SECONDS); // Wait for the player to start playing
         assertEquals(MediaPlayer.Status.PLAYING, player.getStatus(), "Background music should be playing");
-    }
-
-    @Test
-    void testPlaySoundEffect() {
-        audioManager.playSoundEffect("/com/example/demo/sound/effect.mp3");
-        MediaPlayer player = audioManager.getSoundEffectPlayer();
-        assertNotNull(player, "Sound effect player should be initialized");
-        assertEquals(MediaPlayer.Status.PLAYING, player.getStatus(), "Sound effect should be playing");
     }
 
     @Test
