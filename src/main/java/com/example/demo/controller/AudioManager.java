@@ -121,4 +121,21 @@ public class AudioManager {
         return isBackgroundMusicOn;
     }
 
+    /**
+     * Getter for the background music player.
+     *
+     * @return the background music player
+     */
+    public MediaPlayer getBackgroundMusicPlayer() {
+        return backgroundMusicPlayer;
+    }
+
+    /**
+     * Getter for the sound effect player.
+     *
+     * @return the sound effect player
+     */
+    public MediaPlayer getSoundEffectPlayer() {
+        return soundEffectPlayer;
+    }
 }
