@@ -4,7 +4,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import com.example.demo.menu.EndMenu;
-import com.example.demo.actors.enemies.Helicopter;
+import com.example.demo.actors.Helicopter;
 import com.example.demo.controller.Controller;
 import com.example.demo.view.LevelView;
 import com.example.demo.actors.ActiveActorDestructible;
