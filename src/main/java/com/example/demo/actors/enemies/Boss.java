@@ -118,7 +118,8 @@ public class Boss extends FighterPlane {
 	@Override
 	public void updatePosition() {
 		double initialTranslateY = getTranslateY();
-		moveVertically(getNextMove());
+		int move = getNextMove();
+		moveVertically(move);
 		if (isOutOfBounds()) {
 			resetVerticalPosition(initialTranslateY);
 		}
@@ -319,5 +320,13 @@ public class Boss extends FighterPlane {
 	 */
 	private void resetVerticalPosition(double initialTranslateY) {
 		setTranslateY(initialTranslateY);
+	}
+
+	public boolean isShielded() {
+		return isShielded;
+	}
+
+	private void moveVertically(int move) {
+		setTranslateY(getTranslateY() + move);
 	}
 }
