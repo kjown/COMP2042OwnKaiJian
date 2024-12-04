@@ -1,6 +1,8 @@
 # COMP2042 Coursework
 ## 👤Author
-- Own Kai Jian (20611060)
+Own Kai Jian 20611060
+
+[Github Repository](https://github.com/kjown/COMP2042.git)
 
 ## 📁Folder Structure
 ```
@@ -10,16 +12,28 @@
 └── javadoc 
 └── Demo.mp4
 └── OwnKaiJian_IntelliJ_21.zip
-
 ```
-## **Github**: Provide link to GitHub repo
 
 ## Compilation Instructions
 #### Follow these steps to set up and run the project locally:
-Ensure you have the correct java version and maven installed
-> git clone https://github.com/kjown/COMP2042.git
+Ensure you have the correct java version and maven installed:
+1. Maven (v3.9 or above)
+2. Java (JDK 19 or above)
 
+You can verify this by executing the following command
+
+```shell
+mvn --version
+java --version
+```
 Ensure you have added JavaFX library in your IDE
+
+Run the following command to run the app
+
+```shell
+./mvnw clean javafx:run
+```
+
 
 ## Features Implemented and Working Properly
 ### **Player Controls**
