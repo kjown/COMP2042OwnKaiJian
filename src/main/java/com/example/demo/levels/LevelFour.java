@@ -129,4 +129,14 @@ public class LevelFour extends LevelParent {
     protected LevelView instantiateLevelView() {
         return new LevelView(getRoot(), PLAYER_INITIAL_HEALTH);
     }
+
+
+
+    public boolean isGameOver() {
+        return userIsDestroyed() || isEnemy4Destroyed();
+    }
+
+    public Enemy4 getEnemy4() {
+        return enemy4;
+    }
 }

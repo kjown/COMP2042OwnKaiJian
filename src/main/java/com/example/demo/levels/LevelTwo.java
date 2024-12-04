@@ -142,4 +142,12 @@ public class LevelTwo extends LevelParent {
     private boolean userHasReachedKillTarget() {
         return getUser().getNumberOfKills() >= KILLS_TO_ADVANCE;
     }
+
+    public boolean isGameOver() {
+        return userIsDestroyed() || userHasReachedKillTarget();
+    }
+
+    public String getNextLevel() {
+        return NEXT_LEVEL;
+    }
 }

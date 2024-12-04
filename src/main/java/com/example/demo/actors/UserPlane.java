@@ -325,4 +325,8 @@ public class UserPlane extends FighterPlane {
 		}
 		return null;
 	}
+
+	public void setNumberOfKills(int numberOfKills) {
+		this.numberOfKills = numberOfKills;
+	}
 }

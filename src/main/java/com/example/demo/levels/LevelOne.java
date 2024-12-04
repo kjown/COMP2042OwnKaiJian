@@ -149,4 +149,12 @@ public class LevelOne extends LevelParent {
 	private double generateRandomEnemyYPosition() {
 		return Math.random() * getEnemyMaximumYPosition();
 	}
+
+	public boolean isGameOver() {
+		return userIsDestroyed() || userHasReachedKillTarget();
+	}
+
+	public String getNextLevel() {
+		return NEXT_LEVEL;
+	}
 }

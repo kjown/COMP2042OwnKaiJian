@@ -109,4 +109,12 @@ public class LevelBoss extends LevelParent {
 		System.out.println("LevelViewLevelBoss instantiated: " + levelView);
 		return this.levelView;
 	}
+
+	public Boss getBoss() {
+		return boss;
+	}
+
+	public boolean isGameOver() {
+		return userIsDestroyed() || boss.isDestroyed();
+	}
 }
