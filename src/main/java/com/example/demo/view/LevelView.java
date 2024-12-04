@@ -80,4 +80,12 @@ public class LevelView {
 	public void hidePauseMenuImage() {
 		pauseMenu.hidePauseMenu();
 	}
+
+	public HeartDisplay getHeartDisplay() {
+		return heartDisplay;
+	}
+
+	public PauseMenu getPauseMenu() {
+		return pauseMenu;
+	}
 }

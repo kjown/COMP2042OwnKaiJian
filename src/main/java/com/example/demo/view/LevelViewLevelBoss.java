@@ -51,4 +51,8 @@ public class LevelViewLevelBoss extends LevelView {
 	public void hideShield() {
 		shieldImage.hideShield();
 	}
+
+	public ShieldImage getShieldImage() {
+		return shieldImage;
+	}
 }
