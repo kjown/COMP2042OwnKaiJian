@@ -258,6 +258,10 @@ public class UserPlane extends FighterPlane {
 		Platform.runLater(() -> shieldCircle.setVisible(false));
 	}
 
+	public boolean isShieldActive() {
+		return shieldActive;
+	}
+
 	/**
 	 * Creates a screen shake effect when the plane takes damage.
 	 *

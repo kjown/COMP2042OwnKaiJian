@@ -60,4 +60,12 @@ public class Enemy1 extends FighterPlane {
 	public void updateActor() {
 		updatePosition();
 	}
+
+	public double getPublicProjectileXPosition(double xPositionOffset) {
+		return getProjectileXPosition(xPositionOffset);
+	}
+
+	public double getPublicProjectileYPosition(double yPositionOffset) {
+		return getProjectileYPosition(yPositionOffset);
+	}
 }

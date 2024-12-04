@@ -54,7 +54,6 @@ public class Enemy2 extends Helicopter {
             System.out.println("Firing projectile at X: " + projectileXPosition + ", Y: " + projectileYPosition);
             return new EnemyBulletProjectile(projectileXPosition, projectileYPosition);
         }
-        System.out.println("Projectile not fired");
         return null;
     }
 
@@ -64,5 +63,13 @@ public class Enemy2 extends Helicopter {
     @Override
     public void updateActor() {
         updatePosition();
+    }
+
+    public double getPublicProjectileXPosition(double xPositionOffset) {
+        return getProjectileXPosition(xPositionOffset);
+    }
+
+    public double getPublicProjectileYPosition(double yPositionOffset) {
+        return getProjectileYPosition(yPositionOffset);
     }
 }
