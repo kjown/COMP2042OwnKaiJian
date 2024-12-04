@@ -1,4 +1,3 @@
-// EndMenuTest.java
 package com.example.demo.menu;
 
 import com.example.demo.controller.Controller;
@@ -10,9 +9,7 @@ import org.testfx.framework.junit5.ApplicationTest;
 import org.testfx.util.WaitForAsyncUtils;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.testfx.api.FxAssert.verifyThat;
-import static org.testfx.matcher.control.LabeledMatchers.hasText;
+
 
 class EndMenuTest extends ApplicationTest {
 

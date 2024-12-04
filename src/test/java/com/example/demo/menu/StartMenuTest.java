@@ -1,4 +1,3 @@
-// StartMenuTest.java
 package com.example.demo.menu;
 
 import com.example.demo.controller.Controller;
