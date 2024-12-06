@@ -1,6 +1,8 @@
 package com.example.demo.actors;
 
 import com.example.demo.controller.AudioManager;
+import javafx.application.Platform;
+import javafx.scene.image.Image;
 
 /**
  * The Helicopter class represents an enemy helicopter in the game.
@@ -86,5 +88,30 @@ public abstract class Helicopter extends ActiveActorDestructible {
      */
     public int getHealth() {
         return health;
+    }
+
+    /**
+     * Overrides the destroy method to show an explosion before removing the object.
+     */
+    @Override
+    public void destroy() {
+        Platform.runLater(() -> {
+            try {
+                Image explosionImage = new Image(getClass().getResource("/com/example/demo/images/explode.png").toExternalForm());
+                this.setImage(explosionImage);
+            } catch (NullPointerException e) {
+                System.err.println("Resource not found: /com/example/demo/images/explode.png");
+                e.printStackTrace();
+            }
+        });
+
+        new Thread(() -> {
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            Platform.runLater(super::destroy);
+        }).start();
     }
 }

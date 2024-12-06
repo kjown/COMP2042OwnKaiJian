@@ -1,6 +1,8 @@
 package com.example.demo.actors;
 
 import com.example.demo.controller.AudioManager;
+import javafx.application.Platform;
+import javafx.scene.image.Image;
 
 /**
  * The FighterPlane class represents a fighter plane in the game,
@@ -10,6 +12,8 @@ import com.example.demo.controller.AudioManager;
 public abstract class FighterPlane extends ActiveActorDestructible {
 
 	private int health;
+	private static final String EXPLOSION_IMAGE = "/com/example/demo/images/explode.png";
+
 
 	/**
 	 * Constructs a FighterPlane object with a specified image, position, and health.
@@ -47,6 +51,31 @@ public abstract class FighterPlane extends ActiveActorDestructible {
 			AudioManager.getInstance().playSoundEffect("/com/example/demo/music/destroyedsound.wav");
 			this.destroy();
 		}
+	}
+
+	/**
+	 * Overrides the destroy method to show an explosion before removing the object.
+	 */
+	@Override
+	public void destroy() {
+		Platform.runLater(() -> {
+			try {
+				Image explosionImage = new Image(getClass().getResource("/com/example/demo/images/explode.png").toExternalForm());
+				this.setImage(explosionImage);
+			} catch (NullPointerException e) {
+				System.err.println("Resource not found: /com/example/demo/images/explode.png");
+				e.printStackTrace();
+			}
+		});
+
+		new Thread(() -> {
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			Platform.runLater(super::destroy);
+		}).start();
 	}
 
 	/**
