@@ -236,12 +236,12 @@ There are a total of 5 playable levels.
 - A bug where toggling off, then on again will cause the background music to play unexpectedly.
 
 ## Features not Implemented
--  `UserPlane` turning red when it takes damage.
-- `Power Ups` not implemented.
-- `High Score` not implemented.
-- `Special Movements` not implemented. 
-- Smoother frame rates is not implemented.
-- 
+-  `UserPlane` turning red when it takes damage. Not implemented due to a bug where the plane disappears.
+- `Power Ups` not implemented. Not implemented due to time constraint.
+- `High Score` not implemented. Not implemented due to a bug where random scores are assigned to each kill.
+- `Special Movements` not implemented. Not implemented due to time constraint.
+- `Smoother frame rates` is not implemented. Not implemented due to time constraint.
+
 
 ## New Java Classes
 | New Class        | Description                                                                                                                                            | Path                                                                                                                        |
