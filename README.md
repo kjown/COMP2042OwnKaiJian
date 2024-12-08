@@ -2,7 +2,7 @@
 ## 👤Author
 Own Kai Jian 20611060
 
-[Github Repository](https://github.com/kjown/COMP2042.git)
+[Github Repository](https://github.com/kjown/COMP2042OwnKaiJian.git)
 
 ## 📁Folder Structure
 ```
