@@ -78,6 +78,7 @@ Run the following command to run the game
 ### **Game Flow**
 #### Core Gameplay Loop
 The game revolves around a series of levels where the user controls a fighter plane. The primary goal is to survive and destroy the enemies. The game follows these steps:
+There are a total of 5 playable levels. 
 
 #### Start Game Cutscene
 - A cutscene is displayed to introduce the game to the player.
@@ -130,6 +131,7 @@ The game revolves around a series of levels where the user controls a fighter pl
 - User will turn red when hit by enemy projectiles.
 - User has 5 lives and loses a life when hit by an enemy projectile. If the hearts reaches zero, the user die and will proceed to `EndMenu`.
 
+4 new Enemy types are implemented in the game, each with different characteristics.
 #### Enemy 1
 - `Enemy1` has its own movement pattern and projectile characteristics.
 - Has 1 health.
@@ -174,11 +176,30 @@ The game revolves around a series of levels where the user controls a fighter pl
 - Fires `BossProjectile` projectiles.
 
 #### Projectiles
+- `Projectiles` are fired by user and enemies.
 - `Projectiles` from enemies is now destroyable by user with their own respective health values.
 - `Projectiles` are destroyed when Out of Bounds.
 
+##### UserProjectile
+- Fired by the user's plane when the `SPACEBAR` is pressed.
+- Moves in a straight line towards the top of the screen.
+- Can destroy enemy actors.
 
+###### EnemyBulletProjectile
+- Fired by `Enemy2` and `Enemy3`.
+- Has a higher fire rate compared to EnemyRocketProjectile.
+- Can be destroyed by the user's projectiles.
 
+###### EnemyRocketProjectile
+- Fired by `Enemy1`.
+- Moves in a straight line.
+
+###### LaserProjectile
+- Fired by `Enemy4` and `Enemy5`.
+- Has a futuristic laser theme.
+
+###### BossProjectile
+- Fired by `Boss`.
 
 ### **Game Scene Management**
 - **Dynamic Background**: Each level has different background image to suit the theme of the level.
@@ -187,18 +208,19 @@ The game revolves around a series of levels where the user controls a fighter pl
   - `EndMenu` is displayed when the player loses all their lives.
 
 ### **Sound and Music Control**
-#### AudioManager.java
 - `AudioManager` class implemented to control the background music and sound effects in the game. `AudioManager` class has methods to control the music and sound effects in the game.
 -  `Singleton` pattern is used to ensure only one instance of the `AudioManager` class is created.
 - Background music plays throughout the game and can be toggled on or off in the `SettingsMenu`.
 - Background music stops when PauseMenu is displayed and resumes when the game is unpaused.
 - `AudioManager` class has methods to play sound effects.
+- When an actor is destroyed, there will be explosion sound effects.
+- When user fires projectile, there will be a shooting sound effect.
 
 ### **Visual Effects**
 - **Explosions**: Explosions are displayed when an enemy is destroyed.
 - **Shield**: User will have a shield that activates whenever user destroys 2 enemies.
 - **Health Bar**: `Boss` now displays its own `HealthBar` to show the health of the boss.
-
+- When user takes damage, the user will experience a screen shake.
 
 ### **Technical Details**
 - Fixed the crash that occurs in `LevelOne`.
@@ -206,12 +228,20 @@ The game revolves around a series of levels where the user controls a fighter pl
 - Fixed the hitbox of actors for more accurate and fun gameplay experience.
 
 ## Implemented but Not Working Properly
+### Screen Shake
+- Implemented screen shake when user takes damage but not working properly.
+- Screen shake may cause user to see white space.
+
+### Toggling Sound On/Off in Settings Menu
+- A bug where toggling off, then on again will cause the background music to play unexpectedly.
 
 ## Features not Implemented
 -  `UserPlane` turning red when it takes damage.
 - `Power Ups` not implemented.
 - `High Score` not implemented.
 - `Special Movements` not implemented. 
+- Smoother frame rates is not implemented.
+- 
 
 ## New Java Classes
 | New Class        | Description                                                                                                                                            | Path                                                                                                                        |
@@ -244,7 +274,6 @@ The game revolves around a series of levels where the user controls a fighter pl
 
 ### LevelParent.java
 - added handleProjectileCollision() method to handle projectile collision with actors.
--  
 
 ### Enemy1.java
 
