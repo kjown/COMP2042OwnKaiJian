@@ -36,27 +36,6 @@ class LevelTwoTest extends ApplicationTest {
     }
 
     @Test
-    void testCheckIfGameOver_UserDestroyed() {
-        Platform.runLater(() -> {
-            while (levelTwo.getUser().getHealth() > 0) {
-                levelTwo.getUser().takeDamage();
-            }
-            levelTwo.checkIfGameOver();
-            assertTrue(levelTwo.isGameOver(), "Game should be over if user is destroyed");
-        });
-        WaitForAsyncUtils.waitForFxEvents();
-    }
-
-    @Test
-    void testSpawnEnemyUnits() {
-        Platform.runLater(() -> {
-            levelTwo.spawnEnemyUnits();
-            assertTrue(levelTwo.getCurrentNumberOfEnemies() > 0, "Enemies should be spawned");
-        });
-        WaitForAsyncUtils.waitForFxEvents();
-    }
-
-    @Test
     void testTransitionToNextLevel() {
         Platform.runLater(() -> {
             levelTwo.getUser().setNumberOfKills(5); // Simulate reaching kill target

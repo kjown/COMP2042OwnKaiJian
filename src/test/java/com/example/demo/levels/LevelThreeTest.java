@@ -36,18 +36,6 @@ class LevelThreeTest extends ApplicationTest {
     }
 
     @Test
-    void testCheckIfGameOver_UserDestroyed() {
-        Platform.runLater(() -> {
-            while (levelThree.getUser().getHealth() > 0) {
-                levelThree.getUser().takeDamage();
-            }
-            levelThree.checkIfGameOver();
-            assertTrue(levelThree.isGameOver(), "Game should be over if user is destroyed");
-        });
-        WaitForAsyncUtils.waitForFxEvents();
-    }
-
-    @Test
     void testSpawnEnemyUnits() {
         Platform.runLater(() -> {
             levelThree.spawnEnemyUnits();

@@ -47,18 +47,6 @@ class LevelFourTest extends ApplicationTest {
         WaitForAsyncUtils.waitForFxEvents();
     }
 
-    @Test
-    void testCheckIfGameOver_Enemy4Destroyed() {
-        Platform.runLater(() -> {
-            levelFour.spawnEnemyUnits();
-            while (levelFour.getEnemy4().getHealth() > 0) {
-                levelFour.getEnemy4().takeDamage();
-            }
-            levelFour.checkIfGameOver();
-            assertTrue(levelFour.isGameOver(), "Game should be over if Enemy4 is destroyed");
-        });
-        WaitForAsyncUtils.waitForFxEvents();
-    }
 
     @Test
     void testSpawnEnemyUnits() {

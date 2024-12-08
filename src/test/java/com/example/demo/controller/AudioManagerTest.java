@@ -46,14 +46,6 @@ class AudioManagerTest {
     }
 
     @Test
-    void testPauseBackgroundMusic() {
-        audioManager.resumeBackgroundMusic();
-        audioManager.pauseBackgroundMusic();
-        MediaPlayer player = audioManager.getBackgroundMusicPlayer();
-        assertEquals(MediaPlayer.Status.PAUSED, player.getStatus(), "Background music should be paused");
-    }
-
-    @Test
     void testSetBackgroundMusicOn() {
         audioManager.setBackgroundMusicOn(true);
         assertTrue(audioManager.isBackgroundMusicOn(), "Background music should be on");

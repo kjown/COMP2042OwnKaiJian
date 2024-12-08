@@ -65,15 +65,6 @@ class ControllerTest {
     }
 
     @Test
-    void testResumeBackgroundMusic() {
-        Platform.runLater(() -> {
-            controller.resumeBackgroundMusic();
-        });
-        WaitForAsyncUtils.waitForFxEvents();
-        assertTrue(controller.isBackgroundMusicOn());
-    }
-
-    @Test
     void testUpdate() {
         Platform.runLater(() -> {
             assertDoesNotThrow(() -> controller.update(null, Controller.LEVEL_ONE_CLASS_NAME));

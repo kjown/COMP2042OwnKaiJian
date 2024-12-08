@@ -15,6 +15,7 @@ Own Kai Jian 20611060
 ```
 
 ## Compilation Instructions
+### **Prerequisites**
 #### Follow these steps to set up and run the project locally:
 Ensure you have the correct java version and maven installed:
 1. Maven (v3.9 or above)
@@ -26,10 +27,8 @@ You can verify this by executing the following command
 mvn --version
 java --version
 ```
-Ensure you have added JavaFX library in your IDE
-
-Run the following command to run the app
-
+### **Running**
+Run the following command to run the game
 ```shell
 ./mvnw clean javafx:run
 ```
@@ -39,9 +38,16 @@ Run the following command to run the app
 ### **Player Controls**
 - User navigates menus using mouse cursor and clicks on buttons to navigate through the game.
 - Added horizontal movement for the player using `LEFT` and `RIGHT` arrow keys in `UserPlane` class.
+- Pause the game by pressing `ESC` key.
 
 ### **Menus and User Interface**
+#### Visual Design
+- The menus and UI elements follow a cohesive design language with consistent fonts, colours and button styles.
+- Buttons and labels are easy to read and navigate ensuring accessibility for all users.
+- Buttons have hover effects to provide feedback to the user.
+
 #### Start Menu
+- Provides entry point options for the user to start the game, view settings or exit the game.
 - `StartMenu` implemented with `Start`, `Settings` and `Exit` buttons with `startGame()` and `showSettings()` methods for `Start` and `Settings` button, while `Exit` button exits the game. All buttons have hovering effects to improve user experience.
 - Utilised helper methods to handle creation of UI elements like `createTitleText` and `createStyledButton`.
 - Centralised font loading logic with `loadFont` method.
@@ -49,6 +55,7 @@ Run the following command to run the app
 - Has hover sound effects for buttons.
 
 #### Settings Menu
+- Offers customisation options for the user's experience.
 - `SettingsMenu` implemented with `Sound ON/OFF` toggler to turn on or off background music, `Controls` button to show the controls of the game and `Back` button to return to `StartMenu`.
 - Used lambdas for cleaner action assignments.
 - Has hover sound effects for buttons.
@@ -62,64 +69,115 @@ Run the following command to run the app
 - `PauseMenu` implemented pause functionality using `ESC` key to pause when playing the game.
 
 #### End Menu
+- Displays when the user loses all their lives.
 - `EndMenu` implemented with `Main Menu`, `Restart` and `Exit` buttons with `showMainMenu()` and `restartGame()` methods as well as exiting the game when `Exit` is pressed. All buttons have hovering effects to improve user experience.
 - Encapsulated the game restart and main menu navigation logic in separate methods for clarity.
 - Has hover sound effects for buttons.
 
-### **Game Mechanics**
-#### Projectiles
-- `Projectiles` from enemies is now destroyable by user with their own respective health values.
-- `Projectiles` are destroyed when Out of Bounds.
-
-#### Boss
-- `Boss` now has shield with its own health value and spawn probability to protect the boss.
-- `Boss` now displays its own `HealthBar` to show the health of the boss.
-
-#### Enemy 1
-- `Enemy1` has its own movement pattern and projectile characteristics.
-- Has 1 health.
-- Fires `rocket` projectiles.
-- Spawns at random positions.
-
-#### Enemy 2
-- `Enemy2` has its own movement pattern and projectile characteristics.
-- Moves at slower speed than `Enemy1`.
-- Has more health. Able to take more damage.
-- Fires `bullet` projectiles at a higher fire rate.
-
-#### Enemy 3
-- `Enemy3` has its own movement pattern and projectile characteristics.
-
-- Enemy Spawning logic is changed to spawn enemies in a more random and efficient manner.
-- Different enemy types have different movement patterns, projectile characteristics, health value and spawn logic.
-- User wins and will trigger the `WinImage` when the boss is defeated in `LevelBoss`.
-
 
 ### **Game Flow**
+#### Core Gameplay Loop
+The game revolves around a series of levels where the user controls a fighter plane. The primary goal is to survive and destroy the enemies. The game follows these steps:
+
 #### Start Game Cutscene
 - A cutscene is displayed to introduce the game to the player.
 - User can continue to `LevelOne` by pressing `SPACE` key.
 
-#### Start Menu
 #### Level One
-- `LevelOne` implemented with `UserPlane` and `Enemy1` actors. User can play the first level of the game with Enemy1 of Plane type.
+- The user begins in control of a `UserPlane` actor. The plane is positioned at the left side of the screen.
+- `LevelOne` implemented with `UserPlane` and `Enemy1` actors. User can play the first level of the game with Enemy1.
 - `Enemy1` are spawned in random positions and move in a straight line.
+- The user can fire projectiles at incoming enemies using `SPACEBAR`.
+- The user has 5 lives and loses a life when hit by an enemy projectile. If the hearts reaches zero, the user die and will proceed to `EndMenu`.
 - When user destroys 10 enemies, the user will proceed to `LevelTwo`.
 
 #### Level Two
 - `LevelTwo` implemented with `UserPlane` and `Enemy2` actors. User can play the second level of the game with Enemy2 of Helicopter type.
 - `Enemy2` are spawned in random positions.
+- User has to destroy all enemies to proceed to the next level.
 - Has a desert theme.
 
 #### Level Three
+- `LevelThree` implemented with `UserPlane` and `Enemy3` actors. User can play the third level of the game with Enemy3.
+- `Enemy3` are spawned in random positions with random movement sets to simulate fast moving kamikaze planes.
+- User has to destroy 10 enemies to proceed to the next level. 
+- Has a sunset theme.
 
 #### Level Four
+- `LevelFour` implemented with `UserPlane` and `Enemy1` actors. User can play the fourth level of the game with Enemy4 and Enemy5.
+- The level will have fast moving `Enemy4` attacking user and protecting `Enemy5`.
+- User has to destroy `Enemy5` to proceed to the next level.
+- Has a futuristic snowy tundra space station theme.
 
 #### Level 5 (Level Boss)
+- This is the last level of the game.
+- `LevelBoss` implemented with `UserPlane` and `Boss` actors. User can play the final level of the game with the Boss.
+- User wins the game by defeating the `Boss`, who has a large amount of health and a protective shield.
+- User has to destroy the shield before destroying the `Boss`.
+- Has an ocean theme.
 
 #### Win Image
+- `WinImage` is displayed upon successful completion of the game. User can continue to `EndMenu` by pressing  `ESC` key.
 
 #### End Menu
+- `EndMenu` is displayed when the player loses all their lives. User can return to `StartMenu`, restart the game or exit the game.
+
+### **Game Mechanics**
+#### UserPlane
+- User can move horizontally and vertically.
+- User fires `UserProjectile` when `SPACEBAR` is pressed.
+- User will have a shield that activates whenever user destroys 2 enemies.
+- User will turn red when hit by enemy projectiles.
+- User has 5 lives and loses a life when hit by an enemy projectile. If the hearts reaches zero, the user die and will proceed to `EndMenu`.
+
+#### Enemy 1
+- `Enemy1` has its own movement pattern and projectile characteristics.
+- Has 1 health.
+- Fires `EnemyRocketProjectile` projectiles.
+- Spawns at random positions.
+
+#### Enemy 2
+- `Enemy2` has its own movement pattern and projectile characteristics.
+- Actor of `Helicopter` type.
+- Moves at slower speed than `Enemy1`.
+- Has more health. Able to take more damage.
+- Fires `EnemyBulletProjectile` projectiles at a higher fire rate.
+
+#### Enemy 3
+- `Enemy3` has its own movement pattern and projectile characteristics.
+- Moves at random with a higher speed. 
+- Has a Japanese Kamikaze plane theme.
+- Fires `EnemyBulletProjectile`.
+- Has more health. Able to take more damage.
+
+#### Enemy 4
+- `Enemy4` has its own movement pattern and projectile characteristics.
+- Moves at a slower speed.
+- Has more health. Able to take more damage.
+- Fires `LaserProjectile` projectiles.
+- Functions as a mini boss type in Level4.
+- Has a sci-fi theme.
+
+#### Enemy 5
+- `Enemy5` has its own movement pattern and projectile characteristics.
+- Moves at a faster speed.
+- Has 3 health.
+- Fires `LaserProjectile` projectiles.
+- Spawns at random positions.
+- Has a sci-fi theme.
+
+#### Boss
+- `Boss` now has shield with its own health value and spawn probability to protect the boss.
+- `Boss` now displays its own `HealthBar` to show the health of the boss.
+- `Boss` has its own movement pattern and projectile characteristics.
+- `Boss` has large amount of health.
+- Fires `BossProjectile` projectiles.
+
+#### Projectiles
+- `Projectiles` from enemies is now destroyable by user with their own respective health values.
+- `Projectiles` are destroyed when Out of Bounds.
+
+
 
 
 ### **Game Scene Management**
@@ -135,6 +193,12 @@ Run the following command to run the app
 - Background music plays throughout the game and can be toggled on or off in the `SettingsMenu`.
 - Background music stops when PauseMenu is displayed and resumes when the game is unpaused.
 - `AudioManager` class has methods to play sound effects.
+
+### **Visual Effects**
+- **Explosions**: Explosions are displayed when an enemy is destroyed.
+- **Shield**: User will have a shield that activates whenever user destroys 2 enemies.
+- **Health Bar**: `Boss` now displays its own `HealthBar` to show the health of the boss.
+
 
 ### **Technical Details**
 - Fixed the crash that occurs in `LevelOne`.

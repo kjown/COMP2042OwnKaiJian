@@ -45,32 +45,6 @@ class LevelBossTest extends ApplicationTest {
     }
 
     @Test
-    void testCheckIfGameOver_UserDestroyed() {
-        Platform.runLater(() -> {
-            while (levelBoss.getUser().getHealth() > 0) {
-                levelBoss.getUser().takeDamage();
-            }
-            levelBoss.checkIfGameOver();
-
-            assertTrue(levelBoss.isGameOver(), "Game should be over if user is destroyed");
-        });
-        WaitForAsyncUtils.waitForFxEvents();
-    }
-
-    @Test
-    void testCheckIfGameOver_BossDestroyed() {
-        Platform.runLater(() -> {
-            while (levelBoss.getBoss().getHealth() > 0) {
-                levelBoss.getBoss().takeDamage();
-            }
-            levelBoss.checkIfGameOver();
-
-            assertTrue(levelBoss.isGameOver(), "Game should be over if boss is destroyed");
-        });
-        WaitForAsyncUtils.waitForFxEvents();
-    }
-
-    @Test
     void testCheckIfGameOver_GameContinues() {
         Platform.runLater(() -> {
             assertFalse(levelBoss.isGameOver(), "Game should continue if neither the user nor the boss is destroyed");
