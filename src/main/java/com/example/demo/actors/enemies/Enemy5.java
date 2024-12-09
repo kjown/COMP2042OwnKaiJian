@@ -77,24 +77,4 @@ public class Enemy5 extends FighterPlane {
     public void updateActor() {
         updatePosition();
     }
-
-    /**
-     * Public wrapper method to get the projectile X position.
-     *
-     * @param xPositionOffset The X position offset.
-     * @return The projectile X position.
-     */
-    public double getProjectileXPosition(double xPositionOffset) {
-        return getProjectileXPosition(xPositionOffset);
-    }
-
-    /**
-     * Public wrapper method to get the projectile Y position.
-     *
-     * @param yPositionOffset The Y position offset.
-     * @return The projectile Y position.
-     */
-    public double getProjectileYPosition(double yPositionOffset) {
-        return getProjectileYPosition(yPositionOffset);
-    }
 }

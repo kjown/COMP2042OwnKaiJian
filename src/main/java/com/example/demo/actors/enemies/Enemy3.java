@@ -141,12 +141,4 @@ public class Enemy3 extends FighterPlane {
         }
         return currentMove;
     }
-
-    public double getProjectileXPosition(double xPositionOffset) {
-        return getProjectileXPosition(xPositionOffset);
-    }
-
-    public double getProjectileYPosition(double yPositionOffset) {
-        return getProjectileYPosition(yPositionOffset);
-    }
 }

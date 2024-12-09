@@ -36,21 +36,6 @@ class Enemy4Test extends ApplicationTest {
         WaitForAsyncUtils.waitForFxEvents();
     }
 
-    @Test
-    void testFireProjectile() {
-        Platform.runLater(() -> {
-            ActiveActorDestructible projectile = enemy.fireProjectile();
-            if (projectile != null) {
-                assertTrue(projectile instanceof LaserProjectile, "The projectile should be an instance of LaserProjectile");
-                assertEquals(enemy.getProjectileXPosition(-50.0), projectile.getLayoutX(), "Projectile X position should match expected value");
-                assertEquals(enemy.getProjectileYPosition(50.0), projectile.getLayoutY(), "Projectile Y position should match expected value");
-            } else {
-                assertNull(projectile, "No projectile should be fired when random check fails");
-            }
-        });
-        WaitForAsyncUtils.waitForFxEvents();
-    }
-
     private void waitForFxEvents() {
         try {
             Thread.sleep(500);

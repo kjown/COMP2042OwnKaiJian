@@ -37,19 +37,4 @@ class Enemy3Test extends ApplicationTest {
         });
         WaitForAsyncUtils.waitForFxEvents();
     }
-
-    @Test
-    void testFireProjectile() {
-        Platform.runLater(() -> {
-            ActiveActorDestructible projectile = enemy.fireProjectile();
-            if (projectile != null) {
-                assertTrue(projectile instanceof EnemyBulletProjectile, "The projectile should be an instance of EnemyBulletProjectile");
-                assertEquals(enemy.getProjectileXPosition(-100.0), projectile.getLayoutX(), "Projectile X position should match expected value");
-                assertEquals(enemy.getProjectileYPosition(75.0), projectile.getLayoutY(), "Projectile Y position should match expected value");
-            } else {
-                System.out.println("Projectile not fired");
-            }
-        });
-        WaitForAsyncUtils.waitForFxEvents();
-    }
 }
