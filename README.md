@@ -27,6 +27,7 @@ You can verify this by executing the following command
 mvn --version
 java --version
 ```
+Next:
 1. Clone the repository:
     ```bash
     git clone https://github.com/kjown/COMP2042OwnKaiJian.git
