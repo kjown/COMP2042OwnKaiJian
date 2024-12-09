@@ -18,35 +18,6 @@ class UserPlaneTest extends ApplicationTest {
         waitForFxEvents(); // Ensures the JavaFX thread completes initialization
     }
 
-//    @Test
-//    void testUpdatePosition() throws InterruptedException {
-//        final double[] initialY = new double[1];  // Use an array to allow access inside and outside the lambda
-//
-//        Platform.runLater(() -> {
-//            // Set a baseline position
-//            userPlane.setLayoutY(300);
-//            initialY[0] = userPlane.getLayoutY(); // Capture initial Y position
-//
-//            // Trigger movement
-//            userPlane.moveUp(); // Simulate move up
-//            userPlane.updatePosition(); // Update its position in the game loop
-//        });
-//
-//        Thread.sleep(500); // Wait for the JavaFX thread to complete
-//
-//        WaitForAsyncUtils.waitForFxEvents(); // Wait for UI thread
-//
-//        // Assert new position is within bounds and less than the initial position
-//        double updatedY = userPlane.getLayoutY();
-//        System.out.println("Initial Y: " + initialY[0] + ", Updated Y: " + updatedY);
-//
-//        // Validate the position change respects movement direction
-//        assertTrue(updatedY < initialY[0], "The plane should move up (Y position should decrease)");
-//
-//        // Optional: Test boundaries
-//        assertTrue(updatedY >= 0, "The plane's Y position should not move outside the top boundary");
-//    }
-
     @Test
     void testBottomBoundary() {
         Platform.runLater(() -> {
